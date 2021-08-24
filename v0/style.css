@@ -1,0 +1,499 @@
+@font-face {
+    font-family: "Shogun";
+    src: url("fonts/shoguns-clan.ttf");
+}
+
+
+/* NAV BAR */
+/* ------------------------------------ */
+
+#logo{
+    width: 120px;
+    height: auto;
+}
+
+nav .active{
+    font-weight: bold;
+}
+
+nav button{
+    max-height: 3rem;
+}
+
+
+/* COMMUN HEADERS */
+/* ------------------------------------ */
+
+.header{
+    color: #fff;
+    font-size: 2em;
+    margin-bottom: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.header p{
+    text-align: center;
+}
+
+.header h1{
+    margin-bottom: 0;
+}
+
+.header hr{
+    background-color: white;
+    height: 1px;
+    margin-top: 0.5rem;
+}
+
+.header .lead{
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.2;
+}
+
+.citation{
+    font-size: 0.6em;
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+@media(max-width: 480px){
+    .citation{
+        font-size: 0.5em;
+    }
+}
+
+/* COMMUN HEADERS TAILLE TEXTE STYLISE  */
+/* ------------------------------------ */
+
+.petit{
+    font-family: "Shogun";
+    font-size: 2em;
+}
+
+.moyen{
+    font-family: "Shogun";
+    font-size: 5em;
+}
+
+.grand{
+    font-family: "Shogun";
+    font-size: 6em;
+}
+
+@media(max-width: 576px){
+
+    .petit{
+        font-family: "Shogun";
+        font-size: 1.70em;
+    }
+
+    .moyen{
+        font-family: "Shogun";
+        font-size: 3.5em;
+    }
+
+    .grand{
+        font-family: "Shogun";
+        font-size: 4.5em;
+    }
+}
+
+@media(max-width: 480px){
+
+    .petit{
+        font-size: 1.2em;
+    }
+
+    .moyen{
+        font-family: "Shogun";
+        font-size: 2.8em;
+    }
+
+    .grand{
+        font-size: 3.5em;
+    }
+
+    .display-5{
+        font-size: 2rem;
+    }
+
+    .display-4{
+        font-size: 3rem;
+    }
+}
+
+
+/* CONTENU SPECIFIQUE HEADERS CHAPITRE & HEADER PAGE-EPISODE */
+/* ------------------------------------ */
+
+.chapitre-fond p.lead, .episode-fond p.lead{
+    margin-top: 8rem;
+}
+
+#ch3-header .lead, #ch4-header .lead{
+    margin-top: 5rem;
+}
+
+
+/* BLOC/FOND HEADER PRINCIPAL */
+/* -------------------------------------------------------- */
+
+.header-fond{
+    min-height: 60vh;
+    background-size: cover;
+    background-position: top;
+}
+
+#header-s1{
+    background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('images/headers/aventure-s1.jpg');
+}
+
+#header-empire{
+    background-image: linear-gradient(rgb(0,30,0,0.5),rgba(0, 30, 0, 0.5)),url('images/header-empire.jpg');
+}
+
+#header-regles{
+    background-image: linear-gradient(rgb(0,0,30,0.5),rgba(0, 0, 30, 0.5)),url('images/header-regles.jpg');
+}
+
+
+/* BLOC/FOND SECTIONS CHAPITRE & PAGE-EPISODE */
+/* ------------------------------------------------------------ */
+
+.chapitre-fond, .episode-fond{
+    min-height: 60vh;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+@media(max-width: 1200px){
+    .chapitre-fond, .episode-fond{
+        background-size: 150% auto;
+    }
+}
+
+@media(max-width: 992px){
+    .chapitre-fond, .episode-fond{
+        background-size: 200% auto;
+    }
+}
+
+@media(max-width: 576px){
+    .chapitre-fond, .episode-fond{
+        background-size: 250% auto;
+    }
+}
+
+@media(max-width: 480px){
+    .chapitre-fond, .episode-fond{
+        background-size: 300% auto;
+    }
+}
+
+/* FOND HEADER PAGE INDEX */
+
+#ch8-header.chapitre-fond, #ch8-header.episode-fond{
+    background-image: url('images/chapters/ch8.jpg');
+    background-color: #330000;
+}
+
+#ch7-header.chapitre-fond, #ch7-header.episode-fond{
+    background-image: url('images/chapters/ch7.jpg');
+    background-color: #140d40;
+}
+
+#ch6-header.chapitre-fond, #ch6-header.episode-fond{
+    background-image: url('images/chapters/ch6.jpg');
+    background-color: #330000;
+}
+
+#ch5-header.chapitre-fond, #ch5-header.episode-fond{
+    background-image: url('images/chapters/ch5.jpg');
+    background-color: #260b0e;
+}
+
+#ch4-header.chapitre-fond, #ch4-header.episode-fond{
+    background-image: url('images/chapters/ch4.jpg');
+    background-color: #261300;
+}
+
+#ch3-header.chapitre-fond, #ch3-header.episode-fond{
+    background-image: url('images/chapters/ch3.jpg');
+    background-color: #26211f;
+}
+
+#ch2-header.chapitre-fond, #ch2-header.episode-fond{
+    background-image: url('images/chapters/ch2.jpg');
+    background-color: #402b00;
+}
+
+#ch1-header.chapitre-fond, #ch1-header.episode-fond{
+    background-image: url('images/chapters/ch1.jpg');
+    background-color: #1f3329;
+}
+
+#ch8-header.chapitre-fond.fermer{
+    background-image: linear-gradient(rgb(20,0,0,0.6),rgb(20,0,0,0),rgb(20,0,0,0.3),rgb(20,0,0,0.6)),url('images/chapters/ch8.jpg');
+}
+
+#ch7-header.chapitre-fond.fermer{
+    background-image: linear-gradient(rgb(0,0,10,0.6),rgb(0,0,10,0),rgb(0,0,10,0.3),rgb(0,0,10,0.6)),url('images/chapters/ch7.jpg');
+}
+
+#ch6-header.chapitre-fond.fermer{
+    background-image: linear-gradient(rgb(10,0,20,0.6),rgb(10,0,20,0),rgb(10,0,20,0.3),rgb(10,0,20,0.6)),url('images/chapters/ch6.jpg');
+}
+
+#ch5-header.chapitre-fond.fermer{
+    background-image: linear-gradient(rgb(20,10,10,0.6),rgb(20,10,10,0),rgb(20,10,10,0.3),rgb(20,10,10,0.6)),url('images/chapters/ch5.jpg');
+}
+
+#ch4-header.chapitre-fond.fermer{
+    background-image: linear-gradient(rgb(20,20,0,0.6),rgb(20,20,0,0),rgb(20,20,0,0.3),rgb(15,15,0,0.6)),url('images/chapters/ch4.jpg');
+}
+
+#ch3-header.chapitre-fond.fermer{
+    background-image: linear-gradient(rgb(15,0,0,0.6),rgb(15,0,0,0),rgb(15,0,0,0.3),rgb(15,0,0,0.6)),url('images/chapters/ch3.jpg');
+}
+
+#ch2-header.chapitre-fond.fermer{
+    background-image: linear-gradient(rgb(30,20,0,0.6),rgb(30,20,0,0),rgb(30,20,0,0.3),rgb(20,10,0,0.6)),url('images/chapters/ch2.jpg');
+}
+
+#ch1-header.chapitre-fond.fermer{
+    background-image: linear-gradient(rgb(0,20,20,0.6),rgb(0,20,20,0),rgb(0,20,20,0.3),rgb(0,10,10,0.6)),url('images/chapters/ch1.jpg');
+}
+
+/* FONDS DES PAGES GRISES */
+/* ------------------------------------ */
+
+#liste-ch {
+    background-color: #f0f0f0;
+}
+
+
+/* CARTES */
+/* ------------------------------------ */
+
+.card{
+    background-color: #fff;
+    /* min-width: 25%; */
+    min-height: 400px;
+    /* max-height: 400px; */
+    /* margin: 8px;
+    border-radius: 4px;
+    width: 18rem; */
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
+}
+
+@media(max-width: 480px) {
+    .episode .card{
+        border-radius: 0;
+        box-shadow: unset;
+    }
+}
+
+.card-body{
+    padding: 1rem;
+}
+
+/* .episode-fond .card-body{
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 3rem;
+} */
+
+
+@media(min-width: 480px) {
+    .episode-fond .card-body{
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-top: 3rem;
+    }
+}
+
+.fond-mask{
+    background-color: black;
+}
+
+.fond-mask img{
+    mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1));
+}
+
+.ancre-scene {
+    position:relative;
+}
+
+.scene-heure{
+    color: white;
+    position: absolute;
+}
+
+@media(min-width: 480px) {
+    .scene-heure{
+        top: -8rem;
+    }
+}
+
+@media(max-width: 480px) {
+    .scene-heure{
+        top: -5rem;
+    }
+}
+
+.chapitre-fond .card-title{
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    top: -30px;
+}
+
+.scene-heure h3, .scene-heure h5{
+    margin-bottom: 0;
+}
+
+.card.liste img.disabled {
+    filter:grayscale()
+}
+
+.card-text{
+    padding-bottom: 2rem;
+}
+
+.card-text.disabled{
+    color: #bfbfbf;
+}
+
+.card.liste img.enabled:hover{
+    filter: brightness(1.3);
+    transition: .5s;
+}
+
+.btn-lire-ep{
+    position: absolute;
+    bottom: 1rem;
+}
+
+.newpad{
+    padding-right: 8px;
+    padding-left: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+@media(max-width: 480px){
+
+    .newpad{
+        padding-right: 0;
+        padding-left: 0;
+
+    }
+
+    .episode .newpad{
+        padding: 0;
+    }
+}
+
+/* BOUTON */
+/* ------------------------------------ */
+
+.btn-primary{
+    background-color: #EA2027 !important;
+    border-color: #b6252f !important;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:target{
+    background-color: #ff4147 !important;
+    border-color: #d12f3a !important;
+}
+
+.btn-primary.disabled{
+    background-color: #b4b4b4 !important;
+    border-color: #9f9f9f !important;
+}
+
+.cacher
+{
+    position: relative;
+    top: -3.5rem;
+    left: -3rem;
+}
+
+@media(max-width: 1300px){
+
+    .cacher
+    {
+        position: relative;
+        top: 0rem;
+        left: 0.5rem;
+    }
+}
+
+.voir
+{
+    position: absolute;
+    top: 5.5rem;
+    /* left: 5rem; */
+}
+
+/* DIVIDER */
+/* ------------------------------------ */
+
+.division{
+    width: 30%;
+}
+
+@media(max-width: 480px){
+
+    .division{
+        width: 50%;
+    }
+}
+
+.division-motif{
+    width: 36px;
+    height: auto;
+}
+
+.division hr{
+    background-color: #ffbbbb;
+    height: 1px;
+    width: 100%;
+}
+
+.chapitre-separateur{
+    height:0.4rem;
+    background-color: rgb(40, 0, 0);
+}
+
+/* ----------------------------------- */
+/* FOOTER */
+/* ------------------------------------ */
+
+.bg-footer1{
+    background-color: #28323C;
+    height: 24vh;
+}
+
+.bg-footer1 h5{
+    color: rgb(173, 173, 173);
+}
+
+.bg-footer2{
+    background-color: #1E242A;
+    height: 8vh;
+}
+
+.footer-link{
+    color: rgb(156, 161, 170);
+}
+
+.footer-link:hover{
+    color: white;
+    text-decoration: underline;
+}
