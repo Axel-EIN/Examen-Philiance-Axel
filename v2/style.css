@@ -1,0 +1,424 @@
+@font-face {
+    font-family: "Shogun";
+    src: url("assets/fonts/shoguns-clan.ttf");
+}
+
+/* WTF */
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+
+/* NAV */
+/* ------------------------------------ */
+
+.admin { color: #fff; }
+.admin:hover { color: #ea2027; }
+
+#logo{
+    width: 120px;
+    height: auto;
+}
+
+nav .active{
+    font-weight: bold;
+}
+
+nav button{
+    max-height: 3rem;
+}
+
+
+/* COMMUN HEADERS */
+/* ------------------------------------ */
+
+.header{
+    color: #fff;
+    font-size: 2em;
+    margin-bottom: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.header p{
+    text-align: center;
+}
+
+.header h1{
+    margin-bottom: 0;
+}
+
+.header hr{
+    background-color: white;
+    height: 1px;
+    margin-top: 0.5rem;
+}
+
+.header .lead{
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.2;
+}
+
+.citation{
+    font-size: 0.6em;
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+@media(max-width: 480px){
+    .citation{
+        font-size: 0.5em;
+    }
+}
+
+/* COMMUN HEADERS TAILLE TEXTE STYLISE  */
+/* ------------------------------------ */
+
+.petit{
+    font-family: "Shogun";
+    font-size: 3rem;
+}
+
+.grand{
+    font-family: "Shogun";
+    font-size: 9rem;
+}
+
+@media(max-width: 576px){
+
+    .petit{
+        font-family: "Shogun";
+        font-size: 1.70rem;
+    }
+
+    .moyen{
+        font-family: "Shogun";
+        font-size: 3.5rem;
+    }
+
+    .grand{
+        font-family: "Shogun";
+        font-size: 4.5rem;
+    }
+}
+
+@media(max-width: 480px){
+
+    .petit{
+        font-size: 1.2rem;
+    }
+
+    .moyen{
+        font-family: "Shogun";
+        font-size: 2.8rem;
+    }
+
+    .grand{
+        font-size: 3.5rem;
+    }
+
+    .display-5{
+        font-size: 2rem;
+    }
+
+    .display-4{
+        font-size: 3rem;
+    }
+}
+
+
+/* CONTENU SPECIFIQUE HEADERS CHAPITRE & HEADER PAGE-EPISODE */
+/* ------------------------------------ */
+
+.chapitre-fond p.lead, .episode-fond p.lead{
+    margin-top: 8rem;
+}
+
+#ch3-header .lead, #ch4-header .lead{
+    margin-top: 5rem;
+}
+
+
+/* BLOC/FOND HEADER PRINCIPAL */
+/* -------------------------------------------------------- */
+
+.header-fond{   
+    min-height: 60vh;
+    background-size: cover;
+    background-position: top;
+}
+
+#header-empire{
+    background-image: linear-gradient(rgb(0,30,0,0.5),rgba(0, 30, 0, 0.5)),url('images/header-empire.jpg');
+}
+
+#header-regles{
+    background-image: linear-gradient(rgb(0,0,30,0.5),rgba(0, 0, 30, 0.5)),url('images/header-regles.jpg');
+}
+
+
+/* BLOC/FOND SECTIONS CHAPITRE & PAGE-EPISODE */
+/* ------------------------------------------------------------ */
+
+.chapitre-fond, .episode-fond{
+    min-height: 60vh;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+@media(max-width: 1200px){
+    .chapitre-fond, .episode-fond{
+        background-size: 150% auto;
+    }
+}
+
+@media(max-width: 992px){
+    .chapitre-fond, .episode-fond{
+        background-size: 200% auto;
+    }
+}
+
+@media(max-width: 576px){
+    .chapitre-fond, .episode-fond{
+        background-size: 250% auto;
+    }
+}
+
+@media(max-width: 480px){
+    .chapitre-fond, .episode-fond{
+        background-size: 300% auto;
+    }
+}
+
+/* FONDS DES PAGES GRISES */
+/* ------------------------------------ */
+
+#liste-ch {
+    background-color: #f0f0f0;
+}
+
+
+/* CARTES */
+/* ------------------------------------ */
+
+.card.liste{
+    background-color: #fff;
+    /* min-width: 25%; */
+    min-height: 400px;
+    /* max-height: 400px; */
+    /* margin: 8px;
+    border-radius: 4px;
+    width: 18rem; */
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
+}
+
+@media(max-width: 480px) {
+    .episode .card{
+        border-radius: 0;
+        box-shadow: unset;
+    }
+}
+
+.card-body{
+    padding: 1rem;
+}
+
+/* .episode-fond .card-body{
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 3rem;
+} */
+
+
+@media(min-width: 480px) {
+    .episode-fond .card-body{
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-top: 3rem;
+    }
+}
+
+.fond-mask{
+    background-color: black;
+}
+
+.fond-mask img{
+    mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1));
+}
+
+.ancre-scene {
+    position:relative;
+}
+
+.scene-heure{
+    color: white;
+    position: absolute;
+}
+
+@media(min-width: 480px) {
+    .scene-heure{
+        top: -8rem;
+    }
+}
+
+@media(max-width: 480px) {
+    .scene-heure{
+        top: -5rem;
+    }
+}
+
+.chapitre-fond .card-title{
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    top: -30px;
+}
+
+.scene-heure h3, .scene-heure h5{
+    margin-bottom: 0;
+}
+
+.card.liste img.disabled {
+    filter:grayscale()
+}
+
+.card-text.disabled{
+    color: #bfbfbf;
+}
+
+.card.liste img.enabled:hover{
+    filter: brightness(1.3);
+    transition: .5s;
+}
+
+.btn-lire-ep{
+    position: absolute;
+    bottom: 1rem;
+}
+
+.newpad{
+    padding-right: 8px;
+    padding-left: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+@media(max-width: 480px){
+
+    .newpad{
+        padding-right: 0;
+        padding-left: 0;
+
+    }
+
+    .episode .newpad{
+        padding: 0;
+    }
+}
+
+/* BOUTON */
+/* ------------------------------------ */
+
+.btn-saison{
+    padding: 0.3rem 1rem !important;
+}
+
+.btn-primary{
+    background-color: #EA2027 !important;
+    border-color: #b6252f !important;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:target{
+    background-color: #ff4147 !important;
+    border-color: #d12f3a !important;
+}
+
+.btn-primary.disabled{
+    background-color: #b4b4b4 !important;
+    border-color: #9f9f9f !important;
+}
+
+.voir, .pasdispo
+{
+    position: absolute;
+    top: 5.5rem;
+}
+
+.cacher
+{
+    position: relative;
+    left: 0.5rem;
+}
+
+/* DIVIDER */
+/* ------------------------------------ */
+
+.division{
+    width: 30%;
+}
+
+@media(max-width: 480px){
+
+    .division{
+        width: 50%;
+    }
+}
+
+.division-motif{
+    width: 36px;
+    height: auto;
+}
+
+.division hr{
+    background-color: #ffbbbb;
+    height: 1px;
+    width: 100%;
+}
+
+.chapitre-separateur{
+    height:0.4rem;
+    background-color: rgb(40, 0, 0);
+}
+
+/* ----------------------------------- */
+/* FOOTER */
+/* ------------------------------------ */
+
+.bg-footer1{
+    background-color: #28323C;
+    height: 24vh;
+}
+
+.bg-footer1 h5{
+    color: rgb(173, 173, 173);
+}
+
+.bg-footer2{
+    background-color: #1E242A;
+    height: 8vh;
+}
+
+.footer-link{
+    color: rgb(156, 161, 170);
+}
+
+.footer-link:hover{
+    color: white;
+    text-decoration: underline;
+}
+
+
+/* ----------------------------------- */
+/* FORM */
+/* ------------------------------------ */
+
+fieldset{
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+}
