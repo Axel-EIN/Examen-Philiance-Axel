@@ -4,49 +4,91 @@
     <div class="row">
         <div class="col-12">
             <h1 class="text-center"><?= $h1; ?></h1>
+            <?php if(!empty($episode_parent)): ?>
+                <h4 class="text-center">
+                    <small>pour </small>
+                    <a href="<?= route('episode&id=' . $episode_parent->id, "#tete-lecture"); ?>">
+                        <?= $episode_parent->titre ?>&nbsp;<i class="fas fa-eye"></i>
+                    </a>
+                </h4>
+            <?php endif; ?>
         </div>
     </div>
 </header>
 
 <main class="container">
 
-    <form class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-scene-handler'); ?>" enctype="multipart/form-data">
+<?php
+    if(!empty($_GET['id_episode']) && is_numeric($_GET['id_episode']) && $_GET['id_episode'] > 0) $get_episode = '&id_episode=' . $_GET['id_episode'];
+    else $get_episode = ''; ?>
+
+    <form class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-scene-handler' . $get_episode); ?>" enctype="multipart/form-data">
 
         <label for="titre">Titre :</label>
         <input class="form-control" type="text" name="titre" id="titre"><br/>
 
         <div class="form-row">
-            <div class="col-6">
-                <label for="saison">Choisir la saison à rattacher</label>
-                <select class="form-control" id="saison" required onchange="chapitreChange(this);">
-                    <option value="">Choisir une Saison...</option>
 
-                    <?php foreach($toutes_les_saisons as $une_saison): ?>
-                        <option value="<?= $une_saison->id; ?>"><?= $une_saison->titre; ?></option>
-                    <?php endforeach; ?>
+            <?php if(empty($saison_parent)): ?>
+                <div class="col">
+                    <label for="saison">Choisir la saison à rattacher</label>
+                    <select class="form-control" id="saison" required onchange="chapitreChange(this);">
 
-                </select>
-            </div>
-            <div class="col-6">
-                <label for="chapitre">Choisir le chapitre à rattacher</label>
-                <select class="form-control" id="chapitre" required onchange="episodeChange(this);">
-                    <option value="" disabled></option>
-                </select>
-            </div>
+                        <option value="">Choisir une Saison...</option>
+
+                        <?php foreach($toutes_les_saisons as $une_saison): ?>
+                            <option value="<?= $une_saison->id; ?>"><?= $une_saison->titre; ?></option>
+                        <?php endforeach; ?>
+
+                    </select>
+                </div>
+            <?php endif; ?>
+
+            <?php if(empty($chapitre_parent)): ?>
+                <div class="col">
+                    <label for="chapitre">Choisir le chapitre à rattacher</label>
+                    <select class="form-control" id="chapitre" required onchange="episodeChange(this);">
+                        <option value="" disabled></option>
+                    </select>
+                </div>
+            <?php endif; ?>
         </div><br/>
+        
+        
         <div class="form-row">
-            <div class="col-6">
-                <label for="episode">Choisir l'episode à rattacher</label>
-                <select class="form-control" id="episode" name="id_episode" required onchange="sceneChange(this);">
-                    <option value="" disabled></option>
-                </select>
-            </div>
-            <div class="col-6">
+
+            <?php if(empty($episode_parent)): ?>
+                <div class="col">
+                    <label for="episode">Choisir l'episode à rattacher</label>
+                    <select class="form-control" id="episode" name="id_episode" required onchange="sceneChange(this);">
+                        <option value="" disabled></option>
+                    </select>
+                </div>
+            <?php endif; ?>
+
+            <div class="col">
                 <label for="scene">Choisir la position de la Scène : (insérer devant)</label>
                 <select class="form-control" id="scene" name="numero" required>
-                    <option value="" disabled></option>
+                    <?php if(empty($episode_parent) || empty($_GET['numero'])): ?>
+                        <option value="" disabled></option>
+                    <?php else: ?>
+                        <?php if($scenes_enfants): ?>
+                            <?php foreach($scenes_enfants as $une_scene): ?>
+                                <option value="<?= $une_scene->numero ?>"
+                                    <?php if($une_scene->numero == $_GET['numero']) echo 'selected' ?>>
+                                        <?= $une_scene->numero; ?> - insérer devant <?= $une_scene->titre ?>
+                                </option>
+                            <?php endforeach; ?>
+                                <option value="<?= $une_scene->numero+1; ?>"
+                                    <?php if($une_scene->numero+1 == $_GET['numero']) echo 'selected' ?>>
+                                        <?= $une_scene->numero+1; ?> - insérer en dernier</option>
+                        <?php else: ?>
+                            <option value="1">1 - Insérer en premier</option>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </select>
             </div>
+
         </div><br/>
         
         <label for="temps">Temps dans le jeu :</label>
@@ -59,7 +101,7 @@
         <div class="form-group">
           <label for="image"></label>
           <input type="file" class="form-control-file" name="image" id="image" aria-describedby="fileHelpId">
-          <small id="fileHelpId" class="form-text text-muted">Taille conseillé : 1280x720 minimum, rapport 16/9</small>
+          <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
         </div><br/><br/>
         
         <input class="form-control btn btn-primary" type="submit" value="Créer" name="creer" />
@@ -93,7 +135,7 @@ var scenesArray = new Array(<?= count($tous_les_episodes); ?>);
             <?php foreach (scenes_enfants_de_episode_triees_numero($un_episode->id) as $une_scene): ?>  
                 "<?= $une_scene->numero; ?>" : "<?= $une_scene->numero ?> - Insérer devant : <?= $une_scene->titre; ?>",
             <?php endforeach; ?>
-                "<?= $une_scene->numero+1; ?>" : "<?= $une_scene->numero+1 ?> - Ajouter en dernier",
+                "<?= $une_scene->numero+1; ?>" : "<?= $une_scene->numero+1 ?> - Insérer en dernier",
         <?php else: ?>
             "1" : "1 - Ajouter en première scène",
         <?php endif; ?>

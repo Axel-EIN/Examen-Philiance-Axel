@@ -42,7 +42,7 @@
             </div>
             <div class="col-6">
                 <label for="id_chapitre">Choisir un chapitre</label>
-                <select class="form-control" id="id_chapitre" name="id_chapitre" required onchange="episodeChange(this);">
+                <select class="form-control" id="chapitre" name="id_chapitre" required onchange="episodeChange(this);">
                     <option value="" disabled>Choisir un Chapitre...</option>
 
                     <?php foreach(chapitres_enfants_de_saison($saison_parent->id) as $un_chapitre): ?>
@@ -55,7 +55,7 @@
         <div class="form-row">
             <div class="col-6">
                 <label for="numero">Choisir la position de l'episode</label>
-                <select class="form-control" id="numero" name="numero" required >
+                <select class="form-control" id="episode" name="numero" required >
                     <option value="" disabled>Choisir la position de l'episode...</option>
 
                     <?php foreach(episodes_enfants_du_chapitre_triees_numero($chapitre_parent->id) as $un_episode): ?>
@@ -67,14 +67,14 @@
         </div><br/>
 
         <label for="image">Image :</label>
-        <img class="img-fluid" src="<?= $episode_trouve->image ?>" alt="Image de la scène <?= $episode_trouve->numero; ?>" />
+        <img class="img-fluid" src="<?= url_img($episode_trouve->image); ?>" alt="Image de la scène <?= $episode_trouve->numero; ?>" />
         <div class="form-group">
           <label for="image"></label>
           <input type="file" class="form-control-file" name="image" id="image" aria-describedby="fileHelpId">
-          <small id="fileHelpId" class="form-text text-muted">Taille conseillé : 1280x720 minimum, rapport 16/9</small>
+          <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
         </div><br/>
 
-        <label for="resume">Résumé une ligne :</label>
+        <label for="resume">Très bref résumé / Synopsis (2 lignes) :</label>
         <textarea style="resize: none;" class="form-control" maxlength="200" name="resume" id="resume" cols="30" rows="2"><?= $episode_trouve->resume; ?></textarea><br/>
         
         <input class="form-control btn btn-primary" type="submit" value="Modifier" name="modifier" />
@@ -99,7 +99,7 @@ var episodesArray = new Array(<?= count($tous_les_chapitres); ?>);
 <?php foreach ($tous_les_chapitres as $un_chapitre): ?>
     episodesArray["<?= $un_chapitre->id ?>"] = {"" : "Choisir la position de l'Episode...",
         <?php if (empty(episodes_enfants_du_chapitre_triees_numero($un_chapitre->id))): ?>
-            "1" : "1 - Déplacer ici en premièr episode",
+            "1" : "1 - Déplacer ici en premier episode",
         <?php else: ?>
             <?php $trouvee = false; ?>
             <?php foreach (episodes_enfants_du_chapitre_triees_numero($un_chapitre->id) as $un_episode): ?>

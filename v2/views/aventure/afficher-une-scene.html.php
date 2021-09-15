@@ -2,7 +2,7 @@
 <article id="scn<?= $scene->numero; ?>" class="mb-5">
     <!-- IMAGE -->
     <div class="fond-mask">
-        <img src="<?php echo $scene->image; ?>" class="card-img-top img-fluid" alt="<?php echo $scene->titre; ?>">
+        <img src="<?= url_img($scene->image); ?>" class="card-img-top img-fluid" alt="<?php echo $scene->titre; ?>">
     </div>
 
     <div class="card-body">
@@ -53,5 +53,7 @@
             <div class="col py-0 px-2"><hr></div>
         </div>
     </div>
+
+    <?php if(admin_connecte()): $numero = $scene->numero+1; ?><?php include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?><?php endif; ?>
     
 </article>

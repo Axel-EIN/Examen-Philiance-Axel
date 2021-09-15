@@ -1,6 +1,6 @@
 <?php
 
-if(!admin_connecte()) redirection('403');
+if(!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
 include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
@@ -30,6 +30,7 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
     <!-- AFFICHAGE ADMIN : LISTE SCENES -->
     <section id="scenes" class="row my-5 py-2">
+
         <div class="col-8">
             <h3 class="py-3">Scenes :</h3>
         </div>
@@ -62,7 +63,7 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
                         <td class="p-2 border text-center"><a href="<?= route('admin-supprimer-scene-handler&id=' . $une_scene->id, 'administration'); ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer la scène : <?= $une_scene->titre ?> ?')"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
                     <tr class="border">
-                        <td class="col-3 border p-2 bg-light" rowspan="2" colspan="3"><img src="<?= $une_scene->image; ?>" class="img-fluid" /></td>
+                        <td class="col-3 border p-2 bg-light" rowspan="2" colspan="3"><img src="<?= url_img($une_scene->image); ?>" class="img-fluid" /></td>
                         <td class="p-2 border" colspan="7"><small><?= $une_scene->texte; ?></small></td>
                     </tr>
                     <tr class="border">
@@ -76,38 +77,45 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
     <!-- AFFICHAGE ADMIN : LISTE EPISODES -->
     <section class="row my-5 py-2">
+
         <div class="col-8">
             <h3 class="py-3">Episodes :</h3>
         </div>
         <div class="col-4 text-right my-3">
-            <a href="admin_creer_episode.php"><button class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer un nouvel Episode</button></a>
+            <a href="<?= route('admin-creer-episode'); ?>">
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer un nouvel Episode
+                </button>
+            </a>
         </div>
         <div class="col-12">
             <table class="w-100">
                 <tr class="bg-dark text-light">
+                    <td class="p-2 text-center">Image</td>
+                    <td class="p-2 text-center">ID</td>
                     <td class="p-2 text-center">N°</td>
-                    <td class="p-2"></td>
+                    <td class="p-2 text-center">du Chapitre :</td>
                     <td class="p-2">Titre</td>
-                    <td class="p-2">Image</td>
                     <td class="p-2"></td>
                     <td class="p-2"></td>
                     <td class="p-2"></td>
                 </tr>
-                <tr><td class="p-2" colspan="7"></td></tr>
+                <tr><td class="p-2" colspan="8"></td></tr>
                 <?php foreach ($episodes as $un_episode): ?>
                     <tr>
+                        <td class="p-2 border bg-light text-center" rowspan="2">
+                            <img src="<?= url_img($un_episode->image); ?>" class="img-fluid" style="max-height: 240px;" />
+                        </td>
+                        <td class="p-2 border text-center"><strong><?= $un_episode->id; ?></strong></td>
                         <td class="p-2 border text-center"><strong><?= $un_episode->numero; ?></strong></td>
-                        <td class="p-2 border text-center">Saison <?= $un_episode->id_saison; ?></td>
+                        <td class="p-2 border text-center">Chapitre &nbsp;<?= $un_episode->id_chapitre; ?></td>
                         <td class="p-2 border"><strong><?= $un_episode->titre; ?></strong></td>
-                        
-                        <td class="p-2 border"><small><?= $un_episode->image; ?></small></td>
                         <td class="p-2 border text-center"><a href="<?= route('episode&id=' . $un_episode->id . '#tete-lecture'); ?>"><i class="fas fa-eye"></i></a></td>
                         <td class="p-2 border text-center"><a href="<?= route('admin-modifier-episode&id=' . $un_episode->id); ?>"><i class="fas fa-edit"></i></a></td>
                         <td class="p-2 border text-center"><a href="<?= route('supprimer?id=' . $un_episode->id); ?>"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
                     <tr>
-                        <td class="p-2 border bg-light text-center" colspan="2"><strong>Résumé :</strong></td>
-                        <td class="p-2 border" colspan="5"><small><?= $un_episode->resume; ?></small></td>
+                        <td class="p-2 border" colspan="7"><strong>Résumé :</strong><br/><small><?= $un_episode->resume; ?></small></td>
                     </tr>
                     <tr><td class="p-2" colspan="7"></td></tr>
                 <?php endforeach; ?>
@@ -142,7 +150,7 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
                         <td class="p-2 border text-center"><strong><?= $un_chapitre->numero; ?></strong></td>
                         <td class="p-2 border text-center">Saison <?= $un_chapitre->id_saison; ?></td>
                         <td class="p-2 border"><strong><?= $un_chapitre->titre; ?></strong></td>
-                        <td class="p-2 border"><small><?= $un_chapitre->image; ?></small></td>
+                        <td class="p-2 border"><?= url_img($un_chapitre->image); ?></td>
                         <td class="p-2 border text-center"><?= $un_chapitre->couleur; ?></td>
                         <td class="p-2 border"><?= $un_chapitre->id_mj; ?></td>
                         <td class="p-2 border text-center"><a href="<?= route('aventure&saison=' . $un_chapitre->id_saison . '#ch' . $un_chapitre->numero . '-header'); ?>"><i class="fas fa-eye"></i></a></td>
@@ -182,7 +190,7 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
                     <tr>
                         <td class="p-2 border text-center"><?= $une_saison->numero; ?></td>
                         <td class="p-2 border"><strong><?= $une_saison->titre; ?></strong></td>
-                        <td class="p-2 border"><?= $une_saison->image; ?></td>
+                        <td class="p-2 border"><?= url_img($une_saison->image); ?></td>
                         <td class="p-2 border text-center"><?= $une_saison->couleur; ?></td>
                         <td class="p-2 border text-center"><a href="<?= route('aventure&saison=' . $une_saison->id); ?>"><i class="fas fa-eye"></i></a></td>
                         <td class="p-2 border text-center"><a href="<?= route('admin_modifier_saison&id=' . $une_saison->id); ?>"><i class="fas fa-edit"></i></a></td>

@@ -13,12 +13,11 @@ function se_connecter_handler() {
 
         $utilisateur_trouve = Utilisateur::retrieveByField('identifiant', $_POST['identifiant'], SimpleOrm::FETCH_ONE);
         if ($utilisateur_trouve === null) { // Si la recherche null on renvoit vers formulaire avec une alerte
-            redirection('se-connecter', 'Cette utilisateur n\'existe pas');
+            redirection('se-connecter', 'Cette utilisateur n\'existe pas', 'warning');
         } else {
-            // Sinon on compare le mot de passe hashé saisi avec celui en BDD
-            // if (!password_verify($_POST['mdp'], $utilisateur_trouve->mdp)) // Si MDP match pas on renvoie formulaire avec alerte
-            if ($_POST['mdp'] !== $utilisateur_trouve->mdp) // Si MDP match pas on renvoie formulaire avec alerte
-                redirection('se-connecter', 'Mot de passe incorrect! Veuillez réessayer.');
+            // Sinon on compare le mot de passe saisi avec celui hashé en BDD
+            if (!password_verify($_POST['mdp'], $utilisateur_trouve->mdp))
+                redirection('se-connecter', 'Mot de passe incorrect! Veuillez réessayer.', 'danger');
             else { // Si c'est bon on crée la session puis le cookie
                 $_SESSION['id'] = $utilisateur_trouve->id;
                 $_SESSION['identifiant'] = $utilisateur_trouve->identifiant;
@@ -37,7 +36,7 @@ function se_connecter_handler() {
             }
         }
     } else // Erreur : je renvoie sur le formulaire de connexion avec un message d'alerte
-        redirection('se-connecter', 'Le formulaire est invalide!');
+        redirection('se-connecter', 'Le formulaire est invalide!', 'danger');
 }
 
 function se_deconnecter() {

@@ -10,7 +10,7 @@
         <div class="navbar navbar-expand-lg navbar-dark bg-dark bg-primary">
             <div id="logo">
                 <a class="navbar-brand" href="<?= route('accueil'); ?>">
-                    <img src="<?= url_img('/logo-axl.png'); ?>" alt="Logo" class="img-fluid" />
+                    <img src="<?= url_img('logo-axl.png'); ?>" alt="Logo" class="img-fluid" />
                 </a>
             </div>
             <button class="navbar-toggler btn-primary" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -65,11 +65,11 @@
         </div><br/>
 
         <label for="image">Image :</label>
-        <img class="img-fluid" src="<?= $scene_trouve->image ?>" alt="Image de la scène <?= $scene_trouve->numero; ?>" />
+        <img class="img-fluid" src="<?= url_img($scene_trouve->image); ?>" alt="Image de la scène <?= $scene_trouve->numero; ?>" />
         <div class="form-group">
           <label for="image"></label>
           <input type="file" class="form-control-file" name="image" id="image" aria-describedby="fileHelpId">
-          <small id="fileHelpId" class="form-text text-muted">Taille conseillé : 1280x720 minimum, rapport 16/9</small>
+          <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
         </div><br/>
 
         <label for="temps">Temps dans le jeu :</label>

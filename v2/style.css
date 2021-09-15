@@ -1,18 +1,13 @@
-@font-face {
-    font-family: "Shogun";
-    src: url("assets/fonts/shoguns-clan.ttf");
-}
-
-/* WTF */
-
 html, body {
     margin: 0;
     height: 100%;
 }
 
 
-/* NAV */
-/* ------------------------------------ */
+
+/* -----------------------------------------  */
+/* NAVIGATION                                 */
+/* ------------------------------------------ */
 
 .admin { color: #fff; }
 .admin:hover { color: #ea2027; }
@@ -31,8 +26,15 @@ nav button{
 }
 
 
-/* COMMUN HEADERS */
-/* ------------------------------------ */
+
+/* -----------------------------------------  */
+/* ALL HEADERS                                */
+/* ------------------------------------------ */
+
+@font-face {
+    font-family: "Shogun";
+    src: url("assets/fonts/shoguns-clan.ttf");
+}
 
 .header{
     color: #fff;
@@ -75,9 +77,6 @@ nav button{
         font-size: 0.5em;
     }
 }
-
-/* COMMUN HEADERS TAILLE TEXTE STYLISE  */
-/* ------------------------------------ */
 
 .petit{
     font-family: "Shogun";
@@ -132,8 +131,10 @@ nav button{
 }
 
 
-/* CONTENU SPECIFIQUE HEADERS CHAPITRE & HEADER PAGE-EPISODE */
-/* ------------------------------------ */
+
+/* -----------------------------------------  */
+/* CONTENU HEADER CHAPITRE & HEADER EPISODE   */
+/* ------------------------------------------ */
 
 .chapitre-fond p.lead, .episode-fond p.lead{
     margin-top: 8rem;
@@ -144,8 +145,10 @@ nav button{
 }
 
 
-/* BLOC/FOND HEADER PRINCIPAL */
-/* -------------------------------------------------------- */
+
+/* -----------------------------------  */
+/* FOND HEADER PRINCIPAL                */
+/* ------------------------------------ */
 
 .header-fond{   
     min-height: 60vh;
@@ -162,8 +165,10 @@ nav button{
 }
 
 
-/* BLOC/FOND SECTIONS CHAPITRE & PAGE-EPISODE */
-/* ------------------------------------------------------------ */
+
+/* -----------------------------------  */
+/* FOND IMAGE DU CHAPITRE               */
+/* ------------------------------------ */
 
 .chapitre-fond, .episode-fond{
     min-height: 60vh;
@@ -196,7 +201,10 @@ nav button{
     }
 }
 
-/* FONDS DES PAGES GRISES */
+
+
+/* -----------------------------------  */
+/* FOND PAGE GRISES                     */
 /* ------------------------------------ */
 
 #liste-ch {
@@ -204,13 +212,16 @@ nav button{
 }
 
 
-/* CARTES */
+
+/* -----------------------------------  */
+/* CARD                                 */
 /* ------------------------------------ */
 
 .card.liste{
     background-color: #fff;
     /* min-width: 25%; */
-    min-height: 400px;
+    min-height: 380px;
+    max-height: 380px
     /* max-height: 400px; */
     /* margin: 8px;
     border-radius: 4px;
@@ -226,7 +237,17 @@ nav button{
 }
 
 .card-body{
-    padding: 1rem;
+    padding: 0.75rem;
+}
+
+.card .numero{
+    color: white;
+    font-size:3rem;
+    font-weight: bold;
+    position: absolute;
+    left: 16px;
+    top: 54px;
+    z-index: 100
 }
 
 /* .episode-fond .card-body{
@@ -241,6 +262,7 @@ nav button{
         padding-left: 4rem;
         padding-right: 4rem;
         padding-top: 3rem;
+        padding-bottom: 1rem;
     }
 }
 
@@ -322,7 +344,10 @@ nav button{
     }
 }
 
-/* BOUTON */
+
+
+/* -----------------------------------  */
+/* BOUTON                               */
 /* ------------------------------------ */
 
 .btn-saison{
@@ -356,7 +381,10 @@ nav button{
     left: 0.5rem;
 }
 
-/* DIVIDER */
+
+
+/* -----------------------------------  */
+/* DIVIDER                              */
 /* ------------------------------------ */
 
 .division{
@@ -386,8 +414,21 @@ nav button{
     background-color: rgb(40, 0, 0);
 }
 
-/* ----------------------------------- */
-/* FOOTER */
+
+
+/* -----------------------------------  */
+/* FORMULAIRE                           */
+/* ------------------------------------ */
+
+fieldset{
+    border: 1px solid #ccc;
+    margin-bottom: 8px;
+}
+
+
+
+/* -----------------------------------  */
+/* FOOTER                               */
 /* ------------------------------------ */
 
 .bg-footer1{
@@ -411,14 +452,4 @@ nav button{
 .footer-link:hover{
     color: white;
     text-decoration: underline;
-}
-
-
-/* ----------------------------------- */
-/* FORM */
-/* ------------------------------------ */
-
-fieldset{
-    border: 1px solid #ccc;
-    margin-bottom: 8px;
 }

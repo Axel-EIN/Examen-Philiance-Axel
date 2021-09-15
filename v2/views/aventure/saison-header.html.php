@@ -1,10 +1,14 @@
 <!-- HEADER SAISON -->
 <header id="header-s<?= $saison_trouve->numero; ?>" class="header-fond py-md-4 py-sm-2"
-style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<?= $saison_trouve->image; ?>');">
+style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<?= url_img($saison_trouve->image); ?>');">
     <div class="container">
+
+        <?php include DOSSIER_VIEWS . '/parts/alerte.php'; ?>
+
         <div class="header">
             <h1 class="display-5 text-center">
                 <div class="d-flex w-100 justify-content-center">
+
                     <!-- BOUTON SAISON PRECEDENTE -->
                     <div class="text-center" style="width: 64px">
                         <?php if (!empty($saison_precedente)) : ?>
@@ -15,8 +19,10 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
                             </a>
                         <?php endif; ?>
                     </div>
+
                     <!-- SAISON EN COURS -->
                     <div>SAISON <?= $saison_trouve->numero ?></div>
+
                     <!-- BOUTON SAISON SUIVANTE -->
                     <div class="text-center" style="width: 64px">
                         <?php if (!empty($saison_suivante)) : ?>

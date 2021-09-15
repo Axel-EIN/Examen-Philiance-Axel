@@ -1,8 +1,8 @@
 <?php
 
-function url_img($chemin) {
+function url_img($chemin = '') {
     // Renvoi le chemin des URL pour les images
-    return URL_DU_SITE . '/assets/img' . $chemin;
+    return URL_DU_SITE . '/assets/img/' . $chemin;
 }
 
 function route(string $nom_route, string $provenance = ''): string {
@@ -13,13 +13,17 @@ function route(string $nom_route, string $provenance = ''): string {
 	return URL_DU_SITE . '/index.php?page=' . $nom_route . $provenance;
 }
 
-function redirection(string $route_de_destination, string $alerte = '', string $ancre = '') {
+function redirection(string $route_de_destination, string $alerte = '', string $type = '', string $ancre = '', string $cible = '') {
+    // Cette fonction redirige vers une nouvelle route. On peut ajouter :
+    // - une string pour les messages d'alertes et leur type bootstrap (Success, Warning, Primary, Danger...)
+    // - une string pour ajouter un ancre à la fin de l'URL
+    // - une cible au cas où on a besoin d'ajouter un paramètre pour cibler quelque chose
 
-    // si un message d'alerte existe, alors on construit le paramètre d'URL
-    if (!empty($alerte)) $alerte = '&alerte=' . $alerte;
+    $alerte = '&alerte=' . $alerte;
+    $type = '&type=' . $type;
+    $cible = '&cible=' . $cible;
 
-    // On change la location du header ce qui recharge la page avec la route spécifié
-    header('location: ' . route($route_de_destination) . $alerte . $ancre);
+    header('location: ' . route($route_de_destination) . $alerte . $type . $cible . $ancre);
     die();
 }
 
@@ -82,19 +86,19 @@ function uploader_image(int $saison, int $chapitre, int $episode, int $scene, st
     // GESTION du NOM du fichier et son EMPLACEMENT de stockage
     if ($scene != 0) {
         $image_nouveau_nom = 's' . $saison . '-ch' . $chapitre . '-ep' . $episode . '-scene' . $scene . '-' . uniqid() . '.' . $image_extension;
-        $image_chemin = DOSSIER_IMG . '/' . 'scenes/' . $image_nouveau_nom;
+        $image_chemin = DIR_IMG . '/' . 'scenes/' . $image_nouveau_nom;
         $dossier_categorie = 'scenes/';
     } elseif ($episode != 0) {
         $image_nouveau_nom = 's' . $saison . '-ch' . $chapitre . '-ep' . $episode . '-' . uniqid() . '.' . $image_extension;
-        $image_chemin = DOSSIER_IMG . '/' . 'episodes/' . $image_nouveau_nom;
+        $image_chemin = DIR_IMG . '/' . 'episodes/' . $image_nouveau_nom;
         $dossier_categorie = 'episodes/';
     } elseif ($chapitre != 0) {
         $image_nouveau_nom = 's' . $saison . '-ch' . $chapitre . '-' . uniqid() . '.' . $image_extension;
-        $image_chemin = DOSSIER_IMG . '/' . 'chapitres/' . $image_nouveau_nom;
+        $image_chemin = DIR_IMG . '/' . 'chapitres/' . $image_nouveau_nom;
         $dossier_categorie = 'chapitres/';
     } elseif ($saison != 0) {
         $image_nouveau_nom = 's' . $saison . '-' . uniqid() . '.' . $image_extension;
-        $image_chemin = DOSSIER_IMG . '/' . 'saisons/' . $image_nouveau_nom;
+        $image_chemin = DIR_IMG . '/' . 'saisons/' . $image_nouveau_nom;
         $dossier_categorie = 'saisons/';
     }
 
@@ -105,7 +109,7 @@ function uploader_image(int $saison, int $chapitre, int $episode, int $scene, st
         supprimer_image($ancienne_image, $dossier_categorie);
 
     // CONSTRUCTION de l'URL du nouvel fichier image
-    $image_nouvel_url = URL_DU_SITE . '/assets/img/' . $dossier_categorie . $image_nouveau_nom;
+    $image_nouvel_url = $dossier_categorie . $image_nouveau_nom;
     return $image_nouvel_url;
 }
 
@@ -114,7 +118,7 @@ function supprimer_image(string $url_image, string $dossier_categorie): bool {
 
     $nom_fichier_a_supprimer = basename($url_image);
     
-    $chemin_du_fichier_a_supprimer = DOSSIER_IMG . '/' . $dossier_categorie . $nom_fichier_a_supprimer;
+    $chemin_du_fichier_a_supprimer = DIR_IMG . '/' . $dossier_categorie . $nom_fichier_a_supprimer;
     if (file_exists($chemin_du_fichier_a_supprimer)) unlink($chemin_du_fichier_a_supprimer);
     else return false;
 

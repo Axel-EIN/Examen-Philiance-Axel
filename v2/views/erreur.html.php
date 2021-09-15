@@ -6,4 +6,7 @@
     <p><?= $message_erreur; ?></p>
 </div>
 
+<?php if(!utilisateur_connecte()): ?>
+    <?php include_once DOSSIER_VIEWS . '/parts/modal.html.php'; ?>
+<?php endif; ?>
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>
