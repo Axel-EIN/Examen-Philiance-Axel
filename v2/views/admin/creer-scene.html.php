@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-12">
             <h1 class="text-center"><?= $h1; ?></h1>
-            <?php if(!empty($episode_parent)): ?>
+
+            <?php if(!empty($episode_parent)): ?> <!-- GESTION ID EPISODE PARENT FOURNI -->
                 <h4 class="text-center">
                     <small>pour </small>
                     <a href="<?= route('episode&id=' . $episode_parent->id, "#tete-lecture"); ?>">
@@ -12,19 +13,16 @@
                     </a>
                 </h4>
             <?php endif; ?>
+
         </div>
     </div>
 </header>
 
 <main class="container">
 
-<?php
-    if(!empty($_GET['id_episode']) && is_numeric($_GET['id_episode']) && $_GET['id_episode'] > 0) $get_episode = '&id_episode=' . $_GET['id_episode'];
-    else $get_episode = ''; ?>
-
     <form class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-scene-handler' . $get_episode); ?>" enctype="multipart/form-data">
 
-        <label for="titre">Titre :</label>
+        <label for="titre">Titre</label>
         <input class="form-control" type="text" name="titre" id="titre"><br/>
 
         <div class="form-row">
@@ -52,8 +50,9 @@
                     </select>
                 </div>
             <?php endif; ?>
-        </div><br/>
-        
+
+        </div>
+        <br/>
         
         <div class="form-row">
 
@@ -67,8 +66,9 @@
             <?php endif; ?>
 
             <div class="col">
-                <label for="scene">Choisir la position de la Scène : (insérer devant)</label>
+                <label for="scene">Choisir la position de la Scène</label>
                 <select class="form-control" id="scene" name="numero" required>
+
                     <?php if(empty($episode_parent) || empty($_GET['numero'])): ?>
                         <option value="" disabled></option>
                     <?php else: ?>
@@ -86,18 +86,19 @@
                             <option value="1">1 - Insérer en premier</option>
                         <?php endif; ?>
                     <?php endif; ?>
+                    
                 </select>
             </div>
 
         </div><br/>
         
-        <label for="temps">Temps dans le jeu :</label>
+        <label for="temps">Temps dans le jeu</label>
         <input class="form-control" type="text" name="temps" id="temps"><br/>
 
-        <label for="texte">Texte :</label>
+        <label for="texte">Texte</label>
         <textarea style="resize: none;" class="form-control" name="texte" id="texte" cols="30" rows="7"></textarea><br/>
 
-        <label for="image">Image : (facultative)</label>
+        <label for="image">Image (facultative)</label>
         <div class="form-group">
           <label for="image"></label>
           <input type="file" class="form-control-file" name="image" id="image" aria-describedby="fileHelpId">

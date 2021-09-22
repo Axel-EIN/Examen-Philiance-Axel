@@ -25,7 +25,7 @@
 
     <form class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-modifier-episode-handler&id=' . $_GET['id']); ?>" enctype="multipart/form-data">
 
-        <label for="titre">Titre :</label>
+        <label for="titre">Titre</label>
         <input class="form-control" type="text" name="titre" id="titre" value="<?= $episode_trouve->titre; ?>"><br/>
 
         <div class="form-row">
@@ -66,7 +66,7 @@
             </div>
         </div><br/>
 
-        <label for="image">Image :</label>
+        <label for="image">Image</label>
         <img class="img-fluid" src="<?= url_img($episode_trouve->image); ?>" alt="Image de la scène <?= $episode_trouve->numero; ?>" />
         <div class="form-group">
           <label for="image"></label>

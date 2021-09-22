@@ -17,14 +17,14 @@ $connexion_mysqli->set_charset('utf8'); // Force la configuration de MySLI en UT
 session_start();
 reconnexion_via_cookie();
 
-if (!empty($_GET['page'])) { // VERIF => paramètre URL GET 'page' pour pouvoir router
+if (!empty($_GET['page'])) {
+    // VERIF => paramètre URL GET 'page' pour pouvoir router
 
     switch ($_GET['page']) {
         case 'home':
         case 'index':
         case 'accueil':
         case 'saison':
-
 
         /**
          * AVENTURE
@@ -38,15 +38,6 @@ if (!empty($_GET['page'])) { // VERIF => paramètre URL GET 'page' pour pouvoir 
             require_once DOSSIER_CONTROLLERS . '/aventure-controller.php';
             afficher_episode();
             break;
-
-        // case 'empire':
-        //     include_once DOSSIER_VIEWS . '/empire.html.php';
-        //     break;
-
-        // case 'regles':
-        //     include_once DOSSIER_VIEWS . '/regles.html.php';
-        //     break;
-
 
         /**
          * CONNEXION
@@ -67,66 +58,90 @@ if (!empty($_GET['page'])) { // VERIF => paramètre URL GET 'page' pour pouvoir 
             break;
 
 
-        /**
-         * ADMINISTRATION
-         */
-        case 'administration':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
-            afficher_panneau_administration();
-            break;
+        // /**
+        //  * ADMINISTRATION
+        //  */
+        // case 'administration':
+        //     require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+        //     afficher_panneau_administration();
+        //     break;
 
         // ADMIN SCENES
 
+        case 'administration':
+        // case 'administration-scenes':
+            require_once DOSSIER_CONTROLLERS . '/admin-scenes-controller.php';
+            afficher_panneau_administration_scenes();
+            break;
+
         case 'admin-creer-scene':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-scenes-controller.php';
             admin_creer_scene();
             break;
 
         case 'admin-creer-scene-handler':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-scenes-controller.php';
             admin_creer_scene_handler();
             break;
 
         case 'admin-modifier-scene':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-scenes-controller.php';
             admin_modifier_scene();
             break;
 
         case 'admin-modifier-scene-handler':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-scenes-controller.php';
             admin_modifier_scene_handler();
             break;
 
         case 'admin-supprimer-scene-handler':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-scenes-controller.php';
             admin_supprimer_scene_handler();
             break;
 
-        // ADMIN EPISODE
+        // ADMIN EPISODES
+
+        case 'administration-episodes':
+            require_once DOSSIER_CONTROLLERS . '/admin-episodes-controller.php';
+            afficher_panneau_administration_episodes();
+            break;
 
         case 'admin-creer-episode':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-episodes-controller.php';
             admin_creer_episode();
             break;
 
         case 'admin-creer-episode-handler':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-episodes-controller.php';
             admin_creer_episode_handler();
             break;
 
         case 'admin-modifier-episode':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-episodes-controller.php';
             admin_modifier_episode();
             break;
 
         case 'admin-modifier-episode-handler':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-episodes-controller.php';
             admin_modifier_episode_handler();
             break;
 
         case 'admin-supprimer-episode-handler':
-            require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
+            require_once DOSSIER_CONTROLLERS . '/admin-episodes-controller.php';
             admin_supprimer_episode_handler();
+            break;
+
+
+        // ADMIN CHAPITRES
+        case 'administration-chapitres':
+            require_once DOSSIER_CONTROLLERS . '/admin-chapitres-controller.php';
+            afficher_panneau_administration_chapitres();
+            break;
+
+        // ADMIN SAISONS
+        case 'administration-chapitres':
+            require_once DOSSIER_CONTROLLERS . '/admin-saisons-controller.php';
+            afficher_panneau_administration_saisons();
             break;
 
 

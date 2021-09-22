@@ -8,7 +8,7 @@
 
   <div class="form-group">
     <label for="mdp" class="col-form-label">Mot de passe:</label>
-    <input type="mdp" class="form-control" id="mdp" name="mdp" required placeholder="Entrez votre mot de passe...">
+    <input type="password" class="form-control" id="mdp" name="mdp" required placeholder="Entrez votre mot de passe...">
   </div>
 
   <div class="form-group text-center">

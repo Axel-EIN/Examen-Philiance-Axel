@@ -4,18 +4,35 @@
     <div class="row">
         <div class="col-12">
             <h1 class="text-center"><?= $h1; ?></h1>
+
+            <?php include_once DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
+
+            <!-- TITRE SI ID CHAPITRE PARENT FOURNI -->
+            <?php if(!empty($chapitre_parent)): ?> 
+                <h4 class="text-center">
+                    <small>pour </small>
+                    <a href="<?= route('aventure&saison=' . $saison_parent->numero
+                                        . '&chapitre=' . $chapitre_parent->numero
+                                        . '#tete-lecture-ch' . $chapitre_parent->numero); ?>">
+                        <?= $chapitre_parent->titre ?>&nbsp;<i class="fas fa-eye"></i>
+                    </a>
+                </h4>
+            <?php endif; ?>
+
         </div>
     </div>
 </header>
 
 <main class="container">
 
-    <form class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-episode-handler'); ?>" enctype="multipart/form-data">
+    <form class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-episode-handler' . $get_chapitre); ?>" enctype="multipart/form-data">
 
-        <label for="titre">Titre :</label>
+        <label for="titre">Titre</label>
         <input class="form-control" type="text" name="titre" id="titre"><br/>
 
         <div class="form-row">
+
+            <?php if(empty($saison_parent)): ?> <!-- S'AFFICHE SEULEMENT SI SAISON NON FOURNI -->
             <div class="col-6">
                 <label for="saison">Choisir la saison à rattacher</label>
                 <select class="form-control" id="saison" required onchange="chapitreChange(this);">
@@ -27,26 +44,50 @@
 
                 </select>
             </div>
+            <?php endif; ?>
+
+            <?php if(empty($chapitre_parent)): ?> <!-- S'AFFICHE SEULEMENT SI CHAPITRE NON FOURNI -->
             <div class="col-6">
                 <label for="chapitre">Choisir le chapitre à rattacher</label>
                 <select class="form-control" id="chapitre" name="id_chapitre" required onchange="episodeChange(this);">
                     <option value="" disabled></option>
                 </select>
             </div>
-        </div><br/>
+            <?php endif; ?>
+
+        </div>
+        <br/>
+
         <div class="form-row">
             <div class="col-6">
-                <label for="scene">Choisir la position de l'Episode : (insérer devant)</label>
+                <label for="scene">Choisir la position de l'Episode</label>
                 <select class="form-control" id="episode" name="numero" required>
-                    <option value="" disabled></option>
+
+                    <?php if(empty($chapitre_parent)): ?>
+                        <option value="" disabled></option>
+                    <?php else: ?>
+                        <?php if($episodes_enfants): ?>
+                            <?php foreach($episodes_enfants as $un_episode): ?>
+                                <option value="<?= $un_episode->numero ?>">
+                                    <?= $un_episode->numero; ?> - insérer devant <?= $un_episode->titre ?>
+                                </option>
+                            <?php endforeach; ?>
+                                <option value="<?= $un_episode->numero+1; ?>" selected>
+                                    <?= $un_episode->numero+1; ?> - insérer en dernier
+                                </option>
+                        <?php else: ?>
+                            <option value="1" selected>1 - Insérer en premier</option>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
                 </select>
             </div>
         </div><br/>
 
-        <label for="resume">Très bref résumé / Synopsis (2 lignes) :</label>
+        <label for="resume">Bref résumé / Synopsis (2 lignes)</label>
         <textarea style="resize: none;" class="form-control" maxlength="200" name="resume" id="resume" cols="30" rows="2"></textarea><br/>
 
-        <label for="image">Image : (facultative)</label>
+        <label for="image">Image (facultative)</label>
         <div class="form-group">
           <label for="image"></label>
           <input type="file" class="form-control-file" name="image" id="image" aria-describedby="fileHelpId">

@@ -12,7 +12,7 @@
 
     <form class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-modifier-scene-handler&id=' . $_GET['id']); ?>" enctype="multipart/form-data">
 
-        <label for="titre">Titre :</label>
+        <label for="titre">Titre</label>
         <input class="form-control" type="text" name="titre" id="titre" value="<?= $scene_trouve->titre; ?>"><br/>
 
         <div class="form-row">
@@ -52,7 +52,7 @@
                 </select>
             </div>
             <div class="col-6">
-                <label for="scene">Choisir la Position de la Scène :</label>
+                <label for="scene">Choisir la Position de la Scène</label>
                 <select class="form-control" id="scene" name="numero" required>
                     <option value="" disabled>Choisir la position de la Scène...</option>
 
@@ -64,7 +64,7 @@
             </div>
         </div><br/>
 
-        <label for="image">Image :</label>
+        <label for="image">Image</label>
         <img class="img-fluid" src="<?= url_img($scene_trouve->image); ?>" alt="Image de la scène <?= $scene_trouve->numero; ?>" />
         <div class="form-group">
           <label for="image"></label>
@@ -72,10 +72,10 @@
           <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
         </div><br/>
 
-        <label for="temps">Temps dans le jeu :</label>
+        <label for="temps">Temps dans le jeu</label>
         <input class="form-control" type="text" name="temps" id="temps" value="<?= $scene_trouve->temps; ?>"><br/>
 
-        <label for="texte">Texte :</label>
+        <label for="texte">Texte</label>
         <textarea style="resize: none;" class="form-control" name="texte" id="texte" cols="30" rows="11"><?= $scene_trouve->texte; ?></textarea><br/>
         
         <input class="form-control btn btn-primary" type="submit" value="Modifier" name="modifier" />

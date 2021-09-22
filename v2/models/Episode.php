@@ -31,8 +31,12 @@ function episodes_enfants_du_chapitre($chapitre_id): array {
 }
 
 function episodes_enfants_du_chapitre_triees_numero($chapitre_id): array {
+	// Renvoi un tableau d'objet des episodes enfants d'un chapitre triés par numero
 
-	$episodes_enfants = Episode::retrieveByField('id_chapitre', $chapitre_id, SimpleOrm::FETCH_MANY, SimpleOrm::options('numero', SimpleOrm::ORDER_ASC));
+	$episodes_enfants = Episode::retrieveByField('id_chapitre',
+												$chapitre_id,
+												SimpleOrm::FETCH_MANY,
+												SimpleOrm::options('numero',SimpleOrm::ORDER_ASC));
 	if ($episodes_enfants === null)
 		redirection('500', 'Ce Chapitre n\' a pas encore d\'episodes!');
 

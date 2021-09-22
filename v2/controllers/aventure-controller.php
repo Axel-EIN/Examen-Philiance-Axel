@@ -4,36 +4,24 @@ require_once DOSSIER_MODELS . '/Chapitre.php';
 require_once DOSSIER_MODELS . '/Episode.php';
 require_once DOSSIER_MODELS . '/Scene.php';
 
-/**
- *  AVENTURE HOME
- */
-
 function afficher_aventure() {
     // Ce contrôlleur construit toute la page Aventure
 
-    // Récupération des données
-    $saisons = Saison::all();
-    $numero_saison_courante = 1;
-
+    // VERIFICATION des paramètres d'URL pour spécifier la saison
     if (!empty($_GET['saison']) && is_numeric($_GET['saison']) && $_GET['saison'] > 0)
         $numero_saison_courante = $_GET['saison'];
+    else
+        $numero_saison_courante = 1;
 
+    // RECUPERATION des données pour la saison
     $saison_trouve = Saison::retrieveByField('numero', $numero_saison_courante, SimpleOrm::FETCH_ONE);
     if ($saison_trouve == null) redirection('404', 'Désolé! Cette Saison n\'existe pas!');
 
-    // AFFICHAGE
-    $html_title = $saison_trouve->titre . ' | ' . 'Saison ' . $saison_trouve->numero . ' d\'une ' . NOM_DU_SITE;
-    include_once DOSSIER_VIEWS . '/aventure/aventure.html.php';
-}
+    // RECUPERATION de toutes les saisons
+    $saisons = Saison::all();
 
-function afficher_saison_header(object $saison_trouve, array $saisons) {
-    // Ce contrôlleur affiche la partie header d'une saison
-
-    // On trouve la position de la Saison dans le tableau des Saisons
+    // GESTION des Saisons précédentes ou Suivante
     $position_cle_saison = array_search($saison_trouve, $saisons);
-
-    $saison_precedente = '';
-    $saison_suivante = '';
 
     if (!empty($saisons[$position_cle_saison-1]))
         $saison_precedente = $saisons[$position_cle_saison-1];
@@ -41,37 +29,13 @@ function afficher_saison_header(object $saison_trouve, array $saisons) {
     if (!empty($saisons[$position_cle_saison+1]))
         $saison_suivante = $saisons[$position_cle_saison+1];
 
-    // AFFICHAGE
-    include_once DOSSIER_VIEWS . '/aventure/saison-header.html.php'; 
-}
-
-function afficher_liste_chapitres(int $saison_id) {
-    // Ce contrôlleur affiche tout les chapitres d'une saison
-
-    $chapitres = Chapitre::retrieveByField('id_saison', $saison_id, SimpleOrm::FETCH_MANY);
-
-    if ($chapitres == null)
-        $chapitres_dispo = false;
-    else
-        include_once DOSSIER_VIEWS . '/aventure/afficher-liste-chapitres.html.php'; // AFFICHAGE
-}
-
-function afficher_un_chapitre(object $chapitre) {
-    // Ce controlleur afficher la partie HTML d'une section CHAPITRE
-
-    $episodes = Episode::retrieveByField('id_chapitre', $chapitre->id, SimpleOrm::FETCH_MANY, SimpleOrm::options('numero'));
-    if ($episodes == null) $episodes_dispo = false;
-
-    $r = 0; $g = 0; $b = 0;
-    couleur_hexa_plus_sombre_rgb($chapitre->couleur, $r, $g, $b, 30);
+    // RECUPERATION des données pour les Chapitres de la Saison
+    $chapitres = Chapitre::retrieveByField('id_saison', $saison_trouve->id, SimpleOrm::FETCH_MANY);
 
     // AFFICHAGE
-    include DOSSIER_VIEWS . '/aventure/afficher-un-chapitre.html.php'; 
+    $html_title = $saison_trouve->titre . ' (Saison ' . $saison_trouve->numero . ') | ' . NOM_DU_SITE;
+    include_once DOSSIER_VIEWS . '/aventure/aventure.html.php';
 }
-
-/**
- *  LIRE UN EPISODE
- */
 
 function afficher_episode() {
 

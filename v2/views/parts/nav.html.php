@@ -13,11 +13,12 @@
                     <img src="<?= url_img('logo-axl.png'); ?>" alt="Logo" class="img-fluid" />
                 </a>
             </div>
-            <button class="navbar-toggler btn-primary" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler btn-primary" type="button" data-toggle="collapse"
+                    data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="d-flex justify-content-between w-100">
+                <div class="d-flex justify-content-between align-items-center w-100">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
                             <a class="nav-link" href="<?= route('aventure'); ?>">L'AVENTURE</a>
@@ -35,7 +36,12 @@
                     <?php if (!utilisateur_connecte()): ?>
                         <button type="button" class="btn btn-primary nav-item" data-toggle="modal" data-target="#connexion">Se Connecter</button>
                     <?php else: ?>
-                        <a href="<?= route('se-deconnecter'); ?>"><button type="button" class="btn btn-primary nav-item">Se Deconnecter</button></a>
+                        <div class="row">
+                            <div class="text-right text-light">Bon retour,<br/><strong><?= $_SESSION['prenom']; ?></strong><br/>
+                                <a href="<?= route('se-deconnecter'); ?>"><button type="button" class="btn btn-primary nav-item">Se Deconnecter</button></a>
+                            </div>
+                            <div><img src="<?= $_SESSION['image']; ?>" alt="" style="width: 84px; margin-left: 10px;"/></div>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>

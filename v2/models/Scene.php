@@ -33,7 +33,10 @@ function scenes_enfants_de_episode($episode_id): array {
 function scenes_enfants_de_episode_triees_numero($episode_id): array {
 	// Cette fonction renvoie les scènes enfants d'un episode parent triées par leur numéro
 
-	$scenes_enfants = Scene::retrieveByField('id_episode', $episode_id, SimpleOrm::FETCH_MANY, SimpleOrm::options('numero', SimpleOrm::ORDER_ASC));
+	$scenes_enfants = Scene::retrieveByField(	'id_episode',
+												$episode_id,
+												SimpleOrm::FETCH_MANY,
+												SimpleOrm::options('numero', SimpleOrm::ORDER_ASC));
 	if ($scenes_enfants === null)
 		redirection('500', 'Cette episode n\' a pas encore de scènes!');
 

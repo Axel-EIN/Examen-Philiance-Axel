@@ -137,7 +137,7 @@ nav button{
 /* ------------------------------------------ */
 
 .chapitre-fond p.lead, .episode-fond p.lead{
-    margin-top: 8rem;
+    margin-top: 6rem;
 }
 
 #ch3-header .lead, #ch4-header .lead{
@@ -203,9 +203,17 @@ nav button{
 
 
 
+
 /* -----------------------------------  */
-/* FOND PAGE GRISES                     */
+/* PAGE EPISODE                         */
 /* ------------------------------------ */
+
+.numero-episode-courant {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    z-index: 100;
+}
 
 #liste-ch {
     background-color: #f0f0f0;
@@ -213,21 +221,72 @@ nav button{
 
 
 
+
 /* -----------------------------------  */
-/* CARD                                 */
+/* ALL DIVIDERS                         */
+/* ------------------------------------ */
+
+.division{
+    width: 30%;
+}
+
+@media(max-width: 480px){
+
+    .division{
+        width: 50%;
+    }
+}
+
+.division-motif{
+    width: 36px;
+    height: auto;
+}
+
+.division hr{
+    background-color: #ffbbbb;
+    height: 1px;
+    width: 100%;
+}
+
+.chapitre-separateur{
+    height:0.4rem;
+    background-color: rgb(40, 0, 0);
+}
+
+
+
+
+/* -----------------------------------  */
+/* ALL CARDS                            */
 /* ------------------------------------ */
 
 .card.liste{
     background-color: #fff;
-    /* min-width: 25%; */
     min-height: 380px;
-    max-height: 380px
-    /* max-height: 400px; */
-    /* margin: 8px;
+    max-height: 380px;
     border-radius: 4px;
-    width: 18rem; */
     box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
 }
+
+.gros_bouton:hover { text-decoration: none; }
+
+.card.new{
+    color: rgba(255,255,255,0.6);
+    background-color: unset;
+    border: solid 1px rgba(255,255,255,0.40);
+    min-height: 380px;
+    max-height: 380px;
+    text-align: center;
+    justify-content: center;
+    align-items: center; 
+}
+
+.card.new:hover {
+    border: solid 1px rgba(255,255,255,0.8);
+    color: rgba(255,255,255,1);
+}
+
+.card.new svg { width: 40%; }
 
 @media(max-width: 480px) {
     .episode .card{
@@ -255,7 +314,6 @@ nav button{
     padding-right: 4rem;
     padding-top: 3rem;
 } */
-
 
 @media(min-width: 480px) {
     .episode-fond .card-body{
@@ -306,17 +364,8 @@ nav button{
     margin-bottom: 0;
 }
 
-.card.liste img.disabled {
-    filter:grayscale()
-}
-
 .card-text.disabled{
     color: #bfbfbf;
-}
-
-.card.liste img.enabled:hover{
-    filter: brightness(1.3);
-    transition: .5s;
 }
 
 .btn-lire-ep{
@@ -346,8 +395,9 @@ nav button{
 
 
 
+
 /* -----------------------------------  */
-/* BOUTON                               */
+/* ALL BOUTONS                          */
 /* ------------------------------------ */
 
 .btn-saison{
@@ -369,87 +419,45 @@ nav button{
     border-color: #9f9f9f !important;
 }
 
-.voir, .pasdispo
-{
-    position: absolute;
-    top: 5.5rem;
-}
-
-.cacher
-{
-    position: relative;
-    left: 0.5rem;
-}
 
 
 
 /* -----------------------------------  */
-/* DIVIDER                              */
+/* ALL FORMULAIRES                      */
 /* ------------------------------------ */
 
-.division{
-    width: 30%;
-}
-
-@media(max-width: 480px){
-
-    .division{
-        width: 50%;
-    }
-}
-
-.division-motif{
-    width: 36px;
-    height: auto;
-}
-
-.division hr{
-    background-color: #ffbbbb;
-    height: 1px;
-    width: 100%;
-}
-
-.chapitre-separateur{
-    height:0.4rem;
-    background-color: rgb(40, 0, 0);
-}
+fieldset{ border: 1px solid #ccc; margin-bottom: 8px; }
 
 
 
 /* -----------------------------------  */
-/* FORMULAIRE                           */
+/* ALL ALERTES                          */
 /* ------------------------------------ */
 
-fieldset{
-    border: 1px solid #ccc;
-    margin-bottom: 8px;
-}
+.volatile{ position:absolute; }
 
 
 
 /* -----------------------------------  */
-/* FOOTER                               */
+/* ALL FOOTERS                          */
 /* ------------------------------------ */
 
-.bg-footer1{
-    background-color: #28323C;
-    height: 24vh;
-}
+.bg-footer1{ background-color: #28323C; height: 24vh; }
 
-.bg-footer1 h5{
-    color: rgb(173, 173, 173);
-}
+.bg-footer1 h5{ color: rgb(173, 173, 173); }
 
-.bg-footer2{
-    background-color: #1E242A;
-    height: 8vh;
-}
+.bg-footer2{ background-color: #1E242A; height: 8vh; }
 
-.footer-link{
-    color: rgb(156, 161, 170);
-}
+.footer-link{ color: rgb(156, 161, 170); }
 
-.footer-link:hover{
-    color: white;
-    text-decoration: underline;
-}
+.footer-link:hover{ color: white; text-decoration: underline; }
+
+
+
+/* -----------------------------------  */
+/* ALL ASSETS                           */
+/* ------------------------------------ */
+
+img.disabled { filter:grayscale(); }
+
+img.enabled:hover{ filter: brightness(1.3); transition: .5s; }
