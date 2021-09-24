@@ -14,5 +14,5 @@ function afficher_panneau_administration() {
     // AFFICHAGE
     $html_title = 'Administration' .  ' | ' . NOM_DU_SITE;
     $h1 = 'Panneau d\'Administration';
-    include_once DOSSIER_VIEWS . '/admin/panneau-admin.html.php';
+    include_once DOSSIER_VIEWS . '/admin/admin.html.php';
 }

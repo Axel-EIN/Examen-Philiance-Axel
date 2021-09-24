@@ -5,6 +5,9 @@
         <div class="col-12">
             <h1 class="text-center"><?= $h1; ?></h1>
         </div>
+
+        <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
+
     </div>
 </header>
 
@@ -41,7 +44,7 @@
         </div><br/>
         <div class="form-row">
             <div class="col-6">
-                <label for="episode">Choisir un episode</label>
+                <label for="episode">Choisir un épisode</label>
                 <select class="form-control" id="episode" name="id_episode" required onchange="sceneChange(this);">
                     <option value="" disabled>Choisir un Episode...</option>
 
@@ -52,9 +55,9 @@
                 </select>
             </div>
             <div class="col-6">
-                <label for="scene">Choisir la Position de la Scène</label>
+                <label for="scene">Choisir la Position de la scène</label>
                 <select class="form-control" id="scene" name="numero" required>
-                    <option value="" disabled>Choisir la position de la Scène...</option>
+                    <option value="" disabled>Choisir la position de la scène...</option>
 
                     <?php foreach(scenes_enfants_de_episode_triees_numero($episode_parent->id) as $une_scene): ?>
                         <option value="<?= $une_scene->numero; ?>" <?php if($une_scene->id == $scene_trouve->id) echo "selected" ?>><?= $une_scene->numero; ?> - <?php if ($une_scene->id == $scene_trouve->id): ?>position actuel<?php else: ?>à la place de : <?= $une_scene->titre; endif;?></option>
@@ -107,7 +110,7 @@ var episodesArray = new Array(<?= count($tous_les_chapitres); ?>);
 var scenesArray = new Array(<?= count($tous_les_episodes); ?>);
 
 <?php foreach ($tous_les_episodes as $un_episode): ?>
-    scenesArray["<?= $un_episode->id ?>"] = {"" : "Choisir la position de la Scène...",
+    scenesArray["<?= $un_episode->id ?>"] = {"" : "Choisir la position de la scène...",
         <?php if (empty(scenes_enfants_de_episode_triees_numero($un_episode->id))): ?>
             "1" : "1 - Déplacer ici en première scène",
         <?php else: ?>
@@ -159,7 +162,7 @@ function chapitreChange(selectObj) {
             newOption.setAttribute('selected', true); // On met l'attribut selected
 
         // On ajoute/rattache les <options> à l'élement DOM 
-        try { cchapitresSelect.add(newOption); } // pour IE
+        try { chapitresSelect.add(newOption); } // pour IE
         catch (e) { chapitresSelect.appendChild(newOption); }
     }
 }

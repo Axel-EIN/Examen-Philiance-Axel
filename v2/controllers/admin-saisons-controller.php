@@ -18,7 +18,7 @@ function afficher_panneau_administration_saisons() {
     // // AFFICHAGE
     // $html_title = 'Administration des Episodes' .  ' | ' . NOM_DU_SITE;
     // $h1 = 'Administration des Episodes';
-    // include_once DOSSIER_VIEWS . '/admin/panneau-admin-episodes.html.php';
+    // include_once DOSSIER_VIEWS . '/admin/admin-episodes.html.php';
 }
 
 function admin_creer_saison() {
@@ -86,7 +86,7 @@ function admin_creer_saison_handler() {
     // $nouvel_episode->save();
 
     // // AFFICHAGE de la VUE
-    // redirection('episode&id=' . $nouvel_episode->id, 'L\'Episode a bien été crée!', 'success');
+    // redirection('episode&id=' . $nouvel_episode->id, 'La saison a bien été créée !', 'success');
 
 }
 
@@ -97,7 +97,7 @@ function admin_modifier_saison() {
 
     // // VERIF : paramètres d'URL
     // if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
-    //     redirection('404', 'Paramètres manquants ou invalide pour retrouver l\'episode');
+    //     redirection('404', 'Paramètres manquants ou invalides pour retrouver l\'épisode');
 
     // $episode_trouve = Episode::retrieveByField('id', $_GET['id'], SimpleOrm::FETCH_ONE);
     // if ($episode_trouve === null)
@@ -112,7 +112,7 @@ function admin_modifier_saison() {
     // $toutes_les_saisons = Saison::all();
     
     // $html_title = 'Modifier un episode' .  ' | Administration de ' . NOM_DU_SITE;
-    // $h1 = 'Modifier un episode';
+    // $h1 = 'Modifier un épisode';
 
     // include_once DOSSIER_VIEWS . '/admin/modifier-episode.html.php'; // AFFICHAGE
 }
@@ -146,7 +146,7 @@ function admin_modifier_saison_handler() {
     // if ($episode_trouve->numero != $_POST['numero'] || $episode_trouve->id_chapitre != $_POST['id_chapitre'])
     //     reordonner_fratrie($episode_trouve->numero, $_POST['numero'], episodes_enfants_du_chapitre($chapitre_parent->id), episodes_enfants_du_chapitre($_POST['id_chapitre']));
     
-    // // SAUVEGARDE des données de la scène initiale
+    // // SAUVEGARDE des données de la Saison
     // $episode_trouve->numero = $_POST['numero'];
     // $episode_trouve->titre = htmlspecialchars($_POST['titre']);
     // $episode_trouve->resume = htmlspecialchars($_POST['resume']);
@@ -156,7 +156,7 @@ function admin_modifier_saison_handler() {
     // $episode_trouve->save();
 
     // // Affichage de la VUE
-    // redirection('episode&id=' . $episode_trouve->id, 'L\'episode a bien été modifiée!', 'success', '#tete-lecture');
+    // redirection('episode&id=' . $episode_trouve->id, 'La saison a bien été modifiée !', 'success', '#tete-lecture');
 }
 
 function admin_supprimer_saison_handler() {
@@ -184,6 +184,6 @@ function admin_supprimer_saison_handler() {
     // $episode_trouve->delete();
 
     // // AFFICHAGE de la VUE
-    // if (!empty($_GET['depuis'])) redirection($_GET['depuis'], 'L\'episode a bien été supprimée!');
-    // else redirection('aventure' . '&saison=' . $saison_parent->numero , 'L\'episode a bien été supprimée!', 'success', '#tete-lecture-ch' . $chapitre_parent->numero , $chapitre_parent->numero);
+    // if (!empty($_GET['depuis'])) redirection($_GET['depuis'], 'La saison a bien été supprimée !');
+    // else redirection('aventure' . '&saison=' . $saison_parent->numero , 'La saison a bien été supprimée !', 'success', '#tete-lecture-ch' . $chapitre_parent->numero , $chapitre_parent->numero);
 }

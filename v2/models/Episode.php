@@ -15,7 +15,7 @@ function episode_trouve_par_id($id): object {
 	
 	$episode_trouve = Episode::retrieveByField('id', $id, SimpleOrm::FETCH_ONE);
     if ($episode_trouve === null)
-        redirection('500', 'Erreur Interne au serveur!');
+		redirection('500', 'Désolé ! Cette épisode n\'existe pas !');
 
 	return $episode_trouve;
 }
@@ -25,7 +25,7 @@ function episodes_enfants_du_chapitre($chapitre_id): array {
 
 	$episodes_enfants = Episode::retrieveByField('id_chapitre', $chapitre_id, SimpleOrm::FETCH_MANY);
 	if ($episodes_enfants === null)
-		redirection('500', 'Ce Chapitre n\' a pas encore d\'episodes!');
+		redirection('500', 'Désolé ! Ce chapitre n\'a pas encore d\'épisode enfant !');
 
 	return $episodes_enfants;
 }
@@ -38,7 +38,7 @@ function episodes_enfants_du_chapitre_triees_numero($chapitre_id): array {
 												SimpleOrm::FETCH_MANY,
 												SimpleOrm::options('numero',SimpleOrm::ORDER_ASC));
 	if ($episodes_enfants === null)
-		redirection('500', 'Ce Chapitre n\' a pas encore d\'episodes!');
+		redirection('500', 'Désolé ! Ce chapitre n\'a pas encore d\'épisode enfant !');
 
 	return $episodes_enfants;
 }

@@ -3,7 +3,7 @@
 <!-- HEADER CHAPITRE : IMAGE + TITRE -->
 <div id="ch<?= $chapitre_parent->numero; ?>-header"
     class="episode-fond p-md-4"
-    style="background-image: url('<?= url_img($chapitre_parent->image); ?>');background-color: #<?= $chapitre_parent->couleur; ?>;">
+    style="background-image: url('<?= url_img($chapitre_parent->image); ?>');background-color: <?= $chapitre_parent->couleur; ?>;">
 
     <header class="container">
         <div class="header">
@@ -28,10 +28,11 @@
     <!-- ADMIN : MODIFIER / SUPPRIMER -->
     <?php if(admin_connecte()): ?>
         <div class="d-flex justify-content-center">
-                <a href="<?= route('admin-modifier-episode&id=' . $episode_trouve->id); ?>" class="text-light"><i class="fas fa-edit"></i>&nbsp;&nbsp;Modifier l'Episode</a>
+                <a href="<?= route('admin-modifier-episode&id=' . $episode_trouve->id); ?>" class="text-light">
+                    <i class="fas fa-edit"></i>&nbsp;&nbsp;Modifier l'épisode</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="<?= route('admin-supprimer-episode-handler&id=' . $episode_trouve->id); ?>" class="text-light"
-                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer l\'episode : <?= $episode_trouve->titre ?> ?')">
+                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer l\'épisode : <?= $episode_trouve->titre ?> ?')">
                     <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Supprimer l'Episode
                 </a>
         </div>
@@ -42,9 +43,11 @@
             <!-- PRECEDENT -->                 
             <div class="d-flex flex-column justify-content-center" style="width: 180px;">
                 <?php if (!empty($episode_precedent)): ?>
-                    <a href="<?= route('episode&id=' . $episode_precedent->id . '#tete-lecture'); ?>" class="btn btn-primary" style="border-radius: 5px; box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4);">
-                    <img src="<?= url_img($episode_precedent->image); ?>" alt="<?= $episode_precedent->titre; ?>" class="img-fluid" style="width: 180px;" /><br/>
-                    Episode précédent</a>
+                    <a href="<?= route('episode&id=' . $episode_precedent->id . '#tete-lecture'); ?>"
+                       class="btn btn-primary" style="border-radius: 5px; box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4);">
+                    <img src="<?= url_img($episode_precedent->image); ?>" alt="<?= $episode_precedent->titre; ?>"
+                       class="img-fluid" style="width: 180px;" />
+                       <br/>Episode précédent</a>
                 <?php endif; ?>
             </div>
 
@@ -55,11 +58,16 @@
             </div>
 
             <!-- COURANT -->
-            <div class="d-flex flex-column justify-content-center btn btn-primary" style="box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4); border-radius: 5px; cursor: unset;">
+            <div class="d-flex flex-column justify-content-center btn btn-primary"
+                 style="box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4); border-radius: 5px; cursor: unset;">
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <div style="position: relative;">
-                        <span class="display-1 numero-episode-courant" style="color:white; position: absolute; bottom: 10px; left: 10px; line-height: 1;"><?= $episode_trouve->numero; ?></span>
-                        <img src="<?= url_img($episode_trouve->image); ?>" alt="<?= $episode_trouve->titre; ?>" class="img-fluid" style="width: 420px;" />
+                        <span class="display-1 numero-episode-courant"
+                              style="color:white; position: absolute; bottom: 10px; left: 10px; line-height: 1;">
+                                <?= $episode_trouve->numero; ?>
+                        </span>
+                        <img src="<?= url_img($episode_trouve->image); ?>" alt="<?= $episode_trouve->titre; ?>"
+                             class="img-fluid" style="width: 420px;" />
                     </div>
                 </div>
             </div>
@@ -73,9 +81,11 @@
             <!-- SUIVANT -->
             <div class="text-left d-flex flex-column justify-content-center" style="width: 180px;">
                 <?php if (!empty($episode_suivant)) : ?>
-                    <a href="<?= route('episode&id=' . $episode_suivant->id . '#tete-lecture'); ?>" class="btn btn-primary" style="border-radius: 5px; box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4);">
-                    <img src="<?= url_img($episode_suivant->image); ?>" alt="<?= $episode_suivant->titre; ?>" class="img-fluid" style="width: 180px;" /><br/>
-                    Episode suivant</a>
+                    <a href="<?= route('episode&id=' . $episode_suivant->id . '#tete-lecture'); ?>"
+                       class="btn btn-primary" style="border-radius: 5px; box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4);">
+                    <img src="<?= url_img($episode_suivant->image); ?>" alt="<?= $episode_suivant->titre; ?>"
+                         class="img-fluid" style="width: 180px;" />
+                    <br/>Episode suivant</a>
                 <?php endif; ?>
             </div>
 
@@ -95,10 +105,10 @@
 
         <div class="row justify-content-center mt-3">
             <div class="col-sm-12 col-xl-10 newpad">
-                <div class="card">
+                <div class="card justify-content-center" style="min-height: 500px;">
 
                     <!-- AFFICHAGE DES SCENES -->
-                    <section style="min-height: 500px;">
+                    <section>
 
                         <?php if (empty($scenes)): ?>
                             <div class="mx-auto mt-5" style="width: 180px; height: auto; color: #BBBBBB">
@@ -106,7 +116,7 @@
                             </div>
                             <div class="row">
                                 <div class="text-secondary mx-auto mb-5">
-                                    <h5>Il n'y a pas encore de scènes pour cette épisode!</h5>
+                                    <h5>Il n'y a pas encore de scènes pour cette épisode !</h5>
                                 </div>
                             </div>
                             <!-- ADMIN INSERER SCENE -->

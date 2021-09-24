@@ -25,7 +25,7 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
             <h3 class="py-3">Saisons :</h3>
         </div>
         <div class="col-4 text-right my-3">
-            <a href="admin_creer_saison.php"><button class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer une nouvealle Saison</button></a>
+            <a href="admin_creer_saison.php"><button class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer une nouvelle saison</button></a>
         </div>
         <div class="col-12">
             <table class="w-100">

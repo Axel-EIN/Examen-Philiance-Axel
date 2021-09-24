@@ -58,7 +58,7 @@
 
             <?php if(empty($episode_parent)): ?>
                 <div class="col">
-                    <label for="episode">Choisir l'episode à rattacher</label>
+                    <label for="episode">Choisir l'épisode à rattacher</label>
                     <select class="form-control" id="episode" name="id_episode" required onchange="sceneChange(this);">
                         <option value="" disabled></option>
                     </select>
@@ -66,7 +66,7 @@
             <?php endif; ?>
 
             <div class="col">
-                <label for="scene">Choisir la position de la Scène</label>
+                <label for="scene">Choisir la position de la scène</label>
                 <select class="form-control" id="scene" name="numero" required>
 
                     <?php if(empty($episode_parent) || empty($_GET['numero'])): ?>
@@ -131,7 +131,7 @@ var episodesArray = new Array(<?= count($tous_les_chapitres); ?>);
 
 var scenesArray = new Array(<?= count($tous_les_episodes); ?>);
 <?php foreach ($tous_les_episodes as $un_episode): ?>
-    scenesArray["<?= $un_episode->id ?>"] = {"" : "Choisir la position de la Scène...",
+    scenesArray["<?= $un_episode->id ?>"] = {"" : "Choisir la position de la scène...",
         <?php if (!empty(scenes_enfants_de_episode_triees_numero($un_episode->id))): ?>
             <?php foreach (scenes_enfants_de_episode_triees_numero($un_episode->id) as $une_scene): ?>  
                 "<?= $une_scene->numero; ?>" : "<?= $une_scene->numero ?> - Insérer devant : <?= $une_scene->titre; ?>",

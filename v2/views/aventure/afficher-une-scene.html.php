@@ -43,7 +43,7 @@
             </div>
             <div class="col-2 text-center">
                 <a  href="<?= route('admin-supprimer-scene-handler&id=' . $scene->id); ?>"
-                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer la scène : <?= $scene->titre ?> ?')">
+                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer la scène : <<?= $scene->titre ?> ?')">
                         <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Supprimer
                 </a>
             </div>

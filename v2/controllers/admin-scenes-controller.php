@@ -13,12 +13,13 @@ function afficher_panneau_administration_scenes() {
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
     // RECUPERATION des données des scènes
-    $scenes= Scene::all();
+    $scenes = Scene::all();
+    $episode_parent = 
 
     // AFFICHAGE
     $html_title = 'Administration des Scènes' .  ' | ' . NOM_DU_SITE;
     $h1 = 'Administration des Scènes';
-    include_once DOSSIER_VIEWS . '/admin/panneau-admin-scenes.html.php';
+    include_once DOSSIER_VIEWS . '/admin/admin-scenes.html.php';
 }
 
 function admin_creer_scene() {
@@ -99,7 +100,7 @@ function admin_creer_scene_handler() {
 
     // AFFICHAGE de la VUE
     redirection('episode&id=' . $id_episode . '&scene_id=' . $nouvelle_scene->id,
-                'La scène a bien été créee!',
+                'La scène a bien été créée !',
                 'success',
                 '#scn' . $_POST['numero']);
 }
@@ -112,12 +113,12 @@ function admin_modifier_scene() {
 
     // VERIFICATION de l'intégrité des paramètres d'URL
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
-        redirection('404', 'Paramètres manquants ou invalide pour retrouver la scène');
+        redirection('404', 'Paramètres manquants ou invalides pour retrouver la scène');
 
     // RECUPERATION des données
     $scene_trouve = Scene::retrieveByField('id', $_GET['id'], SimpleOrm::FETCH_ONE);
     if ($scene_trouve === null)
-        redirection('404', 'Désolé, cette scène n\'existe pas.');
+        redirection('404', 'Désolé ! Cette scène n\'existe pas.');
 
     $episode_parent = episode_trouve_par_id($scene_trouve->id_episode);
     $chapitre_parent = chapitre_trouve_par_id($episode_parent->id_chapitre);
@@ -162,7 +163,7 @@ function admin_modifier_scene_handler() {
     if (verif_image() === false)
     {
         redirection('admin-modifier-scene' . '&id=' . $_GET['id'],
-                    'Image Invalide, veuillez réessayer avec un format ou taille appropriées',
+                    'Image invalide, veuillez réessayer avec un format ou taille appropriées',
                     'warning');
     }
     elseif (verif_image() === null)
@@ -195,13 +196,13 @@ function admin_modifier_scene_handler() {
 
     // AFFICHAGE
     redirection('episode&id=' . $_POST['id_episode'] . '&scene_id=' . $scene_trouve->id,
-                'La scène a bien été modifiée!',
+                'La scène a bien été modifiée !',
                 'success',
                 '#scn' . $_POST['numero']);
 }
 
 function admin_supprimer_scene_handler() {
-    // Gère la suppression de la scene demandée
+    // Gère la suppression de la scène demandée
 
     // VERIFICATION si l'Administrateur est connecté
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
@@ -223,9 +224,9 @@ function admin_supprimer_scene_handler() {
     $scene_trouve->delete();
 
     // AFFICHAGE
-    if (!empty($_GET['depuis'])) redirection($_GET['depuis'], 'La scène a bien été supprimée!');
+    if (!empty($_GET['depuis'])) redirection($_GET['depuis'], 'La scène a bien été supprimée !');
     else redirection(   'episode&id=' . $scene_trouve->id_episode,
-                        'La scène a bien été supprimée!',
+                        'La scène a bien été supprimée !',
                         'success',
                         '#tete-lecture');
 }

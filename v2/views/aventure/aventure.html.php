@@ -5,9 +5,11 @@
 style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<?= url_img($saison_trouve->image); ?>');">
     <div class="container" style="position: relative">
 
-        <div class="volatile" style="position: aboslute; left: 50%; top: -20px; transform: translate(-50%, -50%);">
-            <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
-        </div>
+        <?php if (empty($_GET['chapitre'])): ?>
+            <div class="volatile" style="position: aboslute; left: 50%; top: -20px; transform: translate(-50%, -50%);">
+                <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
+            </div>
+        <?php endif; ?>
 
         <div class="header">
             <h1 class="display-5 text-center">
@@ -75,7 +77,7 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
         <section
             id="ch<?= $chapitre->numero; ?>-header"
             class="chapitre-fond <?= $volet ?>"
-            style="background-color: #<?= $chapitre->couleur; ?>;
+            style="background-color: <?= $chapitre->couleur; ?>;
             background-image:linear-gradient(
                 rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0.6),
                 rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0),
@@ -90,6 +92,22 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
                     <div class="header" >
                         <h1 class="display-5">CHAPITRE <?= $chapitre->numero; ?></h1>
                         <hr class="my-md-2">
+                        <!-- ADMIN : MODIFIER / SUPPRIMER -->
+                        <?php if(admin_connecte()): ?>
+                        <small>
+                            <div class="d-flex justify-content-end mr-3" style="position: relative; top: -60px;">
+                                    <a href="<?= route('admin-modifier-chapitre&id=' . $chapitre->id); ?>" class="text-light">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="<?= route('admin-supprimer-chapitre-handler&id=' . $chapitre->id); ?>" class="text-light"
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer le chapitre : <?= $chapitre->titre ?> ?')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                            </div>
+                        </small>
+                        <?php endif; ?>
+
                         <p id="tete-lecture-ch<?= $chapitre->numero; ?>" class="lead grand">
                             <?= titre_stylise($chapitre->titre); ?>
                         </p>
@@ -115,10 +133,20 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
                             </a>
 
                         <?php else: ?>
-                            <div class="alert alert-light alert-dismissible mx-auto"
+                            <div class="alert alert-light mx-auto persistante"
                                 style="background-color: rgba(0, 0, 0, .5);
                                         border-color: rgba(255, 255, 255, .4);">
-                                <strong>Pas encore d'épisode disponible!</strong>
+                                <strong>Désolé ! Il n'y a pas encore d'épisode disponible !</strong>
+
+                                <!-- MINI BOUTON : CREER UN EPISODE -->
+                                <?php if(admin_connecte()): ?>
+                                    <a href="<?= route('admin-creer-episode&id_chapitre=' . $chapitre->id); ?>" class="ml-2 text-light">
+                                        <strong>
+                                            <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer un épisode
+                                        </strong>
+                                    </a>
+                                <?php endif; ?>
+
                             </div>
                         <?php endif; ?>
                     </div>
@@ -147,7 +175,7 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
                                                 <p class="card-text"><?= $episode->resume; ?></p>
                                             </div>
                                             <div class="text-center p-2">
-                                                <a href="<?= route('episode&id=' . $episode->id); ?>#tete-lecture" class="btn btn-primary"><i class="fab fa-readme"></i>&nbsp;&nbsp;Lire l'Episode</a>
+                                                <a href="<?= route('episode&id=' . $episode->id); ?>#tete-lecture" class="btn btn-primary"><i class="fab fa-readme"></i>&nbsp;&nbsp;Lire l'épisode</a>
                                             </div>
                                         </div>
                                     </div>
@@ -160,7 +188,7 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
                                 <div class="col-lg-3 col-md-4 col-sm-6 order-8 newpad">
                                     <a class="gros_bouton" href="<?= route('admin-creer-episode&id_chapitre=' . $chapitre->id); ?>">
                                         <div class="card new">
-                                            <h4>Ajouter un Episode</h4>
+                                            <h4>Ajouter un épisode</h4>
                                             <?php echo file_get_contents(url_img("icons/plus-square-solid.svg")); ?>
                                         </div>
                                     </a>
@@ -177,7 +205,14 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
         <div class="chapitre-separateur"></div>
 
     <?php endforeach; ?>
-
+    <?php if(admin_connecte()): ?>
+        <strong>
+            &nbsp;&nbsp;Créer un épisode
+        </strong>
+        <a href="<?= route('admin-creer-chapitre&id_saison=' . $saison_trouve->id); ?>">
+            <i class="fas fa-plus-square"></i>Creer un nouveau Chapitre dans cette saison
+        </a>
+    <?php endif; ?>
 </main>
 
 <?php include_once DOSSIER_VIEWS . '/parts/modal.html.php'; ?>

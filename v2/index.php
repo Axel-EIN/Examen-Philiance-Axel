@@ -58,16 +58,9 @@ if (!empty($_GET['page'])) {
             break;
 
 
-        // /**
-        //  * ADMINISTRATION
-        //  */
-        // case 'administration':
-        //     require_once DOSSIER_CONTROLLERS . '/administration-controller.php';
-        //     afficher_panneau_administration();
-        //     break;
-
-        // ADMIN SCENES
-
+        /**
+         * ADMIN SCENES
+         */
         case 'administration':
         // case 'administration-scenes':
             require_once DOSSIER_CONTROLLERS . '/admin-scenes-controller.php';
@@ -99,8 +92,10 @@ if (!empty($_GET['page'])) {
             admin_supprimer_scene_handler();
             break;
 
-        // ADMIN EPISODES
 
+        /**
+         * ADMIN EPISODES
+         */
         case 'administration-episodes':
             require_once DOSSIER_CONTROLLERS . '/admin-episodes-controller.php';
             afficher_panneau_administration_episodes();
@@ -132,14 +127,41 @@ if (!empty($_GET['page'])) {
             break;
 
 
-        // ADMIN CHAPITRES
+        /**
+         * ADMIN CHAPITRES
+         */
         case 'administration-chapitres':
             require_once DOSSIER_CONTROLLERS . '/admin-chapitres-controller.php';
             afficher_panneau_administration_chapitres();
             break;
 
+        case 'admin-creer-chapitre':
+            require_once DOSSIER_CONTROLLERS . '/admin-chapitres-controller.php';
+            admin_creer_chapitre();
+            break;
+
+        case 'admin-creer-chapitre-handler':
+            require_once DOSSIER_CONTROLLERS . '/admin-chapitres-controller.php';
+            admin_creer_chapitre_handler();
+            break;
+
+        case 'admin-modifier-chapitre':
+            require_once DOSSIER_CONTROLLERS . '/admin-chapitres-controller.php';
+            admin_modifier_chapitre();
+            break;
+
+        case 'admin-modifier-chapitre-handler':
+            require_once DOSSIER_CONTROLLERS . '/admin-chapitres-controller.php';
+            admin_modifier_chapitre_handler();
+            break;
+
+        case 'admin-supprimer-chapitre-handler':
+            require_once DOSSIER_CONTROLLERS . '/admin-chapitres-controller.php';
+            admin_supprimer_chapitre_handler();
+            break;
+
         // ADMIN SAISONS
-        case 'administration-chapitres':
+        case 'administration-saisons':
             require_once DOSSIER_CONTROLLERS . '/admin-saisons-controller.php';
             afficher_panneau_administration_saisons();
             break;

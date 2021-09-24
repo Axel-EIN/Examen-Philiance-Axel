@@ -7,18 +7,22 @@ require_once DOSSIER_MODELS . '/Episode.php';
 require_once DOSSIER_MODELS . '/Scene.php';
 
 function afficher_panneau_administration_chapitres() {
-    // Affiche la page du panneau d'administration qui liste des chapitres
+    // Affiche la page du panneau d'administration qui liste les chapitres
 
     // VERIF Admin Connecté
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); 
 
     // RECUPERATION données
-    $chapitres= Chapitre::all();
+    $chapitres = Chapitre::all();
+
+    // RECUPERATION des utilisateurs
+    require_once DOSSIER_MODELS . '/Utilisateur.php';
+    $utilisateurs = Utilisateur::all();
 
     // AFFICHAGE
     $html_title = 'Administration des chapitres' .  ' | ' . NOM_DU_SITE;
     $h1 = 'Administration des chapitres';
-    include_once DOSSIER_VIEWS . '/admin/panneau-admin-chapitres.html.php';
+    include_once DOSSIER_VIEWS . '/admin/admin-chapitres.html.php';
 }
 
 function admin_creer_chapitre() {
@@ -27,7 +31,7 @@ function admin_creer_chapitre() {
     // VERIFICATION si Administrateur est connecté
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
-    // VERIFICATION si on a un get id_chapitre donc si on doit afficher un formulaire pré-rempli
+    // VERIFICATION si on a un get id_saison donc si on doit afficher un formulaire pré-rempli
     if (!empty($_GET['id_saison']) && is_numeric($_GET['id_saison']) && $_GET['id_saison'] > 0) {
 
         // RECUPERATION DES DONNEES pour pré-remplir le formulaire
@@ -38,15 +42,17 @@ function admin_creer_chapitre() {
     } else $get_saison = '';
 
     // RECUPERATION DES DONNEES pour les tableaux de liste dérouante en JavaScript
-    $tous_les_episodes = Episode::all();
     $tous_les_chapitres = Chapitre::all();
     $toutes_les_saisons = Saison::all();
-    $toutes_les_scenes = Scene::all();
+
+    // RECUPERATION des utilisateurs
+    require_once DOSSIER_MODELS . '/Utilisateur.php';
+    $utilisateurs = Utilisateur::all();
     
      // AFFICHAGE
-    $html_title = 'Créer un Episode | Administration de ' . NOM_DU_SITE;
-    $h1 = 'Créer un Episode';
-    include_once DOSSIER_VIEWS . '/admin/creer-episode.html.php';
+    $html_title = 'Créer un Chapitre | Administration de ' . NOM_DU_SITE;
+    $h1 = 'Créer un Chapitre';
+    include_once DOSSIER_VIEWS . '/admin/creer-chapitre.html.php';
 }
 
 function admin_creer_chapitre_handler() {
@@ -66,14 +72,15 @@ function admin_creer_chapitre_handler() {
         || empty($_POST['titre']) || is_numeric($_POST['titre'])
         || empty($_POST['citation']) || is_numeric($_POST['citation'])
         || empty($_POST['id_mj']) || !is_numeric($_POST['id_mj']) || $_POST['id_mj'] < 1
+        || empty($_POST['couleur'])
         )
-        redirection('admin-creer-episode', 'Informations postées manquantes ou invalides', 'warning');
+        redirection('admin-creer-chapitre', 'Informations postées manquantes ou invalides', 'warning');
     
     $saison_parent = saison_trouve_par_id($id_saison);
 
     // GESTION de l'image (qui est facultative donc la valeur null est autorisée)
     if (verif_image() === false)
-        redirection('admin-creer-episode', 'Image Invalide, veuillez réessayer avec un format ou taille appropriées', 'warning');
+        redirection('admin-creer-chapitre', 'Image invalide, veuillez réessayer avec un format ou taille appropriées', 'warning');
     elseif (verif_image() === null)
         $image_nouvel_url = URL_IMAGE_DEFAUT_1080;
     else
@@ -88,110 +95,130 @@ function admin_creer_chapitre_handler() {
     $nouveau_chapitre->titre = htmlspecialchars($_POST['titre']);
     $nouveau_chapitre->citation = htmlspecialchars($_POST['citation']);
     $nouveau_chapitre->id_saison = $saison_parent->id;
+    $nouveau_chapitre->couleur = $_POST['couleur'];
     $nouveau_chapitre->image = $image_nouvel_url;
-    $nouveau_chapitre->mj = $_POST['mj'];
+    $nouveau_chapitre->id_mj = $_POST['id_mj'];
 
     $nouveau_chapitre->save();
 
     // AFFICHAGE de la VUE
-    redirection('aventure&saison=' . $saison_parent->numero . '#tete-lecture-ch' . $nouveau_chapitre->numero, 'L\'Episode a bien été crée!', 'success');
+    redirection('aventure&saison=' . $saison_parent->numero,
+                 'Le chapitre a bien été crée !', 'success', '', '#tete-lecture-ch' . $nouveau_chapitre->numero);
 
 }
 
 function admin_modifier_chapitre() {
     // Affiche le formulaire pour modifier un chapitre
 
-    // if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); // VERIF Admin Connecté
+    // VERIFIFACTION si Administrateur est connecté
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); 
 
-    // // VERIF : paramètres d'URL
-    // if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
-    //     redirection('404', 'Paramètres manquants ou invalide pour retrouver l\'episode');
+    // VERIFIFACTION des paramètres d'URL
+    if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
+        redirection('404', 'Paramètres manquants ou invalides pour retrouver l\'épisode');
 
-    // $episode_trouve = Episode::retrieveByField('id', $_GET['id'], SimpleOrm::FETCH_ONE);
-    // if ($episode_trouve === null)
-    //     redirection('404', 'Cette episode n\'existe pas.');
+    // RECUPERATION des données du chapitre à modifier
+    $chapitre_trouve = Chapitre::retrieveByField('id', $_GET['id'], SimpleOrm::FETCH_ONE);
+    if ($chapitre_trouve === null)
+        redirection('404', 'Ce chapitre n\'existe pas.');
 
-    // $chapitre_parent = chapitre_trouve_par_id($episode_trouve->id_chapitre);
-    // $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison);
+    $saison_parent = saison_trouve_par_id($chapitre_trouve->id_saison);
 
-    // $episodes_enfants = episodes_enfants_du_chapitre_triees_numero($chapitre_parent->id);
-    // $tous_les_episodes = Episode::all();
-    // $tous_les_chapitres = Chapitre::all();
-    // $toutes_les_saisons = Saison::all();
+    // RECUPERATION des données annexes
+    $chapitre_enfants = chapitres_enfants_de_saison_tries_numero($saison_parent->id);
+    $tous_les_chapitres = Chapitre::all();
+    $toutes_les_saisons = Saison::all();
+
+    // RECUPERATION des utilisateurs
+    require_once DOSSIER_MODELS . '/Utilisateur.php';
+    $utilisateurs = Utilisateur::all();
     
-    // $html_title = 'Modifier un episode' .  ' | Administration de ' . NOM_DU_SITE;
-    // $h1 = 'Modifier un episode';
-
-    // include_once DOSSIER_VIEWS . '/admin/modifier-episode.html.php'; // AFFICHAGE
+    // AFFICHAGE
+    $html_title = 'Modifier un chapitre' .  ' | Administration de ' . NOM_DU_SITE;
+    $h1 = 'Modifier un chapitre';
+    include_once DOSSIER_VIEWS . '/admin/modifier-chapitre.html.php';
 }
 
 function admin_modifier_chapitre_handler() {
     // Gère les données postées du forumlaire pour modifier un chapitre
 
-    // if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); // VERIF Admin Connecté
-    
-    // if ( // VERIFICATION des données postées
-    //     empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1
-    //     || empty($_POST['numero']) || !is_numeric($_POST['numero']) || $_POST['numero'] < 1
-    //     || empty($_POST['id_chapitre']) || !is_numeric($_POST['id_chapitre']) || $_POST['id_chapitre'] < 1
-    //     || empty($_POST['titre']) || is_numeric($_POST['titre'])
-    //     || empty($_POST['resume']) || is_numeric($_POST['resume'])
-    //     ) redirection('admin-modifier-episode' . '&id=' . $_GET['id'], 'Informations postées manquantes ou invalides', 'warning');
+    // VERIFIFACTION si Administrateur est connecté
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); // VERIF Admin Connecté
+
+    // VERIFICATION des données postées
+    if (
+        empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1
+        || empty($_POST['numero']) || !is_numeric($_POST['numero']) || $_POST['numero'] < 1
+        || empty($_POST['id_saison']) || !is_numeric($_POST['id_saison']) || $_POST['id_saison'] < 1
+        || empty($_POST['titre']) || is_numeric($_POST['titre'])
+        || empty($_POST['citation']) || is_numeric($_POST['citation'])
+        || empty($_POST['couleur'])
+        || empty($_POST['id_mj']) || !is_numeric($_POST['id_mj']) || $_POST['id_mj'] < 1
+        ) redirection('admin-modifier-chapitre' . '&id=' . $_GET['id'], 'Informations postées manquantes ou invalides', 'warning');
   
-    //     $episode_trouve = episode_trouve_par_id($_GET['id']);
-    //     $chapitre_parent = chapitre_trouve_par_id($episode_trouve->id_chapitre);
-    //     $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison);
-        
-    // // GESTION de l'image (qui est facultative donc la valeur null est autorisée)
-    // if (verif_image() === false)
-    //     redirection('admin-modifier-episode' . '&id=' . $_GET['id'], 'Image Invalide, veuillez réessayer avec un format ou taille appropriées', 'warning');
-    // elseif (verif_image() === null)
-    //     $image_nouvel_url = $episode_trouve->image;
-    // else
-    //     $image_nouvel_url = uploader_image($saison_parent->numero, $chapitre_parent->numero, $episode_trouve->numero, 0, $episode_trouve->image);
-     
-    // // GESTION de la position / numero
-    // if ($episode_trouve->numero != $_POST['numero'] || $episode_trouve->id_chapitre != $_POST['id_chapitre'])
-    //     reordonner_fratrie($episode_trouve->numero, $_POST['numero'], episodes_enfants_du_chapitre($chapitre_parent->id), episodes_enfants_du_chapitre($_POST['id_chapitre']));
+    // RECUPERATION DES DONNEES
+    $chapitre_trouve = chapitre_trouve_par_id($_GET['id']);
+    $saison_parent = saison_trouve_par_id($chapitre_trouve->id_saison);
+
+    // GESTION de l'image (qui est facultative donc la valeur null est autorisée)
+    if (verif_image() === false)
+        redirection('admin-modifier-chapitre' . '&id=' . $_GET['id'],
+                    'Image invalide, veuillez réessayer avec un format ou taille appropriées', 'warning');
+    elseif (verif_image() === null)
+        $image_nouvel_url = $chapitre_trouve->image;
+    else
+        $image_nouvel_url = uploader_image($saison_parent->numero, $chapitre_trouve->numero, 0, 0, $chapitre_trouve->image);
     
-    // // SAUVEGARDE des données de la scène initiale
-    // $episode_trouve->numero = $_POST['numero'];
-    // $episode_trouve->titre = htmlspecialchars($_POST['titre']);
-    // $episode_trouve->resume = htmlspecialchars($_POST['resume']);
-    // $episode_trouve->image = $image_nouvel_url;
-    // $episode_trouve->id_chapitre = $_POST['id_chapitre'];;
+    // GESTION de la position / numero
+    if ($chapitre_trouve->numero != $_POST['numero'] || $chapitre_trouve->id_saison != $_POST['id_saison'])
+        reordonner_fratrie($chapitre_trouve->numero, $_POST['numero'],
+                            chapitres_enfants_de_saison($saison_parent->id),
+                            chapitres_enfants_de_saison($_POST['id_saison']));
 
-    // $episode_trouve->save();
+    // SAUVEGARDE des données du Chapitre
+    $chapitre_trouve->numero = $_POST['numero'];
+    $chapitre_trouve->titre = htmlspecialchars($_POST['titre']);
+    $chapitre_trouve->citation = htmlspecialchars($_POST['citation']);
+    $chapitre_trouve->image = $image_nouvel_url;
+    $chapitre_trouve->id_saison = $_POST['id_saison'];
+    $chapitre_trouve->couleur = $_POST['couleur'];
+    $chapitre_trouve->id_mj = $_POST['id_mj'];
 
-    // // Affichage de la VUE
-    // redirection('episode&id=' . $episode_trouve->id, 'L\'episode a bien été modifiée!', 'success', '#tete-lecture');
+    $chapitre_trouve->save();
+
+    // Affichage de la VUE
+    redirection('aventure&saison=' . $chapitre_trouve->id_saison
+                . '&chapitre=' . $chapitre_trouve->numero,
+                'Le chapitre a bien été modifié !',
+                'success', '', '#tete-lecture-ch' . $chapitre_trouve->numero);
 }
 
 function admin_supprimer_chapitre_handler() {
     // Gère la suppression du chapitre demandé
 
-    // if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); // VERIF Admin
+    // VERIFIFACTION si Administrateur est connecté
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
     
-    //  // VERIFICATION du paramètre URL GET
-    // if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
-    //     redirection('500', 'Informations manquantes ou invalides pour le traitement interne dans le serveur');
+     // VERIFICATION du paramètre URL GET
+    if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
+        redirection('500', 'Informations manquantes ou invalides pour le traitement interne dans le serveur');
 
-    // $episode_trouve = episode_trouve_par_id($_GET['id']);
-    // $chapitre_parent = chapitre_trouve_par_id($episode_trouve->id_chapitre);
-    // $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison);
+    $chapitre_trouve = chapitre_trouve_par_id($_GET['id']);
+    $saison_parent = saison_trouve_par_id($chapitre_trouve->id_saison);
 
-    // if (scenes_enfants_de_episode($_GET['id']))
-    //     redirection('episode&id=' . $episode_trouve->id,
-    //                 'Cette episode a des scènes enfants, veuillez les supprimer au préalable', 'danger', '#tete-lecture');
+    if (episodes_enfants_du_chapitre($_GET['id']))
+        redirection('aventure&saison=' . $saison_parent->numero,
+                    'Ce chapitre a des épisodes enfants, veuillez les supprimer au préalable',
+                    'danger', '', '#tete-lecture-ch' . $chapitre_trouve->numero);
 
-    // supprimer_image($episode_trouve->image, 'episodes/');
+    supprimer_image($chapitre_trouve->image, 'chapitres/');
 
-    // // GESTION de la position / numero
-    // reordonner_fratrie($episode_trouve->numero, -1, episodes_enfants_du_chapitre($episode_trouve->id_chapitre), []);
+    // GESTION de la position / numero
+    reordonner_fratrie($chapitre_trouve->numero, -1, chapitres_enfants_de_saison($chapitre_trouve->id_saison), []);
 
-    // $episode_trouve->delete();
+    $chapitre_trouve->delete();
 
-    // // AFFICHAGE de la VUE
-    // if (!empty($_GET['depuis'])) redirection($_GET['depuis'], 'L\'episode a bien été supprimée!');
-    // else redirection('aventure' . '&saison=' . $saison_parent->numero , 'L\'episode a bien été supprimée!', 'success', '#tete-lecture-ch' . $chapitre_parent->numero , $chapitre_parent->numero);
+    // AFFICHAGE de la VUE
+    if (!empty($_GET['depuis'])) redirection($_GET['depuis'], 'Le chapitre a bien été supprimé !');
+    else redirection('aventure' . '&saison=' . $saison_parent->numero , 'Le chapitre a bien été supprimé !', 'success');
 }

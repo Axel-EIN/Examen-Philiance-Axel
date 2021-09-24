@@ -6,17 +6,7 @@
             <h1 class="text-center"><?= $h1; ?></h1>
         </div>
 
-        <!-- ALERTE -->
-        <?php if (!empty($_GET['alerte'])): ?>
-            <div class="alert alert-warning alert-dismissible fade show mt-3 mx-auto" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
-                <strong>Attention!</strong> <?= $_GET['alerte']; ?>
-            </div>
-        <?php endif; ?>
-        <!-- FIN : ALERTE -->
+        <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
 
     </div>
 </header>
@@ -54,9 +44,9 @@
         </div><br/>
         <div class="form-row">
             <div class="col-6">
-                <label for="numero">Choisir la position de l'episode</label>
+                <label for="numero">Choisir la position de l'épisode</label>
                 <select class="form-control" id="episode" name="numero" required >
-                    <option value="" disabled>Choisir la position de l'episode...</option>
+                    <option value="" disabled>Choisir la position de l'épisode...</option>
 
                     <?php foreach(episodes_enfants_du_chapitre_triees_numero($chapitre_parent->id) as $un_episode): ?>
                         <option value="<?= $un_episode->numero; ?>" <?php if($un_episode->id == $episode_trouve->id) echo "selected" ?>><?= $un_episode->numero; ?> - <?php if ($un_episode->id == $episode_trouve->id): ?>position actuel<?php else: ?>à la place de : <?= $un_episode->titre; endif;?></option>
@@ -67,14 +57,14 @@
         </div><br/>
 
         <label for="image">Image</label>
-        <img class="img-fluid" src="<?= url_img($episode_trouve->image); ?>" alt="Image de la scène <?= $episode_trouve->numero; ?>" />
+        <img class="img-fluid" src="<?= url_img($episode_trouve->image); ?>" alt="Image de l'épisode <?= $episode_trouve->numero; ?>" />
         <div class="form-group">
           <label for="image"></label>
           <input type="file" class="form-control-file" name="image" id="image" aria-describedby="fileHelpId">
           <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
         </div><br/>
 
-        <label for="resume">Très bref résumé / Synopsis (2 lignes) :</label>
+        <label for="resume">Bref résumé / Synopsis (2 lignes)</label>
         <textarea style="resize: none;" class="form-control" maxlength="200" name="resume" id="resume" cols="30" rows="2"><?= $episode_trouve->resume; ?></textarea><br/>
         
         <input class="form-control btn btn-primary" type="submit" value="Modifier" name="modifier" />
@@ -103,7 +93,8 @@ var episodesArray = new Array(<?= count($tous_les_chapitres); ?>);
         <?php else: ?>
             <?php $trouvee = false; ?>
             <?php foreach (episodes_enfants_du_chapitre_triees_numero($un_chapitre->id) as $un_episode): ?>
-                "<?= $un_episode->numero; ?>" : "<?= $un_episode->numero; ?> - <?php if ($un_episode->id == $episode_trouve->id): $trouvee = true; ?>position actuel<?php else: ?>à la place de : <?= $un_episode->titre; endif; ?>",
+                "<?= $un_episode->numero; ?>" : "<?= $un_episode->numero; ?> - <?php if ($un_episode->id == $episode_trouve->id): $trouvee = true; ?>
+                position actuel<?php else: ?>à la place de : <?= $un_episode->titre; endif; ?>",
             <?php endforeach; ?>
             <?php if ($trouvee == false): ?>
                 "<?= $un_episode->numero+1; ?>" : "<?= $un_episode->numero+1; ?> - Insérer en dernier",
@@ -144,7 +135,7 @@ function chapitreChange(selectObj) {
             newOption.setAttribute('selected', true); // On met l'attribut selected
 
         // On ajoute/rattache les <options> à l'élement DOM 
-        try { cchapitresSelect.add(newOption); } // pour IE
+        try { chapitresSelect.add(newOption); } // pour IE
         catch (e) { chapitresSelect.appendChild(newOption); }
     }
 }
@@ -167,7 +158,6 @@ function episodeChange(selectObj) {
         newOption = document.createElement("option"); 
         newOption.value = key;  // créé la valeur de l'option 
         newOption.text = episodesList[key]; // créé le texte de l'option
-
         if (newOption.value == '')
             newOption.setAttribute('disabled', true);
 

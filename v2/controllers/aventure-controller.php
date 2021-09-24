@@ -15,7 +15,7 @@ function afficher_aventure() {
 
     // RECUPERATION des données pour la saison
     $saison_trouve = Saison::retrieveByField('numero', $numero_saison_courante, SimpleOrm::FETCH_ONE);
-    if ($saison_trouve == null) redirection('404', 'Désolé! Cette Saison n\'existe pas!');
+    if ($saison_trouve == null) redirection('404', 'Désolé ! Cette saison n\'existe pas !');
 
     // RECUPERATION de toutes les saisons
     $saisons = Saison::all();
@@ -30,7 +30,7 @@ function afficher_aventure() {
         $saison_suivante = $saisons[$position_cle_saison+1];
 
     // RECUPERATION des données pour les Chapitres de la Saison
-    $chapitres = Chapitre::retrieveByField('id_saison', $saison_trouve->id, SimpleOrm::FETCH_MANY);
+    $chapitres = chapitres_enfants_de_saison_tries_numero($saison_trouve->id);
 
     // AFFICHAGE
     $html_title = $saison_trouve->titre . ' (Saison ' . $saison_trouve->numero . ') | ' . NOM_DU_SITE;
@@ -41,11 +41,11 @@ function afficher_episode() {
 
     // Vérification des paramètres d'URL
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
-        redirection('404','Informations pour trouver l\'episode invalides ou manquantes');
+        redirection('404','Informations pour trouver l\'épisode invalides ou manquantes');
 
     // Récupération des données
     $episode_trouve = Episode::retrieveByField('id', $_GET['id'], SimpleOrm::FETCH_ONE);
-    if ($episode_trouve === null) redirection ('404','Désolé! Cette espisode n\existe pas!');
+    if ($episode_trouve === null) redirection ('404','Désolé ! Cette épisode n\'existe pas !');
 
     $chapitre_parent = Chapitre::retrieveByField('id', $episode_trouve->id_chapitre, SimpleOrm::FETCH_ONE);
     if ($chapitre_parent === null)

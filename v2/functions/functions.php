@@ -16,7 +16,7 @@ function route(string $nom_route, string $provenance = ''): string {
 function redirection(string $route_de_destination, string $alerte = '', string $type = '', string $ancre = '', string $cible = '') {
     // Cette fonction redirige vers une nouvelle route. On peut ajouter :
     // - une string pour les messages d'alertes et leur type bootstrap (Success, Warning, Primary, Danger...)
-    // - une string pour ajouter un ancre à la fin de l'URL
+    // - une string pour ajouter une ancre à la fin de l'URL
     // - une cible au cas où on a besoin d'ajouter un paramètre pour cibler quelque chose
 
     $alerte = '&alerte=' . $alerte;
@@ -77,7 +77,7 @@ function verif_image() {
 }
 
 function uploader_image(int $saison, int $chapitre, int $episode, int $scene, string $ancienne_image = '') {
-    // ON RECOIT les numeros pour identifier la Saison, le Chapitre, l'Episode, la Scene, on renvoi un URL pour l'image uploadée
+    // ON RECOIT les numeros pour identifier la Saison, le Chapitre, l'Episode, la Scène, on renvoi un URL pour l'image uploadée
     // ANCIENNE IMAGE = false, on peut mettre true pour demander une suppression dans le cas d'edition d'une image
 
     // CREATION du FICHIER image a stoker sur le serveur

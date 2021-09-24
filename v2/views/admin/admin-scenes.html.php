@@ -23,31 +23,40 @@
     <section id="scenes" class="row my-3 py-2">
 
         <div class="col-8">
-            <h3 class="py-3">Scenes :</h3>
+            <h3 class="py-3">Scènes :</h3>
         </div>
         <div class="col-4 text-right my-3">
             <a href="<?= route('admin-creer-scene'); ?>">
-                <button class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer une nouvelle Scène</button>
+                <button class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer une nouvelle scène</button>
             </a>
         </div>
         <div class="col-12">
             <table class="w-100">
+
                 <tr class="bg-dark text-light">
                     <td class="p-2 text-center">ID</td>
                     <td class="p-2 text-center">N°</td>
-                    <td class="p-2 text-center">de l'episode :</td>
+                    <td class="p-2 text-center">Rattachée à</td>
                     <td class="p-2">Titre</td>
                     <td class="p-2">Temps dans le jeu</td>
                     <td class="p-2"></td>
                     <td class="p-2"></td>
                     <td class="p-2"></td>
                 </tr>
+                
                 <tr><td class="p-2" colspan="9"></td></tr>
+
                 <?php foreach ($scenes as $une_scene): ?>
+                    <?php $episode_parent = episode_trouve_par_id($une_scene->id_episode); ?>
+                    <?php $chapitre_parent = chapitre_trouve_par_id($episode_parent->id_chapitre); ?>
+                    <?php $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison); ?>
+
                     <tr>
                         <td class="p-2 border text-center"><strong><?= $une_scene->id; ?></strong></td>
-                        <td class="p-2 border text-center"><?= $une_scene->numero; ?></td>
-                        <td class="p-2 border text-center">Episode&nbsp;<?= $une_scene->id_episode; ?></td>
+                        <td class="p-2 border text-center"><strong>Scène&nbsp;<?= $une_scene->numero; ?></strong></td>
+                        <td class="p-2 border text-center">
+                            Saison<?= $saison_parent->numero; ?> > Chapitre<?= $chapitre_parent->numero; ?> > Episode<?= $une_scene->id_episode; ?>
+                        </td>
                         <td class="p-2 border"><strong><?= $une_scene->titre; ?></strong></td>
                         <td class="p-2 border"><small><?= $une_scene->temps; ?></small></td>
 

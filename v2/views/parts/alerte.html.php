@@ -13,9 +13,9 @@
             <?php if ($type_alerte == 'danger'): ?>
                 <strong>Attention!</strong>
             <?php elseif ($type_alerte == 'success'): ?>
-                <strong>Opération réussie!</strong>
+                <strong>Opération réussie !</strong>
             <?php else: ?>
-                <strong>Notification:</strong>
+                <strong>Notification :</strong>
             <?php endif; ?>
 
             <?= $_GET['alerte']; ?>

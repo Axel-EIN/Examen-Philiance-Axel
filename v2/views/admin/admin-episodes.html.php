@@ -28,7 +28,7 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
         <div class="col-4 text-right my-3">
             <a href="<?= route('admin-creer-episode'); ?>">
                 <button class="btn btn-primary">
-                    <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer un nouvel Episode
+                    <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer un nouvel episode
                 </button>
             </a>
         </div>
@@ -38,7 +38,7 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
                     <td class="p-2 text-center">Image</td>
                     <td class="p-2 text-center">ID</td>
                     <td class="p-2 text-center">N°</td>
-                    <td class="p-2 text-center">du Chapitre :</td>
+                    <td class="p-2 text-center">Ratraché à</td>
                     <td class="p-2">Titre</td>
                     <td class="p-2"></td>
                     <td class="p-2"></td>
@@ -46,22 +46,40 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
                 </tr>
                 <tr><td class="p-2" colspan="8"></td></tr>
                 <?php foreach ($episodes as $un_episode): ?>
+                <?php $chapitre_parent = chapitre_trouve_par_id($un_episode->id_chapitre); ?>
+                <?php $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison); ?>
+
                     <tr>
                         <td class="p-2 border bg-light text-center" rowspan="2">
                             <img src="<?= url_img($un_episode->image); ?>" class="img-fluid" style="max-height: 240px;" />
                         </td>
                         <td class="p-2 border text-center"><strong><?= $un_episode->id; ?></strong></td>
-                        <td class="p-2 border text-center"><strong><?= $un_episode->numero; ?></strong></td>
-                        <td class="p-2 border text-center">Chapitre &nbsp;<?= $un_episode->id_chapitre; ?></td>
+                        <td class="p-2 border text-center"><strong>Episode&nbsp;<?= $un_episode->numero; ?></strong></td>
+                        <td class="p-2 border text-center">
+                            Saison<?= $saison_parent->numero; ?> Chapitre<?= $chapitre_parent->numero; ?>
+                        </td>
                         <td class="p-2 border"><strong><?= $un_episode->titre; ?></strong></td>
-                        <td class="p-2 border text-center"><a href="<?= route('episode&id=' . $un_episode->id . '#tete-lecture'); ?>"><i class="fas fa-eye"></i></a></td>
-                        <td class="p-2 border text-center"><a href="<?= route('admin-modifier-episode&id=' . $un_episode->id); ?>"><i class="fas fa-edit"></i></a></td>
-                        <td class="p-2 border text-center"><a href="<?= route('supprimer?id=' . $un_episode->id); ?>"><i class="fas fa-trash-alt"></i></a></td>
+                        <td class="p-2 border text-center">
+                            <a href="<?= route('episode&id=' . $un_episode->id . '#tete-lecture'); ?>">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </td>
+                        <td class="p-2 border text-center">
+                            <a href="<?= route('admin-modifier-episode&id=' . $un_episode->id); ?>">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td class="p-2 border text-center">
+                            <a href="<?= route('admin-supprimer-episode-handler&id=' . $un_episode->id, 'administration-episodes'); ?>"
+                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer l\'épisode : <?= $un_episode->titre ?> ?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
                     </tr>
                     <tr>
                         <td class="p-2 border" colspan="7"><strong>Résumé :</strong><br/><small><?= $un_episode->resume; ?></small></td>
                     </tr>
-                    <tr><td class="p-2" colspan="7"></td></tr>
+                    <tr><td class="p-2" colspan="9"></td></tr>
                 <?php endforeach; ?>
             </table>
         </div>

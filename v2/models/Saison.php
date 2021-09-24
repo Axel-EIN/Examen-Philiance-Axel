@@ -13,7 +13,7 @@ function saison_trouve_par_id($id): object {
 	
 	$saison_trouve = Saison::retrieveByField('id', $id, SimpleOrm::FETCH_ONE);
     if ($saison_trouve === null)
-        redirection('500', 'Erreur Interne!');
+        redirection('500', 'Désolé ! Cette saison n\'existe pas !');
 
 	return $saison_trouve;
 }

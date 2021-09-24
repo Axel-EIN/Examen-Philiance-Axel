@@ -18,19 +18,19 @@ function afficher_panneau_administration_episodes() {
     // AFFICHAGE
     $html_title = 'Administration des Episodes' .  ' | ' . NOM_DU_SITE;
     $h1 = 'Administration des Episodes';
-    include_once DOSSIER_VIEWS . '/admin/panneau-admin-episodes.html.php';
+    include_once DOSSIER_VIEWS . '/admin/admin-episodes.html.php';
 }
 
 function admin_creer_episode() {
-    // Affiche le formulaire pour creer un episode
+    // Affiche le formulaire pour creer un épisode
     
     // VERIFICATION si Administrateur est connecté
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
-    // VERIF des paramètres URL si on vient depuis un bouton Ajouter un Episode
+    // VERIF des paramètres URL si on vient depuis un bouton Ajouter un épisode
     if (!empty($_GET['id_chapitre']) && is_numeric($_GET['id_chapitre']) && $_GET['id_chapitre'] > 0)
     {
-        // RECUPERATION des données pour le formulaire pré-rempli si on vient depuis un bouton Ajouter un Episode 
+        // RECUPERATION des données pour le formulaire pré-rempli si on vient depuis un bouton Ajouter un épisode 
         $chapitre_parent = chapitre_trouve_par_id($_GET['id_chapitre']);
         $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison);
         $episodes_enfants = episodes_enfants_du_chapitre_triees_numero($chapitre_parent->id);
@@ -96,7 +96,7 @@ function admin_creer_episode_handler() {
 
     // AFFICHAGE
     redirection('episode&id=' . $nouvel_episode->id,
-                'L\'Episode a bien été crée!',
+                'L\'épisode a bien été crée !',
                 'success');
 }
 
@@ -106,9 +106,9 @@ function admin_modifier_episode() {
     // VERIFICATION si Administrateur est connecté
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
-    // VERIFICATION du paramètre URL pour retrouver l'episode
+    // VERIFICATION du paramètre URL pour retrouver l'épisode
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
-        redirection('404', 'Paramètres manquants ou invalide pour retrouver l\'episode');
+        redirection('404', 'Paramètres manquants ou invalides pour retrouver l\'épisode');
 
     // RECUPERATION des données
     $episode_trouve = Episode::retrieveByField('id', $_GET['id'], SimpleOrm::FETCH_ONE);
@@ -126,7 +126,7 @@ function admin_modifier_episode() {
     
     // AFFICHAGE
     $html_title = 'Modifier un episode' .  ' | Administration de ' . NOM_DU_SITE;
-    $h1 = 'Modifier un episode';
+    $h1 = 'Modifier un épisode';
     include_once DOSSIER_VIEWS . '/admin/modifier-episode.html.php'; 
 }
 
@@ -151,7 +151,7 @@ function admin_modifier_episode_handler() {
         
     // GESTION de l'image qui est facultative
     if (verif_image() === false)
-        redirection('admin-modifier-episode' . '&id=' . $_GET['id'], 'Image Invalide, veuillez réessayer avec un format ou taille appropriées', 'warning');
+        redirection('admin-modifier-episode' . '&id=' . $_GET['id'], 'Image invalide, veuillez réessayer avec un format ou taille appropriées', 'warning');
     elseif (verif_image() === null)
         $image_nouvel_url = $episode_trouve->image;
     else
@@ -172,7 +172,7 @@ function admin_modifier_episode_handler() {
 
     // AFFICHAGE
     redirection('episode&id=' . $episode_trouve->id,
-    'L\'episode a bien été modifiée!',
+    'L\'épisode a bien été modifié !',
     'success',
     '#tete-lecture');
 }
@@ -183,7 +183,7 @@ function admin_supprimer_episode_handler() {
     // VERIFICATION si Administrateur est connecté
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
     
-     // VERIFICATION du paramètre URL GET pour identifier l'episode à supprimer
+     // VERIFICATION du paramètre URL GET pour identifier l'épisode à supprimer
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
         redirection('500', 'Informations manquantes ou invalides pour le traitement interne dans le serveur');
 
@@ -192,7 +192,7 @@ function admin_supprimer_episode_handler() {
     $chapitre_parent = chapitre_trouve_par_id($episode_trouve->id_chapitre);
     $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison);
 
-    // VERIF si l'episode a des scenes enfants
+    // VERIF si l'épisode a des scenes enfants
     if (scenes_enfants_de_episode($_GET['id']))
         redirection('episode&id=' . $episode_trouve->id,
                     'Cette episode a des scènes enfants, veuillez les supprimer au préalable', 'danger', '#tete-lecture');
@@ -207,9 +207,9 @@ function admin_supprimer_episode_handler() {
     $episode_trouve->delete();
 
     // AFFICHAGE de la VUE
-    if (!empty($_GET['depuis'])) redirection($_GET['depuis'], 'L\'episode a bien été supprimée!');
+    if (!empty($_GET['depuis'])) redirection($_GET['depuis'], 'L\'épisode a bien été supprimé !');
     else redirection('aventure' . '&saison=' . $saison_parent->numero ,
-                        'L\'episode a bien été supprimée!',
+                        'L\'épisode a bien été supprimé !',
                         'success', '#tete-lecture-ch' . $chapitre_parent->numero,
                         $chapitre_parent->numero);
 }
