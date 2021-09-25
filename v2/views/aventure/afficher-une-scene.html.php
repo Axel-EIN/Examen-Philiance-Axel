@@ -43,7 +43,7 @@
             </div>
             <div class="col-2 text-center">
                 <a  href="<?= route('admin-supprimer-scene-handler&id=' . $scene->id); ?>"
-                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer la scène : <<?= $scene->titre ?> ?')">
+                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer la scène : <?= $scene->titre ?> ?')">
                         <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Supprimer
                 </a>
             </div>
@@ -59,10 +59,8 @@
         </div>
     </div>
 
-    <!-- ADMIN - INSERER A LA FIN -->
-    <?php if(admin_connecte()): $numero = $scene->numero+1; ?>
-        <?php include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?>
-    <?php endif; ?>
+    <!-- ADMIN - BTN - INSERER A LA FIN -->
+    <?php $numero = $scene->numero+1; if(admin_connecte()) include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?>
     
 </article>
 <!-- FIN : UNE SCENE -->

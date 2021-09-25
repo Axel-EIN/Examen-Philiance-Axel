@@ -1,8 +1,5 @@
-<?php
-
-if(!admin_connecte()) redirection('403', 'Accès non-autorisée!');
-
-include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
+<?php if(!admin_connecte()) redirection('403', 'Accès non-autorisée!'); ?>
+<?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
 <header class="container pt-5">
     <div class="row justify-content-center">
@@ -11,8 +8,11 @@ include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
             <h1 class="text-center">Bienvenue dans le Panneau d'Administration !</h1>
         </div>
 
-        <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
         <?php include DOSSIER_VIEWS . '/parts/nav-admin.html.php'; ?>
+
+        <div class="col-12">
+            <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
+        </div>
 
     </div>
 </header>

@@ -49,21 +49,28 @@
                 <label for="chapitre">Choisir la position du Chapitre</label>
                 <select class="form-control" id="chapitre" name="numero" required>
                     
-                    <?php if(empty($saison_parent)): ?>
+                    <?php if(empty($saison_parent) || empty($_GET['numero'])): ?>
                         <option value="" disabled></option>
                     <?php else: ?>
+
                         <?php if($chapitres_enfants): ?>
+
                             <?php foreach($chapitres_enfants as $un_chapitre): ?>
-                                <option value="<?= $un_chapitre->numero ?>">
-                                    <?= $un_chapitre->numero; ?> - insérer devant <?= $un_chapitre->titre ?>
+                                <option value="<?= $un_chapitre->numero ?>"
+                                    <?php if($un_chapitre->numero == $_GET['numero']) echo ' selected'; ?>>
+                                        <?= $un_chapitre->numero; ?> - insérer devant <?= $un_chapitre->titre ?>
                                 </option>
                             <?php endforeach; ?>
-                                <option value="<?= $un_chapitre->numero+1; ?>" selected>
-                                    <?= $un_chapitre->numero+1; ?> - insérer en dernier
+
+                                <option value="<?= $un_chapitre->numero+1; ?>"
+                                    <?php if($un_chapitre->numero+1 == $_GET['numero']) echo ' selected'; ?>>
+                                        <?= $un_chapitre->numero+1; ?> - insérer en dernier
                                 </option>
+
                         <?php else: ?>
                             <option value="1" selected>1 - Insérer en premier</option>
                         <?php endif; ?>
+
                     <?php endif; ?>
 
                 </select>

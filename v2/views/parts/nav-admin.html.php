@@ -1,7 +1,6 @@
-<!-- NAV ADMINISTRATION -->
+<!-- ADMIN - NAV -->
 <?php if (admin_connecte()) : ?>
     <nav class="nav justify-content-center">
-
         <a  class="nav-link <?php if (!empty($_GET['page']) && $_GET['page'] == 'administration'): ?>active<?php endif; ?>"
             href="<?= route('administration'); ?>">Scènes</a>
 
@@ -15,4 +14,4 @@
             href="<?= route('administration-saisons'); ?>">Saisons</a>
     </nav>
 <?php endif; ?>
-<!-- FIN : NAV ADMINISTRATION -->
+<!-- /ADMIN - NAV -->

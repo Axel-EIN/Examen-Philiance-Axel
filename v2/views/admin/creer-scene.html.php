@@ -68,20 +68,21 @@
             <div class="col">
                 <label for="scene">Choisir la position de la scène</label>
                 <select class="form-control" id="scene" name="numero" required>
-
+                    
                     <?php if(empty($episode_parent) || empty($_GET['numero'])): ?>
                         <option value="" disabled></option>
                     <?php else: ?>
                         <?php if($scenes_enfants): ?>
                             <?php foreach($scenes_enfants as $une_scene): ?>
                                 <option value="<?= $une_scene->numero ?>"
-                                    <?php if($une_scene->numero == $_GET['numero']) echo 'selected' ?>>
+                                    <?php if($une_scene->numero == $_GET['numero']) echo ' selected' ?>>
                                         <?= $une_scene->numero; ?> - insérer devant <?= $une_scene->titre ?>
                                 </option>
                             <?php endforeach; ?>
                                 <option value="<?= $une_scene->numero+1; ?>"
-                                    <?php if($une_scene->numero+1 == $_GET['numero']) echo 'selected' ?>>
-                                        <?= $une_scene->numero+1; ?> - insérer en dernier</option>
+                                    <?php if($une_scene->numero+1 == $_GET['numero']) echo 'selected'; ?>>
+                                        <?= $une_scene->numero+1; ?> - insérer en dernier
+                                </option>
                         <?php else: ?>
                             <option value="1">1 - Insérer en premier</option>
                         <?php endif; ?>

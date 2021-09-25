@@ -63,17 +63,19 @@
                 <label for="scene">Choisir la position de l'épisode</label>
                 <select class="form-control" id="episode" name="numero" required>
 
-                    <?php if(empty($chapitre_parent)): ?>
+                    <?php if(empty($chapitre_parent) || empty($_GET['numero'])): ?>
                         <option value="" disabled></option>
                     <?php else: ?>
                         <?php if($episodes_enfants): ?>
                             <?php foreach($episodes_enfants as $un_episode): ?>
                                 <option value="<?= $un_episode->numero ?>">
-                                    <?= $un_episode->numero; ?> - insérer devant <?= $un_episode->titre ?>
+                                    <?php if($un_episode->numero == $_GET['numero']) echo ' selected' ?>>
+                                        <?= $un_episode->numero; ?> - insérer devant <?= $un_episode->titre ?>
                                 </option>
                             <?php endforeach; ?>
-                                <option value="<?= $un_episode->numero+1; ?>" selected>
-                                    <?= $un_episode->numero+1; ?> - insérer en dernier
+                                <option value="<?= $un_episode->numero+1; ?>"
+                                    <?php if($un_episode->numero+1 == $_GET['numero']) echo ' selected'; ?>>
+                                        <?= $un_episode->numero+1; ?> - insérer en dernier
                                 </option>
                         <?php else: ?>
                             <option value="1" selected>1 - Insérer en premier</option>

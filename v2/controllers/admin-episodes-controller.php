@@ -27,8 +27,11 @@ function admin_creer_episode() {
     // VERIFICATION si Administrateur est connecté
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
-    // VERIF des paramètres URL si on vient depuis un bouton Ajouter un épisode
-    if (!empty($_GET['id_chapitre']) && is_numeric($_GET['id_chapitre']) && $_GET['id_chapitre'] > 0)
+    // PARAMETRAGE du formulaire pré-rempli si on arrive depuis un bouton
+    if (
+        !empty($_GET['id_chapitre']) && is_numeric($_GET['id_chapitre']) && $_GET['id_chapitre'] > 0
+        && !empty($_GET['numero']) && is_numeric($_GET['numero']) && $_GET['numero'] > 0
+        )
     {
         // RECUPERATION des données pour le formulaire pré-rempli si on vient depuis un bouton Ajouter un épisode 
         $chapitre_parent = chapitre_trouve_par_id($_GET['id_chapitre']);

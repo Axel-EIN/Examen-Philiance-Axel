@@ -43,23 +43,25 @@
             <!-- PRECEDENT -->                 
             <div class="d-flex flex-column justify-content-center" style="width: 180px;">
                 <?php if (!empty($episode_precedent)): ?>
-                    <a href="<?= route('episode&id=' . $episode_precedent->id . '#tete-lecture'); ?>"
-                       class="btn btn-primary" style="border-radius: 5px; box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4);">
-                    <img src="<?= url_img($episode_precedent->image); ?>" alt="<?= $episode_precedent->titre; ?>"
-                       class="img-fluid" style="width: 180px;" />
-                       <br/>Episode précédent</a>
+                    <div style="border: thick double <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>; border-radius: 15px;">
+                        <a href="<?= route('episode&id=' . $episode_precedent->id . '#tete-lecture'); ?>">
+                            <img src="<?= url_img($episode_precedent->image); ?>" alt="<?= $episode_precedent->titre; ?>"
+                                 class="img-fluid survol" style="width: 180px; border-radius: 15px;" />
+                        </a>
+                    </div>
                 <?php endif; ?>
             </div>
 
             <!-- CHEVRON LEFT -->
-            <div class="d-flex flex-column justify-content-center px-3" style="width:64px; color:white;">
+            <div class="d-flex flex-column justify-content-center px-3"
+                 style="width:64px; color: <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>;">
                 <?php echo file_get_contents(url_img("icons/chevron-left-solid.svg")); ?>
                 <!-- <img src="<?= url_img("icons/chevron-left-solid.svg"); ?>" class="img-fluid" style="width:48px;" /> -->
             </div>
 
             <!-- COURANT -->
-            <div class="d-flex flex-column justify-content-center btn btn-primary"
-                 style="box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4); border-radius: 5px; cursor: unset;">
+            <div class="d-flex flex-column justify-content-center"
+                 style="border: thick double <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>; border-radius: 20px;">
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <div style="position: relative;">
                         <span class="display-1 numero-episode-courant"
@@ -67,13 +69,14 @@
                                 <?= $episode_trouve->numero; ?>
                         </span>
                         <img src="<?= url_img($episode_trouve->image); ?>" alt="<?= $episode_trouve->titre; ?>"
-                             class="img-fluid" style="width: 420px;" />
+                             class="img-fluid" style="width: 420px; border-radius: 20px;" />
                     </div>
                 </div>
             </div>
 
             <!-- CHEVRON RIGHT -->
-            <div class="d-flex flex-column justify-content-center px-3" style="width:64px; color:white;">
+            <div class="d-flex flex-column justify-content-center px-3"
+                 style="width:64px; color: <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>;">
                 <?php echo file_get_contents(url_img("icons/chevron-right-solid.svg")); ?>
                 <!-- <img src="<?= url_img("icons/chevron-right-solid.svg"); ?>" class="img-fluid mx-3" style="width:48px;" /> -->
             </div>
@@ -81,11 +84,12 @@
             <!-- SUIVANT -->
             <div class="text-left d-flex flex-column justify-content-center" style="width: 180px;">
                 <?php if (!empty($episode_suivant)) : ?>
-                    <a href="<?= route('episode&id=' . $episode_suivant->id . '#tete-lecture'); ?>"
-                       class="btn btn-primary" style="border-radius: 5px; box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .4);">
-                    <img src="<?= url_img($episode_suivant->image); ?>" alt="<?= $episode_suivant->titre; ?>"
-                         class="img-fluid" style="width: 180px;" />
-                    <br/>Episode suivant</a>
+                    <div style="border: thick double <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>; border-radius: 15px;">
+                        <a href="<?= route('episode&id=' . $episode_suivant->id . '#tete-lecture'); ?>">
+                            <img src="<?= url_img($episode_suivant->image); ?>" alt="<?= $episode_suivant->titre; ?>"
+                                 class="img-fluid survol" style="width: 180px; border-radius: 15px;" />
+                        </a>
+                    </div>
                 <?php endif; ?>
             </div>
 
@@ -119,12 +123,17 @@
                                     <h5>Il n'y a pas encore de scènes pour cette épisode !</h5>
                                 </div>
                             </div>
-                            <!-- ADMIN INSERER SCENE -->
-                            <?php include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?>
+
+                            <!-- ADMIN - BTN - INSERER SCENE -->
+                            <?php $numero = 1; if(admin_connecte()) include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?>
+
                         <?php else: ?>
-                            <!-- ADMIN INSERER SCENE -->
-                            <?php include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?>
+
+                            <!-- ADMIN - BTN - INSERER SCENE -->
+                            <?php $numero = 1; if(admin_connecte()) include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?>
+
                             <?php foreach ($scenes as $scene) { include DOSSIER_VIEWS . '/aventure/afficher-une-scene.html.php'; } ?>
+                            
                         <?php endif; ?>
 
                         <div class="text-center pb-3">

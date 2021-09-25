@@ -31,10 +31,13 @@ function admin_creer_chapitre() {
     // VERIFICATION si Administrateur est connecté
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
-    // VERIFICATION si on a un get id_saison donc si on doit afficher un formulaire pré-rempli
-    if (!empty($_GET['id_saison']) && is_numeric($_GET['id_saison']) && $_GET['id_saison'] > 0) {
-
-        // RECUPERATION DES DONNEES pour pré-remplir le formulaire
+    // PARAMETRAGE du formulaire pré-rempli si on arrive depuis un bouton
+    if (
+        !empty($_GET['id_saison']) && is_numeric($_GET['id_saison']) && $_GET['id_saison'] > 0
+        && !empty($_GET['numero']) && is_numeric($_GET['numero']) && $_GET['numero'] > 0
+        )
+    {
+        // RECUPERATION des données pour le formulaire pré-rempli si on vient depuis un bouton Insérer 
         $saison_parent = saison_trouve_par_id($_GET['id_saison']);
         $chapitres_enfants = chapitres_enfants_de_saison_tries_numero($saison_parent->id);
         $get_saison = '&id_saison=' . $_GET['id_saison'];
@@ -103,7 +106,7 @@ function admin_creer_chapitre_handler() {
 
     // AFFICHAGE de la VUE
     redirection('aventure&saison=' . $saison_parent->numero,
-                 'Le chapitre a bien été crée !', 'success', '', '#tete-lecture-ch' . $nouveau_chapitre->numero);
+                 'Le chapitre a bien été crée !', 'success', '#tete-lecture-ch' . $nouveau_chapitre->numero);
 
 }
 
@@ -190,7 +193,7 @@ function admin_modifier_chapitre_handler() {
     redirection('aventure&saison=' . $chapitre_trouve->id_saison
                 . '&chapitre=' . $chapitre_trouve->numero,
                 'Le chapitre a bien été modifié !',
-                'success', '', '#tete-lecture-ch' . $chapitre_trouve->numero);
+                'success', '#tete-lecture-ch' . $chapitre_trouve->numero);
 }
 
 function admin_supprimer_chapitre_handler() {
@@ -207,9 +210,10 @@ function admin_supprimer_chapitre_handler() {
     $saison_parent = saison_trouve_par_id($chapitre_trouve->id_saison);
 
     if (episodes_enfants_du_chapitre($_GET['id']))
-        redirection('aventure&saison=' . $saison_parent->numero,
+        redirection('aventure&saison=' . $saison_parent->numero . '&chapitre=' . $chapitre_trouve->numero,
                     'Ce chapitre a des épisodes enfants, veuillez les supprimer au préalable',
-                    'danger', '', '#tete-lecture-ch' . $chapitre_trouve->numero);
+                    'danger',
+                    '#tete-lecture-ch' . $chapitre_trouve->numero);
 
     supprimer_image($chapitre_trouve->image, 'chapitres/');
 

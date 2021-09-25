@@ -29,15 +29,19 @@ function admin_creer_scene() {
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
     // PARAMETRAGE du formulaire pré-rempli si on arrive depuis un bouton
-    if (!empty($_GET['id_episode']) && is_numeric($_GET['id_episode']) && $_GET['id_episode'] > 0)
+    if (
+        !empty($_GET['id_episode']) && is_numeric($_GET['id_episode']) && $_GET['id_episode'] > 0
+        && !empty($_GET['numero']) && is_numeric($_GET['numero']) && $_GET['numero'] > 0
+        )
     {
+        // RECUPERATION des données pour le formulaire pré-rempli si on vient depuis un bouton Insérer 
         $episode_parent = episode_trouve_par_id($_GET['id_episode']);
         $chapitre_parent = chapitre_trouve_par_id($episode_parent->id_chapitre);
         $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison);
         $scenes_enfants = scenes_enfants_de_episode_triees_numero($episode_parent->id);
         $get_episode = '&id_episode=' . $_GET['id_episode'];
-    }
-    else $get_episode = '';
+        
+    } else $get_episode = '';
     
     // RECUPERATION des données pour les listes déroulantes en JavaScript
     $tous_les_episodes = Episode::all();
@@ -58,27 +62,40 @@ function admin_creer_scene_handler() {
     // VERIF Admin connecte
     if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
 
-    // RECUPERATION de la variable id_episode selon si on arrive depuis un formulaire pre-rempli (POST) ou non (GET)
-    if (!empty($_POST['id_episode'])) $id_episode = $_POST['id_episode'];
-    elseif (!empty($_GET['id_episode'])) $id_episode = $_GET['id_episode'];
+    // echo '<pre>';
+    // var_dump($_POST);
+    // echo '</pre><br/>';
+    // echo '<pre>';
+    // var_dump($_GET);
+    // echo '</pre>';
+    // die;
+
+    // RECUPERATION des variable id_episode et numero selon si on arrive depuis un bouton (GET) ou pas (POST)
+    if (!empty($_POST['id_episode']) && is_numeric($_POST['id_episode']) && $_POST['id_episode'] > 0) {
+            $id_episode = $_POST['id_episode'];
+        }
+    elseif (
+        !empty($_GET['id_episode']) && is_numeric($_GET['id_episode']) && $_GET['id_episode'] > 0) {
+            $id_episode = $_GET['id_episode'];
+        }
+    else redirection('admin-creer-scene', 'LOL Informations postées manquantes ou invalides !', 'warning');
     
-    // VERIFICATION de l'intégrité des données postées
-    if ( 
+    // VERIFICATION de l'intégrité des autres données postées
+    if (
         empty($_POST['numero']) || !is_numeric($_POST['numero']) || $_POST['numero'] < 1
-        || empty($id_episode) || !is_numeric($id_episode) || $id_episode < 1
         || empty($_POST['titre']) || is_numeric($_POST['titre'])
         || empty($_POST['temps']) || is_numeric($_POST['temps'])
         || empty($_POST['texte']) || is_numeric($_POST['texte'])
-        ) redirection('admin-creer-scene', 'Informations postées manquantes ou invalides', 'warning');
+        ) redirection('admin-creer-scene', 'Informations postées manquantes ou invalides !', 'warning');
     
     // RECUPERATION des données
     $episode_parent = episode_trouve_par_id($id_episode);
     $chapitre_parent = chapitre_trouve_par_id($episode_parent->id_chapitre);
     $saison_parent = saison_trouve_par_id($episode_parent->id_saison);
 
-    // GESTION de l'image qui est facultative
+    // GESTION de l'image (l'image est facultative)
     if (verif_image() === false)
-        redirection('admin-creer-scene', 'Image Invalide, veuillez réessayer avec un format ou taille appropriées', 'warning');
+        redirection('admin-creer-scene', 'Image invalide ! Veuillez réessayer avec un format ou une taille appropriée !', 'warning');
     elseif (verif_image() === null)
         $image_nouvel_url = URL_IMAGE_DEFAUT_720;
     else

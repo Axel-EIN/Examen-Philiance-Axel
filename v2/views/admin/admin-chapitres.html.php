@@ -8,8 +8,11 @@
             <h1 class="text-center">Bienvenue dans le Panneau d'Administration !</h1>
         </div>
 
-        <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
         <?php include DOSSIER_VIEWS . '/parts/nav-admin.html.php'; ?>
+
+        <div class="col-12">
+            <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
+        </div>
 
     </div>
 </header>
@@ -73,9 +76,11 @@
                     </tr>
                     <tr>
                         <td class="p-2 border align-middle" colspan="4">
-                            <strong>Maître du Jeu :</strong> <?= utilisateur_trouve_par_id($un_chapitre->id_mj)->prenom; ?></td>
+                            <strong>Maître du Jeu :</strong> <?= utilisateur_trouve_par_id($un_chapitre->id_mj)->prenom; ?>
+                        </td>
                         <td class="p-2 border text-center">
-                            <a href="<?= route('admin_supprimer_chapitre&id=' . $un_chapitre->id, 'administration-chapitres'); ?>">
+                            <a href="<?= route('admin-supprimer-chapitre-handler&id=' . $un_chapitre->id, 'administration-chapitres'); ?>"
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer le chapitre : <?= $un_chapitre->titre ?> ?')">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
