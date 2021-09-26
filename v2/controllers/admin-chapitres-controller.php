@@ -7,10 +7,10 @@ require_once DOSSIER_MODELS . '/Episode.php';
 require_once DOSSIER_MODELS . '/Scene.php';
 
 function afficher_panneau_administration_chapitres() {
-    // Affiche la page du panneau d'administration qui liste les chapitres
+    // Affiche Panneau Admin des Chapitres
 
     // VERIF Admin Connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); 
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé!'); 
 
     // RECUPERATION données
     $chapitres = Chapitre::all();
@@ -22,14 +22,14 @@ function afficher_panneau_administration_chapitres() {
     // AFFICHAGE
     $html_title = 'Administration des chapitres' .  ' | ' . NOM_DU_SITE;
     $h1 = 'Administration des chapitres';
-    include_once DOSSIER_VIEWS . '/admin/admin-chapitres.html.php';
+    include_once DOSSIER_VIEWS . '/admin/chapitres/admin-chapitres.html.php';
 }
 
 function admin_creer_chapitre() {
-    // Affiche le formulaire pour creer un chapitre
+    // Affiche Formulaire Creer Chapitre
     
     // VERIFICATION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // PARAMETRAGE du formulaire pré-rempli si on arrive depuis un bouton
     if (
@@ -37,7 +37,7 @@ function admin_creer_chapitre() {
         && !empty($_GET['numero']) && is_numeric($_GET['numero']) && $_GET['numero'] > 0
         )
     {
-        // RECUPERATION des données pour le formulaire pré-rempli si on vient depuis un bouton Insérer 
+        // RECUPERATION des données pour formulaire pré-rempli si on vient depuis bouton "Insérer"
         $saison_parent = saison_trouve_par_id($_GET['id_saison']);
         $chapitres_enfants = chapitres_enfants_de_saison_tries_numero($saison_parent->id);
         $get_saison = '&id_saison=' . $_GET['id_saison'];
@@ -45,7 +45,6 @@ function admin_creer_chapitre() {
     } else $get_saison = '';
 
     // RECUPERATION DES DONNEES pour les tableaux de liste dérouante en JavaScript
-    $tous_les_chapitres = Chapitre::all();
     $toutes_les_saisons = Saison::all();
 
     // RECUPERATION des utilisateurs
@@ -55,14 +54,14 @@ function admin_creer_chapitre() {
      // AFFICHAGE
     $html_title = 'Créer un Chapitre | Administration de ' . NOM_DU_SITE;
     $h1 = 'Créer un Chapitre';
-    include_once DOSSIER_VIEWS . '/admin/creer-chapitre.html.php';
+    include_once DOSSIER_VIEWS . '/admin/chapitres/creer-chapitre.html.php';
 }
 
 function admin_creer_chapitre_handler() {
     // Gère les données postées du forumlaire pour creer un chapitre
 
     // VERIRIFACTION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé!');
 
     // VERIFICATION si le paramètre id_saison vient d'un formulaire pré-rempli (POST) ou non (GET)
     if (!empty($_POST['id_saison'])) $id_saison = $_POST['id_saison'];
@@ -98,7 +97,7 @@ function admin_creer_chapitre_handler() {
     $nouveau_chapitre->titre = htmlspecialchars($_POST['titre']);
     $nouveau_chapitre->citation = htmlspecialchars($_POST['citation']);
     $nouveau_chapitre->id_saison = $saison_parent->id;
-    $nouveau_chapitre->couleur = $_POST['couleur'];
+    $nouveau_chapitre->couleur = htmlspecialchars($_POST['couleur']);
     $nouveau_chapitre->image = $image_nouvel_url;
     $nouveau_chapitre->id_mj = $_POST['id_mj'];
 
@@ -114,7 +113,7 @@ function admin_modifier_chapitre() {
     // Affiche le formulaire pour modifier un chapitre
 
     // VERIFIFACTION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); 
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !'); 
 
     // VERIFIFACTION des paramètres d'URL
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
@@ -139,14 +138,14 @@ function admin_modifier_chapitre() {
     // AFFICHAGE
     $html_title = 'Modifier un chapitre' .  ' | Administration de ' . NOM_DU_SITE;
     $h1 = 'Modifier un chapitre';
-    include_once DOSSIER_VIEWS . '/admin/modifier-chapitre.html.php';
+    include_once DOSSIER_VIEWS . '/admin/chapitres/modifier-chapitre.html.php';
 }
 
 function admin_modifier_chapitre_handler() {
     // Gère les données postées du forumlaire pour modifier un chapitre
 
     // VERIFIFACTION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); // VERIF Admin Connecté
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // VERIFICATION des données postées
     if (
@@ -157,7 +156,7 @@ function admin_modifier_chapitre_handler() {
         || empty($_POST['citation']) || is_numeric($_POST['citation'])
         || empty($_POST['couleur'])
         || empty($_POST['id_mj']) || !is_numeric($_POST['id_mj']) || $_POST['id_mj'] < 1
-        ) redirection('admin-modifier-chapitre' . '&id=' . $_GET['id'], 'Informations postées manquantes ou invalides', 'warning');
+        ) redirection('admin-modifier-chapitre' . '&id=' . $_GET['id'], 'Informations postées manquantes ou invalides !', 'warning');
   
     // RECUPERATION DES DONNEES
     $chapitre_trouve = chapitre_trouve_par_id($_GET['id']);
@@ -166,7 +165,7 @@ function admin_modifier_chapitre_handler() {
     // GESTION de l'image (qui est facultative donc la valeur null est autorisée)
     if (verif_image() === false)
         redirection('admin-modifier-chapitre' . '&id=' . $_GET['id'],
-                    'Image invalide, veuillez réessayer avec un format ou taille appropriées', 'warning');
+                    'Image invalide, veuillez réessayer avec un format ou une taille appropriée !', 'warning');
     elseif (verif_image() === null)
         $image_nouvel_url = $chapitre_trouve->image;
     else
@@ -184,7 +183,7 @@ function admin_modifier_chapitre_handler() {
     $chapitre_trouve->citation = htmlspecialchars($_POST['citation']);
     $chapitre_trouve->image = $image_nouvel_url;
     $chapitre_trouve->id_saison = $_POST['id_saison'];
-    $chapitre_trouve->couleur = $_POST['couleur'];
+    $chapitre_trouve->couleur = htmlspecialchars($_POST['couleur']);
     $chapitre_trouve->id_mj = $_POST['id_mj'];
 
     $chapitre_trouve->save();
@@ -200,7 +199,7 @@ function admin_supprimer_chapitre_handler() {
     // Gère la suppression du chapitre demandé
 
     // VERIFIFACTION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
     
      // VERIFICATION du paramètre URL GET
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)

@@ -1,4 +1,4 @@
-<?php if(!admin_connecte()) redirection('403', 'Accès non-autorisée!'); ?>
+<?php if(!admin_connecte()) redirection('403', 'Accès non-autorisé !'); ?>
 <?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
 <header class="container pt-5">

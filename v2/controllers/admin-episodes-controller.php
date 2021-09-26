@@ -10,7 +10,7 @@ function afficher_panneau_administration_episodes() {
     // Affiche la page du panneau d'administration qui liste des episodes
 
     // VERIFIFICATION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!'); 
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !'); 
 
     // RECUPERATION des données des Episodes
     $episodes= Episode::all();
@@ -18,14 +18,14 @@ function afficher_panneau_administration_episodes() {
     // AFFICHAGE
     $html_title = 'Administration des Episodes' .  ' | ' . NOM_DU_SITE;
     $h1 = 'Administration des Episodes';
-    include_once DOSSIER_VIEWS . '/admin/admin-episodes.html.php';
+    include_once DOSSIER_VIEWS . '/admin/episodes/admin-episodes.html.php';
 }
 
 function admin_creer_episode() {
     // Affiche le formulaire pour creer un épisode
     
     // VERIFICATION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // PARAMETRAGE du formulaire pré-rempli si on arrive depuis un bouton
     if (
@@ -42,22 +42,20 @@ function admin_creer_episode() {
     } else $get_chapitre = '';
 
     // RECUPERATION des données pour les tableaux de liste déroulantes Javascript
-    $tous_les_episodes = Episode::all();
     $tous_les_chapitres = Chapitre::all();
     $toutes_les_saisons = Saison::all();
-    $toutes_les_scenes = Scene::all();
     
     // AFFICHAGE
     $html_title = 'Créer un Episode | Administration de ' . NOM_DU_SITE;
     $h1 = 'Créer un Episode';
-    include_once DOSSIER_VIEWS . '/admin/creer-episode.html.php';
+    include_once DOSSIER_VIEWS . '/admin/episodes/creer-episode.html.php';
 }
 
 function admin_creer_episode_handler() {
     // Gère les données postées du forumlaire pour creer un épisode
 
     // VERIFICATION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // GESTION de l'arrivée de la variable id_chapitre si depuis formulaire pré-rempli (POST) ou non (GET)
     if (!empty($_POST['id_chapitre'])) $id_chapitre = $_POST['id_chapitre'];
@@ -107,7 +105,7 @@ function admin_modifier_episode() {
     // Affiche le formulaire pour modifier un épisode
 
     // VERIFICATION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // VERIFICATION du paramètre URL pour retrouver l'épisode
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
@@ -130,14 +128,14 @@ function admin_modifier_episode() {
     // AFFICHAGE
     $html_title = 'Modifier un episode' .  ' | Administration de ' . NOM_DU_SITE;
     $h1 = 'Modifier un épisode';
-    include_once DOSSIER_VIEWS . '/admin/modifier-episode.html.php'; 
+    include_once DOSSIER_VIEWS . '/admin/episodes/modifier-episode.html.php'; 
 }
 
 function admin_modifier_episode_handler() {
     // Gère les données postées du forumlaire pour modifier un épisode
 
     // VERIFICATION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
     
     if ( // VERIFICATION de l'intégrité des données postées
         empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1
@@ -184,7 +182,7 @@ function admin_supprimer_episode_handler() {
     // Gère la suppression de l'épisode demandée
 
     // VERIFICATION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
     
      // VERIFICATION du paramètre URL GET pour identifier l'épisode à supprimer
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)

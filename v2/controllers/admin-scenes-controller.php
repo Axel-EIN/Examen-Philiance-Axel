@@ -10,7 +10,7 @@ function afficher_panneau_administration_scenes() {
     // Affiche la page du panneau d'administration qui liste les scènes
 
     // VERIFICATION si Administrateur est Connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // RECUPERATION des données des scènes
     $scenes = Scene::all();
@@ -19,14 +19,14 @@ function afficher_panneau_administration_scenes() {
     // AFFICHAGE
     $html_title = 'Administration des Scènes' .  ' | ' . NOM_DU_SITE;
     $h1 = 'Administration des Scènes';
-    include_once DOSSIER_VIEWS . '/admin/admin-scenes.html.php';
+    include_once DOSSIER_VIEWS . '/admin/scenes/admin-scenes.html.php';
 }
 
 function admin_creer_scene() {
     // Affiche le formulaire pour creer une scene
     
     // VERIFICATION si Administrateur est connecte
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // PARAMETRAGE du formulaire pré-rempli si on arrive depuis un bouton
     if (
@@ -47,12 +47,11 @@ function admin_creer_scene() {
     $tous_les_episodes = Episode::all();
     $tous_les_chapitres = Chapitre::all();
     $toutes_les_saisons = Saison::all();
-    $toutes_les_scenes = Scene::all();
 
     // AFFICHAGE
     $html_title = 'Créer une scène | Administration de ' . NOM_DU_SITE;
     $h1 = 'Créer une scène';
-    include_once DOSSIER_VIEWS . '/admin/creer-scene.html.php'; 
+    include_once DOSSIER_VIEWS . '/admin/scenes/creer-scene.html.php'; 
 
 }
 
@@ -60,15 +59,7 @@ function admin_creer_scene_handler() {
     // Gère les données postées du forumlaire pour creer scene
 
     // VERIF Admin connecte
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
-
-    // echo '<pre>';
-    // var_dump($_POST);
-    // echo '</pre><br/>';
-    // echo '<pre>';
-    // var_dump($_GET);
-    // echo '</pre>';
-    // die;
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // RECUPERATION des variable id_episode et numero selon si on arrive depuis un bouton (GET) ou pas (POST)
     if (!empty($_POST['id_episode']) && is_numeric($_POST['id_episode']) && $_POST['id_episode'] > 0) {
@@ -126,7 +117,7 @@ function admin_modifier_scene() {
     // Affiche le formulaire pour modifier scene
 
     // VERIFICATION si Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // VERIFICATION de l'intégrité des paramètres d'URL
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
@@ -151,14 +142,14 @@ function admin_modifier_scene() {
     // AFFICHAGE
     $html_title = 'Modifier une scène' .  ' | Administration de ' . NOM_DU_SITE;
     $h1 = 'Modifier une scène';
-    include_once DOSSIER_VIEWS . '/admin/modifier-scene.html.php';
+    include_once DOSSIER_VIEWS . '/admin/scenes/modifier-scene.html.php';
 }
 
 function admin_modifier_scene_handler() {
     // Gère les données postées du forumlaire pour modifier scene
 
     // VERIF Admin connecte
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
     
     // VERIFICATION de l'intégrité des données postées
     if ( 
@@ -222,7 +213,7 @@ function admin_supprimer_scene_handler() {
     // Gère la suppression de la scène demandée
 
     // VERIFICATION si l'Administrateur est connecté
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisée!');
+    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
 
     // VERIFICATION du paramètre URL GET
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1) 

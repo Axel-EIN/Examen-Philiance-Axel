@@ -10,7 +10,7 @@
         <a  class="nav-link <?php if (!empty($_GET['page']) && $_GET['page'] == 'administration-chapitres'): ?>active<?php endif; ?>"
             href="<?= route('administration-chapitres'); ?>">Chapitres</a>
 
-        <a  class="nav-link  <?php if (!empty($_GET['page']) && $_GET['page'] == 'administration-saisons'): ?>active<?php endif; ?> disabled"
+        <a  class="nav-link  <?php if (!empty($_GET['page']) && $_GET['page'] == 'administration-saisons'): ?>active<?php endif; ?>"
             href="<?= route('administration-saisons'); ?>">Saisons</a>
     </nav>
 <?php endif; ?>

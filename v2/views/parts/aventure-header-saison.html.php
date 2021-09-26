@@ -11,15 +11,13 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
 
         <div class="header">
             <h1 class="display-5 text-center">
-                <div class="d-flex w-100 justify-content-center">
+                <div class="d-flex w-100 justify-content-center align-items-baseline">
 
                     <!-- BOUTON SAISON PRECEDENTE -->
-                    <div class="text-center" style="width: 64px">
+                    <div class="text-center p-2 mr-2" style="width: 48px">
                         <?php if (!empty($saison_precedente)): ?>
-                            <a href="index.php?page=aventure&saison=<?= $saison_precedente->numero; ?>">
-                                <button class="btn btn-primary btn-lg text-center btn-saison" type="button">
-                                    <i class="fas fa-caret-left"></i>
-                                </button>
+                            <a class="text-light" href="<?= route('aventure&saison=' . $saison_precedente->numero); ?>">
+                                <?php echo file_get_contents(url_img('icons/chevron-left-solid.svg')); ?>
                             </a>
                         <?php endif; ?>
                     </div>
@@ -28,12 +26,10 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
                     <div>SAISON <?= $saison_trouve->numero ?></div>
 
                     <!-- BOUTON SAISON SUIVANTE -->
-                    <div class="text-center" style="width: 64px">
-                        <?php if (!empty($saison_suivante)) : ?>
-                            <a href="index.php?page=aventure&saison=<?= $saison_suivante->numero; ?>">
-                                <button class="btn btn-primary btn-lg text-center btn-saison" type="button">
-                                   <i class="fas fa-caret-right"></i>
-                                </button>
+                    <div class="text-center p-2 ml-2" style="width: 48px">
+                        <?php if (!empty($saison_suivante)): ?>
+                            <a class="text-light" href="index.php?page=aventure&saison=<?= $saison_suivante->numero; ?>">
+                                <?php echo file_get_contents(url_img('icons/chevron-right-solid.svg')); ?>
                             </a>
                         <?php endif; ?>
                     </div>

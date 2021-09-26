@@ -1,26 +1,23 @@
-<?php if(!admin_connecte()) redirection('403', 'Accès non-autorisée!'); ?>
+<?php if(!admin_connecte()) redirection('403', 'Accès non-autorisé !'); ?>
 <?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
 <header class="container pt-5">
     <div class="row justify-content-center">
-        
         <div class="col-12">
             <h1 class="text-center">Bienvenue dans le Panneau d'Administration !</h1>
         </div>
-
         <?php include DOSSIER_VIEWS . '/parts/nav-admin.html.php'; ?>
-
         <div class="col-12">
             <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
         </div>
-
     </div>
 </header>
 
 <main class="container">
     
     <!-- AFFICHAGE ADMIN : LISTE CHAPITRES -->
-    <section class="row my-5 py-2">
+    <section id="chapitres" class="row my-3 py-2">
+        
         <div class="col-8">
             <h3 class="py-3">Chapitres :</h3>
         </div>

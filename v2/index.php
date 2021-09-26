@@ -166,6 +166,31 @@ if (!empty($_GET['page'])) {
             afficher_panneau_administration_saisons();
             break;
 
+        case 'admin-creer-saison':
+            require_once DOSSIER_CONTROLLERS . '/admin-saisons-controller.php';
+            admin_creer_saison();
+            break;
+
+        case 'admin-creer-saison-handler':
+            require_once DOSSIER_CONTROLLERS . '/admin-saisons-controller.php';
+            admin_creer_saison_handler();
+            break;
+
+        case 'admin-modifier-saison':
+            require_once DOSSIER_CONTROLLERS . '/admin-saisons-controller.php';
+            admin_modifier_saison();
+            break;
+
+        case 'admin-modifier-saison-handler':
+            require_once DOSSIER_CONTROLLERS . '/admin-saisons-controller.php';
+            admin_modifier_saison_handler();
+            break;
+
+        case 'admin-supprimer-saison-handler':
+            require_once DOSSIER_CONTROLLERS . '/admin-saisons-controller.php';
+            admin_supprimer_saison_handler();
+            break;
+
 
         /**
          * PAGE ERREURS

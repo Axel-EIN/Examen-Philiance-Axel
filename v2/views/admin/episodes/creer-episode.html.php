@@ -60,7 +60,7 @@
 
         <div class="form-row">
             <div class="col-6">
-                <label for="scene">Choisir la position de l'épisode</label>
+                <label for="episode">Choisir la position de l'épisode</label>
                 <select class="form-control" id="episode" name="numero" required>
 
                     <?php if(empty($chapitre_parent) || empty($_GET['numero'])): ?>

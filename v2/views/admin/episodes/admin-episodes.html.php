@@ -1,4 +1,4 @@
-<?php if(!admin_connecte()) redirection('403', 'Accès non-autorisée!'); ?>
+<?php if(!admin_connecte()) redirection('403', 'Accès non-autorisé !'); ?>
 <?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
 <header class="container pt-5">
@@ -20,7 +20,7 @@
 <main class="container">
 
     <!-- AFFICHAGE ADMIN : LISTE EPISODES -->
-    <section class="row my-5 py-2">
+    <section id="episodes" class="row my-3 py-2">
 
         <div class="col-8">
             <h3 class="py-3">Episodes :</h3>
