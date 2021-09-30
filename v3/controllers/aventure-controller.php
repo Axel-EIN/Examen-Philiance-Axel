@@ -70,6 +70,7 @@ function afficher_episode() {
     }
 
     // AFFICHAGE
+    require_once DOSSIER_MODELS . '/Participation.php';
     $html_title = 'Episode n°' . $episode_trouve->numero . ' : ' . $episode_trouve->titre
               . ' | Chapitre ' . $chapitre_parent->numero
               . ' | Saison ' . $saison_parent->numero;

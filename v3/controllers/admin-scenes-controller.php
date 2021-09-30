@@ -192,11 +192,51 @@ function admin_modifier_scene_handler() {
                             scenes_enfants_de_episode($episode_parent->id),
                             scenes_enfants_de_episode($_POST['id_episode']));
     
+    // GESTION des liens des personnages dans le text
+    $texte_input = htmlspecialchars($_POST['texte']);
+
+    echo '<strong>Affichage du texte après la fonction HTMLSPECIALCHARS</strong> :<br/>';
+    echo '<pre>';
+    var_dump($texte_input);
+    echo '<pre>';
+
+    $tableau = [];
+    
+
+    preg_match_all('#\[(.*)\]#Ui', $texte_input, $tableau);
+
+    echo '<strong>Affichage du texte après la fonction PREGMATCH avec le Tableau de prénom</strong> :<br/>';
+    echo '<pre>';
+    var_dump($tableau);
+    echo '<pre>';
+    
+
+    require_once DOSSIER_MODELS . '/Personnage.php';
+    $tableau_remplacement = [];
+
+    foreach ($tableau[1] as $un_match) {
+        echo 'PASSAGE pour ' . $un_match . '<br/>';
+        $perso_trouve = personnage_trouve_par_prenom($un_match);
+        $tableau_remplacement[] = '<a href="' . route('profil-personnage&id=' . $perso_trouve->id) . '">' . $perso_trouve->prenom . '</a>';
+    }
+
+    echo '<strong>Affichage Tableau remplacement</strong> :<br/>';
+    echo '<pre>';
+    var_dump($tableau_remplacement);
+    echo '<pre>';
+
+    $nouveau_texte = preg_replace($tableau[0], $tableau_remplacement, $texte_input);
+
+    echo '<strong>Affichage Texte remplacé</strong> :<br/>';
+    echo '<pre>';
+    var_dump($nouveau_texte);
+    echo '<pre>';
+
     // SAUVEGARDE des données de la scène
     $scene_trouve->numero = $_POST['numero'];
     $scene_trouve->titre = htmlspecialchars($_POST['titre']);
     $scene_trouve->temps = htmlspecialchars($_POST['temps']);
-    $scene_trouve->texte = htmlspecialchars($_POST['texte']);
+    $scene_trouve->texte = $nouveau_texte;
     $scene_trouve->image = $image_nouvel_url;
     $scene_trouve->id_episode = $_POST['id_episode'];;
 

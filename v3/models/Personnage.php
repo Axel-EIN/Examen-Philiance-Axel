@@ -25,6 +25,17 @@ function personnage_trouve_par_id($id): object {
 	return $personnage_trouve;
 }
 
+function personnage_trouve_par_prenom($prenom): object {
+	// Renvoi les données d'un personnage trouvé par prenom  en objet
+
+    echo 'TEST de recherche de ' . $prenom . '<br/>';
+	$personnage_trouve = Personnage::retrieveByField('prenom', $prenom, SimpleOrm::FETCH_ONE);
+    if ($personnage_trouve === null)
+        redirection('500', 'Désolé ! Ce personnage n\'existe pas !');
+
+	return $personnage_trouve;
+}
+
 function tout_les_personnages_joueurs(): array {
     // Renvoi les données de tout les personnages qui sont ou ont été joués par des joueurs
 

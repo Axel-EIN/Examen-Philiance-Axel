@@ -20,10 +20,19 @@
             <?php endif; ?>
 
             <!-- LEGENDE OVERLAY-->
-            <div class="scene-heure">
+            <div class="scene-heure w-100">
                 <h5 class="card-title"><?php echo $scene->temps; ?></h5>
                 <h3 class="card-title"><?php echo $scene->titre; ?></h3>
+                <div class="text-right" style="position: relative; top: -14px;">
+                    <?php $personnages_participants = recuperer_participants_par_scene($scene->id); ?>
+                    <?php foreach($personnages_participants as $un_personnage_participant): ?>
+                        <a href="<?= route('profil-personnage&id=' . $un_personnage_participant->id); ?>" >
+                            <img class="survol" style="width: 64px; border-radius: 5px" src="<?= url_img($un_personnage_participant->icone); ?>" alt="Icone du Personnage" />
+                        </a>
+                    <?php endforeach; ?>
+                </div>
             </div>
+
 
         </div>
 

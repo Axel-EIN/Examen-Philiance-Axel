@@ -6,7 +6,7 @@ class Clan extends SimpleOrm {
     public $mon;
     public $est_majeur;
     public $couleur;
-    public $champion;
+    public $champion_id;
 }
 
 function clan_trouve_par_id($id): object {

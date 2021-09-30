@@ -1,4 +1,11 @@
 <!-- EN TETE -->
+
+<div style="height: 300px" class="d-flex align-items-center justify-content-around">
+    <span>TEXTE A TESTER A ALIGNER</span>
+    <span>TEXTE A TESTER A ALIGNER</span>
+    <span>TEXTE A TESTER A ALIGNER</span>
+</div>
+
 <header class="header-fond py-md-4 py-sm-2"
 style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<?= url_img('empire.jpg'); ?>">
     <div class="container">

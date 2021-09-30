@@ -200,6 +200,11 @@ if (!empty($_GET['page'])) {
             afficher_personnages();
             break;
 
+        case 'profil-personnage':
+            require_once DOSSIER_CONTROLLERS . '/personnages-controller.php';
+            afficher_profil_personnage();
+            break;
+
         /**
          * PAGE ERREURS
          */
