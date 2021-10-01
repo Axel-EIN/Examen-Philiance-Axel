@@ -1,35 +1,34 @@
 <?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
-<header class="container p-5">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center"><?= $h1; ?></h1>
+<!-- H1 -->
+<header class="container my-5">
+    <h1 class="text-center"><?= $h1; ?></h1>
 
-            <?php if(!empty($episode_parent)): ?> <!-- GESTION ID EPISODE PARENT FOURNI -->
-                <h4 class="text-center">
-                    <small>pour </small>
-                    <a href="<?= route('episode&id=' . $episode_parent->id, "#tete-lecture"); ?>">
-                        <?= $episode_parent->titre ?>&nbsp;<i class="fas fa-eye"></i>
-                    </a>
-                </h4>
-            <?php endif; ?>
+    <!-- LIEN SI ARRIVEE DEPUIS PAGE EPISODE = GET ID EPISODE PARENT FOURNI -->
+    <?php if(!empty($episode_parent)): ?> 
+        <h4 class="text-center"><small>pour </small>
+            <a href="<?= route('episode&id=' . $episode_parent->id, "#tete-lecture"); ?>">
+            <?= $episode_parent->titre ?>&nbsp;<i class="fas fa-eye"></i></a>
+        </h4>
+    <?php endif; ?>
 
-        </div>
-    </div>
 </header>
 
 <main class="container">
+    <form id="form1" class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-scene-handler' . $get_episode); ?>" enctype="multipart/form-data">
 
-    <form class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-scene-handler' . $get_episode); ?>" enctype="multipart/form-data">
-
+        <!-- CHAMP TITRE -->
         <label for="titre">Titre</label>
-        <input class="form-control" type="text" name="titre" id="titre"><br/>
+        <input class="form-control" type="text" name="titre" id="titre" required autofocus placeholder="Entrez le titre de la Scène..."><br/>
 
-        <div class="form-row">
+        <?php if (empty($saison_parent) && empty($chapitre_parent)): ?>
+            <div class="form-row">
+        <?php endif; ?>
 
+            <!-- SAISON PARENT -->
             <?php if(empty($saison_parent)): ?>
                 <div class="col">
-                    <label for="saison">Choisir la saison à rattacher</label>
+                    <label for="saison">Saison à rattacher</label>
                     <select class="form-control" id="saison" required onchange="chapitreChange(this);">
 
                         <option value="">Choisir une Saison...</option>
@@ -42,33 +41,37 @@
                 </div>
             <?php endif; ?>
 
+            <!-- CHAPITRE PARENT -->
             <?php if(empty($chapitre_parent)): ?>
                 <div class="col">
-                    <label for="chapitre">Choisir le chapitre à rattacher</label>
+                    <label for="chapitre">Chapitre à rattacher</label>
                     <select class="form-control" id="chapitre" required onchange="episodeChange(this);">
                         <option value="" disabled></option>
                     </select>
                 </div>
             <?php endif; ?>
 
-        </div>
-        <br/>
-        
+        <?php if (empty($saison_parent) && empty($chapitre_parent)): ?>
+            </div><br/>
+        <?php endif; ?>
+
+
         <div class="form-row">
 
+            <!-- EPISODE PARENT -->
             <?php if(empty($episode_parent)): ?>
                 <div class="col">
-                    <label for="episode">Choisir l'épisode à rattacher</label>
+                    <label for="episode">Épisode à rattacher</label>
                     <select class="form-control" id="episode" name="id_episode" required onchange="sceneChange(this);">
                         <option value="" disabled></option>
                     </select>
                 </div>
             <?php endif; ?>
 
+            <!-- POSITION SCENE -->
             <div class="col">
-                <label for="scene">Choisir la position de la scène</label>
+                <label for="scene">Position de la scène</label>
                 <select class="form-control" id="scene" name="numero" required>
-                    
                     <?php if(empty($episode_parent) || empty($_GET['numero'])): ?>
                         <option value="" disabled></option>
                     <?php else: ?>
@@ -87,28 +90,64 @@
                             <option value="1">1 - Insérer en premier</option>
                         <?php endif; ?>
                     <?php endif; ?>
-                    
                 </select>
             </div>
 
         </div><br/>
-        
+
+        <!-- TEMPS DU JEU -->
         <label for="temps">Temps dans le jeu</label>
-        <input class="form-control" type="text" name="temps" id="temps"><br/>
+        <input class="form-control" type="text" name="temps" id="temps" required placeholder="Précisez le moment de la journée ou la nuit dans le jeu"><br/>
 
+        <!-- TEXTE -->
         <label for="texte">Texte</label>
-        <textarea style="resize: none;" class="form-control" name="texte" id="texte" cols="30" rows="7"></textarea><br/>
+        <textarea style="resize: none;" class="form-control" name="texte" id="texte" cols="30" rows="7" required>Veuillez entrer le récit de la scène ici...</textarea><br/>
 
+        <!-- IMAGE -->
         <label for="image">Image (facultative)</label>
-        <div class="form-group">
-          <label for="image"></label>
-          <input type="file" class="form-control-file" name="image" id="image" aria-describedby="fileHelpId">
-          <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" name="image" aria-describedby="fileHelpId" id="image">
+            <label class="custom-file-label" for="image">Charger une image...</label>
+            <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
         </div><br/><br/>
-        
-        <input class="form-control btn btn-primary" type="submit" value="Créer" name="creer" />
-    </form>
 
+        Participants (facultatif) :<br/><br/>
+        <div class="form-row">
+
+            <!-- PARTICIPATION PJs -->
+            <div class="col-6">
+                <div class="participants">
+                    <label for="data[participants][0]"><strong>PJs</strong></label>
+                    <select class="perso form-control" name="participants[0]" id="data[participants][0]">
+                        <?php foreach($tout_les_pjs as $un_pj): ?>
+                            <option value="<?= $un_pj->id; ?>"><?= $un_pj->nom; ?> <?= $un_pj->prenom; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button class="btn mt-2" style="background: #e9ecef;" id="add-participants">Ajouter</button>
+                <br />
+            </div>
+
+            <!-- PARTICIPATION PNJs -->
+            <div class="col-6">
+                <div class="participants_pnjs">
+                    <label for="data[participants_pnjs][0]"><strong>PNJ</strong></label>
+                    <select class="perso_pnj form-control" name="data[participants_pnjs][0]" id="data[participants_pnjs][0]">
+                        <?php foreach($tout_les_pnjs as $un_pnj): ?>
+                            <option value="<?= $un_pnj->id; ?>"><?= $un_pnj->nom; ?> <?= $un_pnj->prenom; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button class="btn mt-2" style="background: #e9ecef;" id="add-participants_pnjs">Ajouter</button>
+                <br />
+            </div>
+
+        </div>
+        
+        <!-- BOUTON VALIDER -->
+        <input class="form-control btn btn-primary mt-4" type="submit" value="Créer" name="creer" />
+
+    </form>
 </main>
 
 <script type="text/javascript">
@@ -177,7 +216,7 @@ function chapitreChange(selectObj) { // RECREE la liste déroulante pour choisir
         }
 
         // On ajoute/rattache les <options> à l'élement DOM  <select>
-        try { cchapitresSelect.add(newOption); } // pour IE
+        try { chapitresSelect.add(newOption); } // pour IE
         catch (e) { chapitresSelect.appendChild(newOption); }
     }
 }
@@ -244,6 +283,134 @@ function sceneChange(selectObj) { // RECREE la liste déroulante pour choisir le
         catch (e) { scenesSelect.appendChild(newOption); } 
     }
 }
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+// script pour les personnages JOUEURS
+
+    var personnages_joueurs = { 
+    <?php foreach ($tout_les_pjs as $un_pj): ?>
+        "<?= $un_pj->id ?>" : "<?= $un_pj->nom ?> <?= $un_pj->prenom ?>",
+    <?php endforeach; ?> };
+
+    var compteur_tout_les_personnages = 0;
+    for( key in personnages_joueurs )
+        compteur_tout_les_personnages++;
+
+    $(document).ready(function(){
+
+        $("#add-participants").click(function(e)
+        {
+            e.preventDefault();
+            var toutes_les_balises_select_perso = document.getElementsByClassName('perso');
+
+            if (toutes_les_balises_select_perso.length < compteur_tout_les_personnages)
+            {
+                var deja_selectionnes = [];
+                for (var i = 0; i <= toutes_les_balises_select_perso.length-1; i++)
+                    deja_selectionnes.push(toutes_les_balises_select_perso[i].selectedOptions[0].value);
+
+                var numberOfparticipants = $("#form1").find("select[name^='participants']").length;
+
+                var input = '<select class="perso form-control mt-1" name="participants[' + numberOfparticipants + ']" required id="data[participants][' + numberOfparticipants + ']" >';
+
+                for (key in personnages_joueurs) {
+                    var trouve = false;
+                    for(cle in deja_selectionnes) 
+                        if (key == deja_selectionnes[cle]) trouve = true;
+
+                    if (trouve == false) input += '<option value="' + key + '">' + personnages_joueurs[key] + '</option>';
+                }
+
+                input += '</select>';
+                var removeButton = '<button class="remove-participants btn mt-2 ml-2" style="background-color: #e9ecef;">Retirer</button>';
+                var html = "<div class='participants'>" + input + "</div>";
+                $("#form1").find("#add-participants").before(html);
+
+                if (numberOfparticipants == 1)
+                    $("#form1").find("#add-participants").after(removeButton);
+
+                document.getElementById('data[participants][' + (numberOfparticipants-1) + ']').setAttribute("readonly", true);  
+            } else
+                alert('Il n\' a pas d\'autre personnage à ajouter !');
+
+        });
+    });
+
+    $(document).on("click", ".remove-participants",function(e){
+        e.preventDefault();
+        $('#form1 div.participants:last').remove();
+        $('#form1 select.perso:last').removeAttr('readonly');
+
+        var numberOfparticipants = $("#form1").find("select[name^='participants']").length;
+        if (numberOfparticipants == 1)
+            $('#form1 button.remove-participants').remove();
+    });
+</script>
+
+<script type="text/javascript">
+// script pour les personnahes NON joueurs
+
+    var personnages_non_joueurs = { 
+    <?php foreach ($tout_les_pnjs as $un_pnj): ?>
+        "<?= $un_pnj->id ?>" : "<?= $un_pnj->nom ?> <?= $un_pnj->prenom ?>",
+    <?php endforeach; ?> };
+
+    var compteur_tout_les_personnages_non_joueurs = 0;
+    for( key in personnages_non_joueurs )
+        compteur_tout_les_personnages_non_joueurs++;
+
+    $(document).ready(function(){
+
+        $("#add-participants_pnjs").click(function(e)
+        {
+            e.preventDefault();
+            var toutes_les_balises_select_perso_pnj = document.getElementsByClassName('perso_pnj');
+
+            if (toutes_les_balises_select_perso_pnj.length < compteur_tout_les_personnages_non_joueurs)
+            {
+                var pnjs_deja_selectionnes = [];
+                for (var i = 0; i <= toutes_les_balises_select_perso_pnj.length-1; i++)
+                pnjs_deja_selectionnes.push(toutes_les_balises_select_perso_pnj[i].selectedOptions[0].value);
+
+                var numberOfparticipants_pnjs = $("#form1").find("select[name^='data[participants_pnjs]']").length;
+
+                var input = '<select class="perso_pnj form-control mt-1" name="data[participants_pnjs][' + numberOfparticipants_pnjs + ']" required id="data[participants_pnjs][' + numberOfparticipants_pnjs + ']" >';
+
+                for (key_pnj in personnages_non_joueurs) {
+                    var trouve_pnj = false;
+                    for(cle_pnj in pnjs_deja_selectionnes) 
+                        if (key_pnj == pnjs_deja_selectionnes[cle_pnj]) trouve_pnj = true;
+
+                    if (trouve_pnj == false) input += '<option value="' + key_pnj + '">' + personnages_non_joueurs[key_pnj] + '</option>';
+                }
+
+                input += '</select>';
+                var removeButton = '<button class="remove-participants_pnjs btn mt-2 ml-2" style="background-color: #e9ecef;">Retirer</button>';
+                var html = "<div class='participants_pnjs'>" + input + "</div>";
+                $("#form1").find("#add-participants_pnjs").before(html);
+
+                if (numberOfparticipants_pnjs == 1)
+                    $("#form1").find("#add-participants_pnjs").after(removeButton);
+
+                document.getElementById('data[participants_pnjs][' + (numberOfparticipants_pnjs-1) + ']').setAttribute("readonly", true);  
+            } else
+                alert('Il n\' a pas d\'autre personnage à ajouter !');
+
+        });
+    });
+
+    $(document).on("click", ".remove-participants_pnjs",function(e){
+        e.preventDefault();
+        $('#form1 div.participants_pnjs:last').remove();
+        $('#form1 select.perso_pnj:last').removeAttr('readonly');
+
+        var numberOfparticipants_pnjs = $("#form1").find("select[name^='data[participants_pnjs]']").length;
+        if (numberOfparticipants_pnjs == 1)
+            $('#form1 button.remove-participants_pnjs').remove();
+    });
 </script>
 
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>

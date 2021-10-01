@@ -150,7 +150,7 @@ function chapitreChange(selectObj) { // RECREE la liste déroulante pour choisir
         }
 
         // On ajoute/rattache les <options> à l'élement DOM  <select>
-        try { cchapitresSelect.add(newOption); } // pour IE
+        try { chapitresSelect.add(newOption); } // pour IE
         catch (e) { chapitresSelect.appendChild(newOption); }
     }
 }

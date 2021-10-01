@@ -25,21 +25,21 @@ function afficher_panneau_administration_scenes() {
 function admin_creer_scene() {
     // Affiche le formulaire pour creer une scene
     
-    // VERIFICATION si Administrateur est connecte
-    if (!admin_connecte()) redirection('403', 'Accès non-autorisé !');
+    // VERIF Admin connecté
+    if (!admin_connecte()) redirection('403', 'Désolé ! Accès non-autorisé !');
 
-    // PARAMETRAGE du formulaire pré-rempli si on arrive depuis un bouton
+    // VERIF si on vient d'une page épisode, alors l'episode parent et la position de la scène sont connus
     if (
         !empty($_GET['id_episode']) && is_numeric($_GET['id_episode']) && $_GET['id_episode'] > 0
         && !empty($_GET['numero']) && is_numeric($_GET['numero']) && $_GET['numero'] > 0
         )
     {
-        // RECUPERATION des données pour le formulaire pré-rempli si on vient depuis un bouton Insérer 
+        // RECUPERATION des données pour PRÉ-REMPLIR le formulaire
         $episode_parent = episode_trouve_par_id($_GET['id_episode']);
         $chapitre_parent = chapitre_trouve_par_id($episode_parent->id_chapitre);
         $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison);
         $scenes_enfants = scenes_enfants_de_episode_triees_numero($episode_parent->id);
-        $get_episode = '&id_episode=' . $_GET['id_episode'];
+        $get_episode = '&id_episode=' . $_GET['id_episode']; // Variable utilisé dans la construction d'un lien dans la vue
         
     } else $get_episode = '';
     
@@ -48,11 +48,15 @@ function admin_creer_scene() {
     $tous_les_chapitres = Chapitre::all();
     $toutes_les_saisons = Saison::all();
 
+    // RECUPERATION des données pour la liste déroulante des personnages joueurs
+    require_once DOSSIER_MODELS . '/Personnage.php';
+    $tout_les_pjs = tout_les_personnages_joueurs();
+    $tout_les_pnjs = tout_les_personnages_non_joueurs();
+
     // AFFICHAGE
     $html_title = 'Créer une scène | Administration de ' . NOM_DU_SITE;
     $h1 = 'Créer une scène';
     include_once DOSSIER_VIEWS . '/admin/scenes/creer-scene.html.php'; 
-
 }
 
 function admin_creer_scene_handler() {
@@ -74,8 +78,7 @@ function admin_creer_scene_handler() {
     // VERIFICATION de l'intégrité des autres données postées
     if (
         empty($_POST['numero']) || !is_numeric($_POST['numero']) || $_POST['numero'] < 1
-        || empty($_POST['titre']) || is_numeric($_POST['titre'])
-        || empty($_POST['temps']) || is_numeric($_POST['temps'])
+        || empty($_POST['titre']) || empty($_POST['temps']) || is_numeric($_POST['temps'])
         || empty($_POST['texte']) || is_numeric($_POST['texte'])
         ) redirection('admin-creer-scene', 'Informations postées manquantes ou invalides !', 'warning');
     
@@ -84,13 +87,30 @@ function admin_creer_scene_handler() {
     $chapitre_parent = chapitre_trouve_par_id($episode_parent->id_chapitre);
     $saison_parent = saison_trouve_par_id($episode_parent->id_saison);
 
-    // GESTION de l'image (l'image est facultative)
+    // GESTION de l'image (facultatif)
     if (verif_image() === false)
         redirection('admin-creer-scene', 'Image invalide ! Veuillez réessayer avec un format ou une taille appropriée !', 'warning');
     elseif (verif_image() === null)
         $image_nouvel_url = URL_IMAGE_DEFAUT_720;
     else
         $image_nouvel_url = uploader_image($saison_parent->numero, $chapitre_parent->numero, $episode_parent->numero, $_POST['numero']);
+
+    // GESTION des participants (facultatif)
+    if ($_POST['participants']) {
+
+
+        foreach ($_POST['participants'] as $participant){
+            echo '<pre>';
+            var_dump($participant);
+            echo '</pre><br/>';
+         }
+
+        die;
+    }
+    else {
+        echo 'pas lol';
+        die;
+    }
 
     // GESTION de la position / numero
     reordonner_fratrie(-1, $_POST['numero'], [], scenes_enfants_de_episode($id_episode));
@@ -138,6 +158,36 @@ function admin_modifier_scene() {
     $tous_les_episodes = Episode::all();
     $tous_les_chapitres = Chapitre::all();
     $toutes_les_saisons = Saison::all();
+
+    // GESTION des liens des personnages dans le text
+    $texte_input = $scene_trouve->texte;
+
+    // echo '<strong>Affichage du texte après la fonction HTMLSPECIALCHARS</strong> :<br/>';
+    // echo '<pre>';
+    // var_dump($texte_input);
+    // echo '<pre>';
+
+    // $tableau = [];
+    
+
+    // preg_match_all('#<a .*>(.*)<\/a>#Ui', $texte_input, $tableau);
+
+    // echo '<strong>Affichage du texte après la fonction PREGMATCH avec le Tableau de prénom</strong> :<br/>';
+    // echo '<pre>';
+    // var_dump($tableau);
+    // echo '<pre>';
+
+    // $fill = array_fill(0, count($tableau[1]), '#\[(.*)\]#Ui');
+
+    $nouveau_texte = preg_replace( '#<a .*>(.*)<\/a>#Ui', '[$1]', $texte_input);
+    // $1 sert a récupérer le contenu de la première paire de paranthèse capturante du match qui actuel
+
+    $scene_trouve->texte = $nouveau_texte;
+
+    // echo '<strong>Affichage Texte remplacé</strong> :<br/>';
+    // echo '<pre>';
+    // var_dump($nouveau_texte);
+    // echo '<pre>';
     
     // AFFICHAGE
     $html_title = 'Modifier une scène' .  ' | Administration de ' . NOM_DU_SITE;
@@ -195,42 +245,56 @@ function admin_modifier_scene_handler() {
     // GESTION des liens des personnages dans le text
     $texte_input = htmlspecialchars($_POST['texte']);
 
-    echo '<strong>Affichage du texte après la fonction HTMLSPECIALCHARS</strong> :<br/>';
-    echo '<pre>';
-    var_dump($texte_input);
-    echo '<pre>';
+    // echo '<strong>Affichage du texte après la fonction HTMLSPECIALCHARS</strong> :<br/>';
+    // echo '<pre>';
+    // var_dump($texte_input);
+    // echo '<pre>';
 
     $tableau = [];
     
 
     preg_match_all('#\[(.*)\]#Ui', $texte_input, $tableau);
 
-    echo '<strong>Affichage du texte après la fonction PREGMATCH avec le Tableau de prénom</strong> :<br/>';
-    echo '<pre>';
-    var_dump($tableau);
-    echo '<pre>';
+    // echo '<strong>Affichage du texte après la fonction PREGMATCH avec le Tableau de prénom</strong> :<br/>';
+    // echo '<pre>';
+    // var_dump($tableau);
+    // echo '<pre>';
     
 
     require_once DOSSIER_MODELS . '/Personnage.php';
     $tableau_remplacement = [];
 
-    foreach ($tableau[1] as $un_match) {
+    foreach ($tableau[1] as $key => $un_match) {
         echo 'PASSAGE pour ' . $un_match . '<br/>';
-        $perso_trouve = personnage_trouve_par_prenom($un_match);
+        if (!($perso_trouve = personnage_trouve_par_prenom($un_match))) {
+
+            redirection('admin-modifier-scene' . '&id=' . $_GET['id'],
+                    'Personnage ' . $un_match .  ' non-trouvé, veuillez réessayer',
+                    'warning');
+
+            // unset($tableau[1][$key]);
+            // continue; // permet de passer au tour de boucle suivant sans lire la suite du code
+            // Faire plutôt une logique avec str_replace SI le perso est trouvé OU bien array_map (le truc avec la fonction car on met le nom du
+            // perso dedans)
+        }
+
         $tableau_remplacement[] = '<a href="' . route('profil-personnage&id=' . $perso_trouve->id) . '">' . $perso_trouve->prenom . '</a>';
     }
 
-    echo '<strong>Affichage Tableau remplacement</strong> :<br/>';
-    echo '<pre>';
-    var_dump($tableau_remplacement);
-    echo '<pre>';
+    // echo '<strong>Affichage Tableau remplacement</strong> :<br/>';
+    // echo '<pre>';
+    // var_dump($tableau_remplacement);
+    // echo '<pre>';
 
-    $nouveau_texte = preg_replace($tableau[0], $tableau_remplacement, $texte_input);
+    $fill = array_fill(0, count($tableau[1]), '#\[(.*)\]#Ui');
 
-    echo '<strong>Affichage Texte remplacé</strong> :<br/>';
-    echo '<pre>';
-    var_dump($nouveau_texte);
-    echo '<pre>';
+    $nouveau_texte = preg_replace( $fill, $tableau_remplacement, $texte_input, 1);
+    // Attention, si le second paramètre est un tableau, le 1er doit en être aussi un tableau
+
+    // echo '<strong>Affichage Texte remplacé</strong> :<br/>';
+    // echo '<pre>';
+    // var_dump($nouveau_texte);
+    // echo '<pre>';
 
     // SAUVEGARDE des données de la scène
     $scene_trouve->numero = $_POST['numero'];

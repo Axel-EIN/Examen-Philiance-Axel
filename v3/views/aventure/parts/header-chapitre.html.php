@@ -1,5 +1,5 @@
 <!-- HEADER CHAPITRE -->
-<section id="ch<?= $chapitre->numero; ?>-header" class="chapitre-fond <?= $volet ?>" style="background-color: <?= $chapitre->couleur; ?>;
+<section class="survol" id="ch<?= $chapitre->numero; ?>-header" class="chapitre-fond <?= $volet ?>" style="background-color: <?= $chapitre->couleur; ?>;
     background-image:linear-gradient(rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0.6),rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0),
                                     rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0.3),rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0.6)),
                                     url('<?= url_img($chapitre->image); ?>');">

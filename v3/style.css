@@ -1,5 +1,7 @@
 html, body { margin: 0; height: 100%; font-size: 16px }
 
+.transform-enligne { display: inline-block; }
+
 /* -----------------------------------------  */
 /* NAVIGATION                                 */
 /* ------------------------------------------ */
@@ -164,6 +166,7 @@ fieldset{ border: 1px solid #ccc; margin-bottom: 8px; }
 
 img.disabled { filter:grayscale(); }
 img.survol:hover{ filter: brightness(1.3); transition: .5s; }
+.survol:hover{ filter: brightness(1.3); transition: .5s; }
 
 /* -----------------------------------  */
 /* FOOTERS                              */

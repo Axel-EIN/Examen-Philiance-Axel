@@ -25,13 +25,15 @@ function personnage_trouve_par_id($id): object {
 	return $personnage_trouve;
 }
 
-function personnage_trouve_par_prenom($prenom): object {
+function personnage_trouve_par_prenom($prenom) {
 	// Renvoi les données d'un personnage trouvé par prenom  en objet
 
     echo 'TEST de recherche de ' . $prenom . '<br/>';
 	$personnage_trouve = Personnage::retrieveByField('prenom', $prenom, SimpleOrm::FETCH_ONE);
-    if ($personnage_trouve === null)
-        redirection('500', 'Désolé ! Ce personnage n\'existe pas !');
+    if ($personnage_trouve === null) {
+        // redirection('500', 'Désolé ! Ce personnage n\'existe pas !');
+        return false;
+    }
 
 	return $personnage_trouve;
 }
