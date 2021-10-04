@@ -15,3 +15,7 @@ class Ecole extends SimpleOrm {
     public $technique5_nom;
     public $technique5_desc;
 }
+
+function recuperer_une_ecole(int $id_ecole): object {
+    return Ecole::retrieveByField('id', $id_ecole, SimpleOrm::FETCH_ONE);
+}

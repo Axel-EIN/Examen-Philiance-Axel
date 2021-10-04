@@ -140,9 +140,19 @@
                             <!-- ADMIN - BTN - INSERER SCENE -->
                             <?php $numero = 1; if(admin_connecte()) include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?>
 
-                            <?php foreach ($scenes as $scene) { include DOSSIER_VIEWS . '/aventure/afficher-une-scene.html.php'; } ?>
+                            <?php foreach ($scenes as $scene) { include DOSSIER_VIEWS . '/aventure/parts/afficher-une-scene.html.php'; } ?>
                             
                         <?php endif; ?>
+
+                        <h2 class="text-center">Classement de l'Episode</h2>
+                        <ol>
+                            <?php foreach($participations_episodes as $une_participation_episode): ?>
+                                <li>
+                                    <?= recuperer_un_personnage($une_participation_episode->personnage_id)->prenom; ?>
+                                    &nbsp;<?= $une_participation_episode->exp_gagne; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ol> 
 
                         <div class="text-center pb-3">
                             <a href="#ch<?= $chapitre_parent->numero; ?>-header" class="btn btn-primary mt-3">Retour en haut</a>

@@ -1,9 +1,8 @@
 <?php
 require_once DOSSIER_MODELS . '/Personnage.php';
-require_once DOSSIER_MODELS . '/Clan.php';
 
 function afficher_personnages() {
-    // Affiche l'index avec tout les personnages
+    // Affiche la LISTE de tout les personnages
 
     // VERIFICATION des paramètres d'URL pour spécifier la saison
     if (!empty($_GET['saison']) && is_numeric($_GET['saison']) && $_GET['saison'] > 0)
@@ -30,16 +29,16 @@ function afficher_personnages() {
 
     // RECUPERATION des personnages
     $personnages = Personnage::all();
-    $pjs = tout_les_personnages_joueurs();
-    $pnjs = tout_les_personnages_non_joueurs();
+    $pjs = recuperer_pjs();
+    $pnjs = recuperer_pnjs();
 
     // AFFICHAGE
     $html_title = 'Les personnages | ' . NOM_DU_SITE;
-    include_once DOSSIER_VIEWS . '/personnages/accueil-personnages.php';
+    include_once DOSSIER_VIEWS . '/personnages/accueil-personnages.html.php';
 }
 
 function afficher_profil_personnage() {
-    // Affiche l'index avec tout les personnages
+    // Affiche PROFIL PUBLIC d'un personnage
 
     // VERIFICATION des paramètres d'URL pour spécifier le personnage
     if (empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1)
@@ -49,18 +48,51 @@ function afficher_profil_personnage() {
     $personnage_trouve = Personnage::retrieveByField('id', $_GET['id'], SimpleOrm::FETCH_ONE);
     if ($personnage_trouve == null) redirection('404', 'Désolé ! Ce personnage n\'existe pas !');
 
-    $personnage_clan = Clan::retrieveByField('id', $personnage_trouve->clan_id, SimpleOrm::FETCH_ONE);
+    require_once DOSSIER_MODELS . '/Clan.php';
+    $personnage_clan = recuperer_un_clan('id', $personnage_trouve->clan_id, SimpleOrm::FETCH_ONE);
 
     require_once DOSSIER_MODELS . '/Classe.php';
-    $personnage_classe = Classe::retrieveByField('id', $personnage_trouve->classe_id, SimpleOrm::FETCH_ONE);
+    $personnage_classe = recuperer_une_classe('id', $personnage_trouve->classe_id, SimpleOrm::FETCH_ONE);
 
     require_once DOSSIER_MODELS . '/Ecole.php';
-    $personnage_ecole = Ecole::retrieveByField('id', $personnage_trouve->ecole_id, SimpleOrm::FETCH_ONE);
+    $personnage_ecole = recuperer_une_ecole($personnage_trouve->ecole_id);
 
     require_once DOSSIER_MODELS . '/Utilisateur.php';
-    $personnage_utilisateur = Utilisateur::retrieveByField('id', $personnage_trouve->utilisateur_id, SimpleOrm::FETCH_ONE);
+    $personnage_utilisateur = recuperer_un_utilisateur('id', $personnage_trouve->utilisateur_id, SimpleOrm::FETCH_ONE);
+
+    require_once DOSSIER_MODELS . '/Participation.php';
+    $participations_du_personnage = Participation::retrieveByField('personnage_id', $personnage_trouve->id, SimpleOrm::FETCH_MANY);
+    $total_xp = 40 + somme_xp_participations_personnage($personnage_trouve->id);
+    $rang = calcul_rang($total_xp);
+    require_once DOSSIER_MODELS . '/Scene.php';
+    require_once DOSSIER_MODELS . '/Episode.php';
 
     // AFFICHAGE
     $html_title = 'Profil de ' . $personnage_trouve->nom . ' ' . $personnage_trouve->prenom . ' | ' . NOM_DU_SITE;
-    include_once DOSSIER_VIEWS . '/personnages/profil-personnage.php';
+    include_once DOSSIER_VIEWS . '/personnages/profil-personnage.html.php';
+}
+
+function afficher_fiche_personnage() {
+    // VERIF
+    if(!utilisateur_connecte()) redirection('403', 'Désolé ! Veuillez-vous connecter !');
+
+    if(empty($_GET['id']) || !is_numeric($_GET['id']) || $_GET['id'] < 1 ) redirection('500', 'Erreur Interne au serveur !');
+
+    // DONNEES
+    $personnage_trouve = recuperer_un_personnage($_GET['id']);
+
+    if($personnage_trouve->utilisateur_id != $_SESSION['id'])
+        redirection('403', 'Désolé, vous ne pouvez pas accéder aux fiches personnages des autres joueurs !');
+
+    $personnage_clan = recuperer_un_clan($personnage_trouve->clan_id);
+    $personnage_ecole = recuperer_une_ecole($personnage_trouve->ecole_id);
+    $personnage_classe = recuperer_une_classe($personnage_trouve->classe_id);
+    $personnage_utilisateur = recuperer_un_utilisateur($personnage_trouve->utilisateur_id);
+
+    require_once DOSSIER_MODELS . '/Fiche.php';
+    $fiche_personnage = recuperer_fiche_personnage($personnage_trouve->id);
+
+    // AFFICHAGE
+    $html_title = 'Fiche de ' . $personnage_trouve->nom . ' ' . $personnage_trouve->prenom . ' | ' . NOM_DU_SITE;
+    include_once DOSSIER_VIEWS . '/personnages/fiche-personnage.html.php';
 }

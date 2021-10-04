@@ -8,7 +8,6 @@
 
     <!-- CORPS DE LA SCENE -->
     <div class="card-body">
-
         
         <div class="ancre-scene">
 
@@ -19,25 +18,36 @@
                 </div>
             <?php endif; ?>
 
-            <!-- LEGENDE OVERLAY-->
+            <!-- LEGENDE OVERLAY -->
             <div class="scene-heure w-100">
                 <h5 class="card-title"><?php echo $scene->temps; ?></h5>
                 <h3 class="card-title"><?php echo $scene->titre; ?></h3>
-                <div class="text-right" style="position: relative; top: -14px;">
-                    <?php $personnages_participants = recuperer_participants_par_scene($scene->id); ?>
-                    <?php foreach($personnages_participants as $un_personnage_participant): ?>
-                        <a href="<?= route('profil-personnage&id=' . $un_personnage_participant->id); ?>" >
-                            <img class="survol" style="width: 64px; border-radius: 5px" src="<?= url_img($un_personnage_participant->icone); ?>" alt="Icone du Personnage" />
-                        </a>
+
+                <div class="text-right ligne-icones">
+                    <?php $participations = recuperer_participations($scene->id); ?>
+                    <?php foreach($participations as $une_participation): ?>
+                        <div style="display: inline-block; position: relative;">
+                            <?php if($une_participation->exp_gagne != 0 && $une_participation->est_mort != 1 ): ?>
+                                <strong class="xp">+<?= $une_participation->exp_gagne; ?>XP</strong>
+                            <?php endif; ?><br/>
+                            <a href="<?= route('profil-personnage&id=' . $une_participation->personnage_id); ?>" >
+                                <?php if($une_participation->est_mort == 1): ?>
+                                    <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
+                                <?php endif; ?>
+                                <img class="perso-icone <?php if($une_participation->est_mort != 0): ?> mort<?php else: ?> survol<?php endif; ?>"
+                                     src="<?= url_img(recuperer_un_personnage($une_participation->personnage_id)->icone); ?>"
+                                     alt="Icone du Personnage" />
+                            </a>
+                        </div>
                     <?php endforeach; ?>
                 </div>
-            </div>
 
+            </div>
 
         </div>
 
         <!-- TEXTE -->
-        <p class="card-text"><?php echo nl2br($scene->texte); ?></p>
+        <p class="card-text texte-scene"><?php echo nl2br($scene->texte); ?></p>
 
     </div>
 
@@ -70,6 +80,6 @@
 
     <!-- ADMIN - BTN - INSERER A LA FIN -->
     <?php $numero = $scene->numero+1; if(admin_connecte()) include DOSSIER_VIEWS . '/boutons/inserer-scene.html.php'; ?>
-    
+
 </article>
 <!-- FIN : UNE SCENE -->

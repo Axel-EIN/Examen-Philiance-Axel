@@ -14,7 +14,8 @@ function afficher_panneau_administration_scenes() {
 
     // RECUPERATION des données des scènes
     $scenes = Scene::all();
-    $episode_parent = 
+    require_once DOSSIER_MODELS . '/Participation.php';
+    require_once DOSSIER_MODELS . '/Personnage.php';
 
     // AFFICHAGE
     $html_title = 'Administration des Scènes' .  ' | ' . NOM_DU_SITE;
@@ -48,10 +49,10 @@ function admin_creer_scene() {
     $tous_les_chapitres = Chapitre::all();
     $toutes_les_saisons = Saison::all();
 
-    // RECUPERATION des données pour la liste déroulante des personnages joueurs
+    // RECUPERATION de tout les personnages
     require_once DOSSIER_MODELS . '/Personnage.php';
-    $tout_les_pjs = tout_les_personnages_joueurs();
-    $tout_les_pnjs = tout_les_personnages_non_joueurs();
+    $tout_pjs = recuperer_pjs();
+    $tout_pnjs = recuperer_pnjs();
 
     // AFFICHAGE
     $html_title = 'Créer une scène | Administration de ' . NOM_DU_SITE;
@@ -95,23 +96,6 @@ function admin_creer_scene_handler() {
     else
         $image_nouvel_url = uploader_image($saison_parent->numero, $chapitre_parent->numero, $episode_parent->numero, $_POST['numero']);
 
-    // GESTION des participants (facultatif)
-    if ($_POST['participants']) {
-
-
-        foreach ($_POST['participants'] as $participant){
-            echo '<pre>';
-            var_dump($participant);
-            echo '</pre><br/>';
-         }
-
-        die;
-    }
-    else {
-        echo 'pas lol';
-        die;
-    }
-
     // GESTION de la position / numero
     reordonner_fratrie(-1, $_POST['numero'], [], scenes_enfants_de_episode($id_episode));
     
@@ -126,11 +110,23 @@ function admin_creer_scene_handler() {
 
     $nouvelle_scene->save();
 
+    // GESTION des participants (facultatif)
+    require_once DOSSIER_MODELS . '/Participation.php';
+
+    // REGROUPEMENT DES DONNEES POST PJS (ID, XP, MORT) & PNJS (ID, MORT)
+    $participants_a_ajoutes = regrouper_donnees_particpants($_POST['participants'], $_POST['participants_pnjs'], $_POST['participants_xp'],
+                                  $_POST['participants_mort'], $_POST['participants_pnjs_mort']);
+
+    // AJOUT
+    if (!empty($participants_a_ajoutes)) {
+        foreach ($participants_a_ajoutes as $cle => $un_participant_a_ajoute)
+            ajouter_une_participation($nouvelle_scene->id, $participants_a_ajoutes[$cle]['id'],
+                                                            $participants_a_ajoutes[$cle]['xp'],
+                                                            $participants_a_ajoutes[$cle]['mort']);
+    }
+
     // AFFICHAGE de la VUE
-    redirection('episode&id=' . $id_episode . '&scene_id=' . $nouvelle_scene->id,
-                'La scène a bien été créée !',
-                'success',
-                '#scn' . $_POST['numero']);
+    redirection('episode&id=' . $id_episode . '&scene_id=' . $nouvelle_scene->id, 'La scène a bien été créée !', 'success', '#scn' . $_POST['numero']);
 }
 
 function admin_modifier_scene() {
@@ -159,35 +155,21 @@ function admin_modifier_scene() {
     $tous_les_chapitres = Chapitre::all();
     $toutes_les_saisons = Saison::all();
 
-    // GESTION des liens des personnages dans le text
-    $texte_input = $scene_trouve->texte;
+    // GESTION des liens des personnages dans le texte de la scène
+    $scene_trouve->texte = retirer_liens_personnages($scene_trouve->texte);
 
-    // echo '<strong>Affichage du texte après la fonction HTMLSPECIALCHARS</strong> :<br/>';
-    // echo '<pre>';
-    // var_dump($texte_input);
-    // echo '<pre>';
+    // RECUPERATION des participations et participants
+    require_once DOSSIER_MODELS . '/Participation.php';
+    require_once DOSSIER_MODELS . '/Personnage.php';
+    $participations_pjs = recuperer_participations_pjs($scene_trouve->id);
+    $participations_pnjs = recuperer_participations_pnjs($scene_trouve->id);
 
-    // $tableau = [];
-    
+    $participants_pjs = recuperer_pjs_par_scene($scene_trouve->id);
+    $participants_pnjs = recuperer_pnjs_par_scene($scene_trouve->id);
 
-    // preg_match_all('#<a .*>(.*)<\/a>#Ui', $texte_input, $tableau);
-
-    // echo '<strong>Affichage du texte après la fonction PREGMATCH avec le Tableau de prénom</strong> :<br/>';
-    // echo '<pre>';
-    // var_dump($tableau);
-    // echo '<pre>';
-
-    // $fill = array_fill(0, count($tableau[1]), '#\[(.*)\]#Ui');
-
-    $nouveau_texte = preg_replace( '#<a .*>(.*)<\/a>#Ui', '[$1]', $texte_input);
-    // $1 sert a récupérer le contenu de la première paire de paranthèse capturante du match qui actuel
-
-    $scene_trouve->texte = $nouveau_texte;
-
-    // echo '<strong>Affichage Texte remplacé</strong> :<br/>';
-    // echo '<pre>';
-    // var_dump($nouveau_texte);
-    // echo '<pre>';
+    // RECUPERATION de tout les personnages
+    $tout_pjs = recuperer_pjs();
+    $tout_pnjs = recuperer_pnjs();
     
     // AFFICHAGE
     $html_title = 'Modifier une scène' .  ' | Administration de ' . NOM_DU_SITE;
@@ -228,73 +210,19 @@ function admin_modifier_scene_handler() {
         $image_nouvel_url = $scene_trouve->image;
     else
     {
-        $image_nouvel_url = uploader_image( $saison_parent->numero,
-                                            $chapitre_parent->numero,
-                                            $episode_parent->numero,
-                                            $scene_trouve->numero,
+        $image_nouvel_url = uploader_image( $saison_parent->numero, $chapitre_parent->numero,
+                                            $episode_parent->numero, $scene_trouve->numero,
                                             $scene_trouve->image);
     }
      
     // GESTION de la position / numero dans le cas où la position change où si on déplace la scène vers un autre épisode
     if ($scene_trouve->numero != $_POST['numero'] || $scene_trouve->id_episode != $_POST['id_episode'])
-        reordonner_fratrie( $scene_trouve->numero,
-                            $_POST['numero'],
-                            scenes_enfants_de_episode($episode_parent->id),
-                            scenes_enfants_de_episode($_POST['id_episode']));
+        reordonner_fratrie( $scene_trouve->numero, $_POST['numero'], scenes_enfants_de_episode($episode_parent->id),
+                                                                     scenes_enfants_de_episode($_POST['id_episode']));
     
-    // GESTION des liens des personnages dans le text
-    $texte_input = htmlspecialchars($_POST['texte']);
-
-    // echo '<strong>Affichage du texte après la fonction HTMLSPECIALCHARS</strong> :<br/>';
-    // echo '<pre>';
-    // var_dump($texte_input);
-    // echo '<pre>';
-
-    $tableau = [];
-    
-
-    preg_match_all('#\[(.*)\]#Ui', $texte_input, $tableau);
-
-    // echo '<strong>Affichage du texte après la fonction PREGMATCH avec le Tableau de prénom</strong> :<br/>';
-    // echo '<pre>';
-    // var_dump($tableau);
-    // echo '<pre>';
-    
-
-    require_once DOSSIER_MODELS . '/Personnage.php';
-    $tableau_remplacement = [];
-
-    foreach ($tableau[1] as $key => $un_match) {
-        echo 'PASSAGE pour ' . $un_match . '<br/>';
-        if (!($perso_trouve = personnage_trouve_par_prenom($un_match))) {
-
-            redirection('admin-modifier-scene' . '&id=' . $_GET['id'],
-                    'Personnage ' . $un_match .  ' non-trouvé, veuillez réessayer',
-                    'warning');
-
-            // unset($tableau[1][$key]);
-            // continue; // permet de passer au tour de boucle suivant sans lire la suite du code
-            // Faire plutôt une logique avec str_replace SI le perso est trouvé OU bien array_map (le truc avec la fonction car on met le nom du
-            // perso dedans)
-        }
-
-        $tableau_remplacement[] = '<a href="' . route('profil-personnage&id=' . $perso_trouve->id) . '">' . $perso_trouve->prenom . '</a>';
-    }
-
-    // echo '<strong>Affichage Tableau remplacement</strong> :<br/>';
-    // echo '<pre>';
-    // var_dump($tableau_remplacement);
-    // echo '<pre>';
-
-    $fill = array_fill(0, count($tableau[1]), '#\[(.*)\]#Ui');
-
-    $nouveau_texte = preg_replace( $fill, $tableau_remplacement, $texte_input, 1);
-    // Attention, si le second paramètre est un tableau, le 1er doit en être aussi un tableau
-
-    // echo '<strong>Affichage Texte remplacé</strong> :<br/>';
-    // echo '<pre>';
-    // var_dump($nouveau_texte);
-    // echo '<pre>';
+    // GESTION des liens des personnages dans le texte
+    $texte = htmlspecialchars($_POST['texte']);
+    $nouveau_texte = ajouter_liens_personnages($texte);
 
     // SAUVEGARDE des données de la scène
     $scene_trouve->numero = $_POST['numero'];
@@ -306,11 +234,46 @@ function admin_modifier_scene_handler() {
 
     $scene_trouve->save();
 
+    // GESTION des participants (facultatif)
+    require_once DOSSIER_MODELS . '/Participation.php';
+
+    // REGROUPEMENT DES DONNEES POST PJS (ID, XP, MORT) & PNJS (ID, MORT)
+    $participants_modifies = regrouper_donnees_particpants($_POST['participants'], $_POST['participants_pnjs'], $_POST['participants_xp'],
+                                  $_POST['participants_mort'], $_POST['participants_pnjs_mort']);
+
+    // SUPPRESSION
+    require_once DOSSIER_MODELS . '/Personnage.php';
+    $participants_precedents = recuperer_personnages_par_scene($scene_trouve->id);
+
+    foreach($participants_precedents as $un_participant_precedent) {
+        $trouvee = false;
+
+        foreach($participants_modifies as $key => $un_participant_modifie) {
+            if($un_participant_precedent->id == $participants_modifies[$key]['id']) {
+                $trouvee = true;
+                break;
+            }
+        }
+
+        if($trouvee == false) supprimer_une_participation_via_personnage_scene($un_participant_precedent->id, $scene_trouve->id);
+    }
+
+    // MODIFICATION OU AJOUT
+    if (!empty($participants_modifies)) {
+        foreach ($participants_modifies as $cle => $un_participant_modifie) {
+            $participation_trouvee = recuperer_une_participation_via_personnage_scene($participants_modifies[$cle]['id'], $scene_trouve->id);
+
+            if( !empty($participation_trouvee) )
+                modifier_une_participation_xp_mort($participation_trouvee, $participants_modifies[$cle]['xp'], $participants_modifies[$cle]['mort']);
+            else
+                ajouter_une_participation($scene_trouve->id, $participants_modifies[$cle]['id'], $participants_modifies[$cle]['xp'],
+                                          $participants_modifies[$cle]['mort']);
+        }
+    }
+
     // AFFICHAGE
-    redirection('episode&id=' . $_POST['id_episode'] . '&scene_id=' . $scene_trouve->id,
-                'La scène a bien été modifiée !',
-                'success',
-                '#scn' . $_POST['numero']);
+    redirection('episode&id=' . $_POST['id_episode'] . '&scene_id=' . $scene_trouve->id, 'La scène a bien été modifiée !',
+                'success', '#scn' . $_POST['numero']);
 }
 
 function admin_supprimer_scene_handler() {
@@ -331,6 +294,15 @@ function admin_supprimer_scene_handler() {
 
     // GESTION de la position / numero
     reordonner_fratrie($scene_trouve->numero, -1, scenes_enfants_de_episode($scene_trouve->id_episode), []);
+
+    // SUPPRESSION des participations
+    require_once DOSSIER_MODELS . '/Personnage.php';
+    require_once DOSSIER_MODELS . '/Participation.php';
+    if(!empty(recuperer_personnages_par_scene($scene_trouve->id))) {
+        $participants_a_supprimer = recuperer_personnages_par_scene($scene_trouve->id);
+        foreach($participants_a_supprimer as $un_participant_a_supprimer)
+            supprimer_une_participation_via_personnage_scene($un_participant_a_supprimer->id, $scene_trouve->id);
+    }
 
     // SUPPRESSION des données
     $scene_trouve->delete();

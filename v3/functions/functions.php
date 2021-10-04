@@ -173,3 +173,62 @@ function reordonner_fratrie(int $position_depart, int $position_arrivee, array $
         }
     }
 }
+
+function regrouper_donnees_particpants($form_pjs, $form_pnjs, $form_xp_pjs, $form_mort_pjs, $form_mort_pnjs) {
+    $participants_regroupes = [];
+    $compteur = 0;
+
+    if(!empty($form_pjs)) {
+        foreach($form_pjs as $key => $un_participant_pj) {
+            $participants_regroupes[$compteur]['id'] = $form_pjs[$key];
+            $participants_regroupes[$compteur]['xp'] = $form_xp_pjs[$key];
+            if (!empty($form_mort_pjs[$key]))
+                $participants_regroupes[$compteur]['mort'] = 1;
+            else
+                $participants_regroupes[$compteur]['mort'] = 0;
+            $compteur++;
+        }
+    }
+
+    if(!empty($form_pnjs)) {
+        echo 'test';
+        foreach($form_pnjs as $cle => $un_participant_pnj) {
+            $participants_regroupes[$compteur]['id'] = $form_pnjs[$cle];
+            $participants_regroupes[$compteur]['xp'] = 0;
+            if (!empty($form_mort_pnjs[$cle]))
+                $participants_regroupes[$compteur]['mort'] = 1;
+            else
+                $participants_regroupes[$compteur]['mort'] = 0;
+            $compteur++;
+        }
+    }
+
+    return $participants_regroupes;
+}
+
+function calcul_rang(int $experience):int {
+    // Cette fonction calcul le rang du personnage en rapport à ses points d'experience
+
+    if($experience <= 149)
+        $rang = 1;
+    elseif($experience >= 150 && $experience <= 174)
+        $rang = 2;
+    elseif($experience >= 175 && $experience <= 199)
+        $rang = 3;
+    elseif($experience >= 200 && $experience <= 224)
+        $rang = 4;
+    elseif($experience >= 225 && $experience <= 249)
+        $rang = 5;
+    elseif($experience >= 250 && $experience <= 274)
+        $rang = 6;
+    elseif($experience >= 275 && $experience <= 299)
+        $rang = 7;
+    elseif($experience >= 300 && $experience <= 324)
+        $rang = 8;
+    elseif($experience >= 325 && $experience <= 349)
+        $rang = 9;
+    elseif($experience >= 350)
+        $rang = 10;
+
+    return $rang;
+}

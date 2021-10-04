@@ -10,7 +10,7 @@
             <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
                 <a href="<?= route('profil-personnage&id=' . $un_pj->id); ?>">
                     <div class="card bg-dark text-white">    
-                        <img src="<?= url_img(clan_trouve_par_id($un_pj->clan_id)->mon); ?>" alt="Mon du clan"
+                        <img src="<?= url_img(recuperer_un_clan($un_pj->clan_id)->mon); ?>" alt="Mon du clan"
                                 style="position: absolute; top: -12px; left: -12px; z-index: 1; width: 48px;" />
                         <div class="fond-mask-fonce">
                             <img class="card-img survol" src="<?= url_img($un_pj->illustration); ?>" alt="Illustration du personnage">
@@ -32,7 +32,7 @@
             <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
                 <a href="<?= route('profil-personnage&id=' . $un_pnj->id); ?>">
                     <div class="card bg-dark text-white">
-                            <img src="<?= url_img(clan_trouve_par_id($un_pnj->clan_id)->mon); ?>" alt="Mon du clan"
+                            <img src="<?= url_img(recuperer_un_clan($un_pnj->clan_id)->mon); ?>" alt="Mon du clan"
                                 style="position: absolute; top: -12px; left: -12px; z-index: 1; width: 48px;" />
                             <div class="fond-mask-fonce">
                                 <img class="card-img survol" src="<?= url_img($un_pnj->illustration); ?>" alt="Illustration du personnage">

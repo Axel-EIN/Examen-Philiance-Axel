@@ -205,6 +205,20 @@ if (!empty($_GET['page'])) {
             afficher_profil_personnage();
             break;
 
+        case 'fiche-personnage':
+            require_once DOSSIER_CONTROLLERS . '/personnages-controller.php';
+            afficher_fiche_personnage();
+            break;
+
+
+        /**
+         * MON COMPTE
+         */
+        case 'mon-compte':
+            require_once DOSSIER_CONTROLLERS . '/utilisateur-controller.php';
+            afficher_mon_compte();
+            break;
+
         /**
          * PAGE ERREURS
          */

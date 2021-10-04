@@ -11,6 +11,7 @@ const DOSSIER_MODELS = __DIR__ . '/models';
 const DOSSIER_VIEWS = __DIR__ . '/views';
 const DOSSIER_CONTROLLERS = __DIR__ . '/controllers';
 const DIR_ASSETS = __DIR__ . '/assets';
+const DOSSIER_SCRIPTS = __DIR__ . '/scripts';
 const DIR_IMG = __DIR__ . '/assets/img';
 const REL_IMG = '/img';
 

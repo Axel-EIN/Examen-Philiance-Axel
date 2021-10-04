@@ -10,10 +10,10 @@ class Utilisateur extends SimpleOrm {
     public $image;
 }
 
-function utilisateur_trouve_par_id($id): object {
+function recuperer_un_utilisateur($id_utilisateur): object {
 	// Renvoi les données de l'utilisateur trouvé par ID en objet
 
-	$utilisateur_trouve = Utilisateur::retrieveByField('id', $id, SimpleOrm::FETCH_ONE);
+	$utilisateur_trouve = Utilisateur::retrieveByField('id', $id_utilisateur, SimpleOrm::FETCH_ONE);
     if ($utilisateur_trouve === null)
         redirection('500', 'Désolé ! Erreur interne au serveur !');
 

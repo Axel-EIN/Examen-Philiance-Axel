@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <td class="p-2 border align-middle" colspan="4">
-                            <strong>Maître du Jeu :</strong> <?= utilisateur_trouve_par_id($un_chapitre->id_mj)->prenom; ?>
+                            <strong>Maître du Jeu :</strong> <?= recuperer_un_utilisateur($un_chapitre->id_mj)->prenom; ?>
                         </td>
                         <td class="p-2 border text-center">
                             <a href="<?= route('admin-supprimer-chapitre-handler&id=' . $un_chapitre->id, 'administration-chapitres'); ?>"

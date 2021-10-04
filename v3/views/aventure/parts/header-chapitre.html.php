@@ -1,5 +1,5 @@
 <!-- HEADER CHAPITRE -->
-<section class="survol" id="ch<?= $chapitre->numero; ?>-header" class="chapitre-fond <?= $volet ?>" style="background-color: <?= $chapitre->couleur; ?>;
+<section id="ch<?= $chapitre->numero; ?>-header" class="chapitre-fond <?= $volet ?>" style="background-color: <?= $chapitre->couleur; ?>;
     background-image:linear-gradient(rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0.6),rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0),
                                     rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0.3),rgb(<?= $r; ?>,<?= $g; ?>,<?= $b; ?>,0.6)),
                                     url('<?= url_img($chapitre->image); ?>');">
@@ -44,7 +44,7 @@
                     <div>
                 <?php else: ?>
                     <div class="alert alert-light mx-auto persistante">
-                        <strong>Désolé ! Il n'y a pas encore d'épisode disponible !</strong>
+                        <strong>Pas encore d'épisode disponible !</strong>
                         <!-- MINI BOUTON : CREER UN EPISODE -->
                         <?php if(admin_connecte()): ?>
                             <a href="<?= route('admin-creer-episode&id_chapitre=' . $chapitre->id . '&numero=1'); ?>"

@@ -50,12 +50,13 @@
                     <?php $episode_parent = episode_trouve_par_id($une_scene->id_episode); ?>
                     <?php $chapitre_parent = chapitre_trouve_par_id($episode_parent->id_chapitre); ?>
                     <?php $saison_parent = saison_trouve_par_id($chapitre_parent->id_saison); ?>
+                    <?php $participations = recuperer_participations($une_scene->id); ?>
 
                     <tr>
                         <td class="p-2 border text-center"><strong><?= $une_scene->id; ?></strong></td>
                         <td class="p-2 border text-center"><strong>Scène&nbsp;<?= $une_scene->numero; ?></strong></td>
-                        <td class="p-2 border text-center">
-                            Saison<?= $saison_parent->numero; ?> > Chapitre<?= $chapitre_parent->numero; ?> > Episode<?= $une_scene->id_episode; ?>
+                        <td class="p-2 border text-left">
+                            Saison<?= $saison_parent->numero; ?><br/>> Chapitre<?= $chapitre_parent->numero; ?><br/>> Episode<?= $episode_parent->numero; ?>
                         </td>
                         <td class="p-2 border"><strong><?= $une_scene->titre; ?></strong></td>
                         <td class="p-2 border"><small><?= $une_scene->temps; ?></small></td>
@@ -80,14 +81,20 @@
                     </tr>
                     <tr class="border">
 
-                        <td class="col-3 border p-2 bg-light" rowspan="2" colspan="3">
+                        <td class="col-3 border p-2 bg-light align-top" rowspan="2" colspan="3">
                             <img src="<?= url_img($une_scene->image); ?>" class="img-fluid" />
                         </td>
                         
-                        <td class="p-2 border" colspan="7"><small><?= $une_scene->texte; ?></small></td>
+                        <td class="p-2 border" colspan="7"><small class="texte-scene"><?= $une_scene->texte; ?></small></td>
                     </tr>
                     <tr class="border">
-                        <td class="p-2 border bg-light" colspan="5"><strong class="text-secondary">Participants&nbsp;:</strong></td>
+                        <td class="p-2 border bg-light" colspan="5"><strong class="text-secondary">Participants&nbsp;:</strong>
+                        <?php foreach($participations as $une_participation): ?>
+                            <a class="perso-img" href="<?= route('profil-personnage&id=' . $une_participation->personnage_id); ?>">
+                                <img src="<?= url_img(recuperer_un_personnage($une_participation->personnage_id)->icone); ?>" />
+                            </a>
+                        <?php endforeach; ?>
+                        </td>
                     </tr>
                     <tr><td class="p-2" colspan="9"></td></tr>
                 <?php endforeach; ?>

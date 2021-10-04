@@ -69,8 +69,13 @@ function afficher_episode() {
             $episode_suivant = $un_episode;
     }
 
-    // AFFICHAGE
+    // Récupération des participations pour l'épisode
     require_once DOSSIER_MODELS . '/Participation.php';
+    $participations_episodes = recuperer_participations_via_episodes($episode_trouve->id);
+
+    // AFFICHAGE
+    
+    require_once DOSSIER_MODELS . '/Personnage.php';
     $html_title = 'Episode n°' . $episode_trouve->numero . ' : ' . $episode_trouve->titre
               . ' | Chapitre ' . $chapitre_parent->numero
               . ' | Saison ' . $saison_parent->numero;

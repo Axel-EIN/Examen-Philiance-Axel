@@ -109,8 +109,18 @@ a.pardessus-clair:hover { color: #fff; font-weight: bold; }
 
 @media(max-width: 480px) { .episode .card { border-radius: 0; box-shadow: unset; } }
 .card-body{ padding: 0.75rem; }
+
 .card-text { color: black; font-size: 1rem; text-align: left; text-justify: inter-word; }
 .card-text.disabled { color: #bfbfbf; }
+
+/* -----------------------------------  */
+/* TEXTE SCENE                          */
+/* ------------------------------------ */
+.texte-scene a { font-weight: bold; }
+
+a.perso-img img { width: 24px; }
+a.perso-img { display: inline-block; }
+
 .card .numero{ color: white;
             font-size:3rem;
             font-weight: bold;
@@ -144,6 +154,7 @@ a.pardessus-clair:hover { color: #fff; font-weight: bold; }
 .btn-primary { background-color: #EA2027 !important; border-color: #b6252f !important; }
 .btn-primary:hover, .btn-primary:active, .btn-primary:target { background-color: #ff4147 !important; border-color: #d12f3a !important; }
 .btn-primary.disabled { background-color: #b4b4b4 !important; border-color: #9f9f9f !important; }
+.remove-participants, .remove-participants_pnjs { background-color: #e9ecef; }
 
 /* -----------------------------------  */
 /* FORMS                                */
@@ -157,8 +168,8 @@ fieldset{ border: 1px solid #ccc; margin-bottom: 8px; }
 /* ------------------------------------ */
 
 .volatile { position: absolute; left: 50%; top: 0px; transform: translate(-50%, -50%); }
-.persistante { font-size: 1rem; display: inline-block; background-color: rgba(0, 0, 0, .5) !important;
-                border-color: rgba(255, 255, 255, .4) !important; margin-bottom: 0;}
+.persistante { font-size: 1rem; display: inline-block; color: rgba(255, 255, 255, .4); background-color: rgba(0, 0, 0, .4) !important;
+                border-color: rgba(255, 255, 255, 0.2) !important; margin-bottom: 0;}
 
 /* -----------------------------------  */
 /* ASSETS                               */
@@ -167,6 +178,7 @@ fieldset{ border: 1px solid #ccc; margin-bottom: 8px; }
 img.disabled { filter:grayscale(); }
 img.survol:hover{ filter: brightness(1.3); transition: .5s; }
 .survol:hover{ filter: brightness(1.3); transition: .5s; }
+
 
 /* -----------------------------------  */
 /* FOOTERS                              */
@@ -177,3 +189,12 @@ img.survol:hover{ filter: brightness(1.3); transition: .5s; }
 .bg-footer2{ background-color: #1E242A; height: 8vh; }
 .footer-link{ color: rgb(156, 161, 170); }
 .footer-link:hover{ color: white; text-decoration: underline; }
+
+/* ------------------------------ */
+/* SCENES                         */
+/* ------------------------------ */
+.ligne-icones { position: relative; top: -36px; }
+.xp { color: rgb(0, 100, 0); text-shadow: 1px 1px 0 #0f0, -1px -1px 0 #0f0, 1px -1px 0 #0f0, -1px 1px 0 #0f0; }
+.perso-icone { width: 64px; border-radius: 5px; }
+.mort { filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8); };
+.mort-icone { width: 72px; position: absolute; top: -6px; left: -2px; z-index: 1; }

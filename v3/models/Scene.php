@@ -10,7 +10,7 @@ class Scene extends SimpleOrm {
 	public $id_episode;
 }
 
-function scene_trouve_par_id($id): object {
+function scene_trouve_par_id($id) {
 	// Renvoi les données de la scène trouvé par ID en objet
 
 	$scene_trouve = Scene::retrieveByField('id', $id, SimpleOrm::FETCH_ONE);
