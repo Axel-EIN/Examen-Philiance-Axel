@@ -1,5 +1,6 @@
 <?php
 require_once DOSSIER_MODELS . '/Personnage.php';
+require_once DOSSIER_MODELS . '/Clan.php';
 
 function afficher_personnages() {
     // Affiche la LISTE de tout les personnages
@@ -45,23 +46,22 @@ function afficher_profil_personnage() {
         redirection('500', 'Désolé ! Les paramètres pour trouver un personnage sont invalides ou manquants !');
 
     // RECUPERATION des données du personnage
-    $personnage_trouve = Personnage::retrieveByField('id', $_GET['id'], SimpleOrm::FETCH_ONE);
+    $personnage_trouve = recuperer_un_personnage($_GET['id']);
     if ($personnage_trouve == null) redirection('404', 'Désolé ! Ce personnage n\'existe pas !');
 
-    require_once DOSSIER_MODELS . '/Clan.php';
-    $personnage_clan = recuperer_un_clan('id', $personnage_trouve->clan_id, SimpleOrm::FETCH_ONE);
+    $personnage_clan = recuperer_un_clan($personnage_trouve->clan_id);
 
     require_once DOSSIER_MODELS . '/Classe.php';
-    $personnage_classe = recuperer_une_classe('id', $personnage_trouve->classe_id, SimpleOrm::FETCH_ONE);
+    $personnage_classe = recuperer_une_classe($personnage_trouve->classe_id);
 
     require_once DOSSIER_MODELS . '/Ecole.php';
     $personnage_ecole = recuperer_une_ecole($personnage_trouve->ecole_id);
 
     require_once DOSSIER_MODELS . '/Utilisateur.php';
-    $personnage_utilisateur = recuperer_un_utilisateur('id', $personnage_trouve->utilisateur_id, SimpleOrm::FETCH_ONE);
+    $personnage_utilisateur = recuperer_un_utilisateur($personnage_trouve->utilisateur_id);
 
     require_once DOSSIER_MODELS . '/Participation.php';
-    $participations_du_personnage = Participation::retrieveByField('personnage_id', $personnage_trouve->id, SimpleOrm::FETCH_MANY);
+    $participations_du_personnage = recuperer_toutes_les_participations_personnage($personnage_trouve->id);
     $total_xp = 40 + somme_xp_participations_personnage($personnage_trouve->id);
     $rang = calcul_rang($total_xp);
     require_once DOSSIER_MODELS . '/Scene.php';
@@ -85,8 +85,11 @@ function afficher_fiche_personnage() {
         redirection('403', 'Désolé, vous ne pouvez pas accéder aux fiches personnages des autres joueurs !');
 
     $personnage_clan = recuperer_un_clan($personnage_trouve->clan_id);
+    require_once DOSSIER_MODELS . '/Ecole.php';
     $personnage_ecole = recuperer_une_ecole($personnage_trouve->ecole_id);
+    require_once DOSSIER_MODELS . '/Classe.php';
     $personnage_classe = recuperer_une_classe($personnage_trouve->classe_id);
+    require_once DOSSIER_MODELS . '/Utilisateur.php';
     $personnage_utilisateur = recuperer_un_utilisateur($personnage_trouve->utilisateur_id);
 
     require_once DOSSIER_MODELS . '/Fiche.php';

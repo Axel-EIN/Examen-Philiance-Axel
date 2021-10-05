@@ -24,7 +24,7 @@
                 <h3 class="card-title"><?php echo $scene->titre; ?></h3>
 
                 <div class="text-right ligne-icones">
-                    <?php $participations = recuperer_participations($scene->id); ?>
+                    <?php $participations = recuperer_participations_scene($scene->id); ?>
                     <?php foreach($participations as $une_participation): ?>
                         <div style="display: inline-block; position: relative;">
                             <?php if($une_participation->exp_gagne != 0 && $une_participation->est_mort != 1 ): ?>

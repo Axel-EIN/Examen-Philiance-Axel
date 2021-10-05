@@ -10,7 +10,7 @@ class Participation extends SimpleOrm {
 
 // RETRIEVES PARTICIPATIONS
 
-function recuperer_une_participation(int $id_participation): object {
+function recuperer_une_participation(int $id_participation) {
     // Trouve une ligne de participation via l'ID puis renvoi toutes les données sous forme d'un objet
 
     return Participation::retrieveByField('id', $id_participation, SimpleOrm::FETCH_ONE);
@@ -18,7 +18,7 @@ function recuperer_une_participation(int $id_participation): object {
 
 // RETRIEVES VIA UNE SCENE, UN EPISODE et/ou PERSONNAGE
 
-function recuperer_une_participation_via_personnage_scene(int $id_personnage, int $id_scene): object {
+function recuperer_une_participation_personnage_scene(int $id_personnage, int $id_scene) {
 	// Renvoi la ligne de participation d'un personnage dans une scène ou bien false
 
     $participations_de_la_scene = Participation::retrieveByField('scene_id', $id_scene, SimpleOrm::FETCH_MANY);
@@ -37,12 +37,19 @@ function recuperer_une_participation_via_personnage_scene(int $id_personnage, in
     return null;
 }
 
-function recuperer_participations($id_scene): array {
+function recuperer_toutes_les_participations_personnage(int $id_personnage): array {
+    return $participations_du_personnage = Participation::retrieveByField('personnage_id',
+                                                                          $id_personnage,
+                                                                          SimpleOrm::FETCH_MANY,
+                                                                          SimpleOrm::options('scene_id', SimpleOrm::ORDER_ASC) );
+}
+
+function recuperer_participations_scene(int $id_scene): array {
 	// Renvoi les lignes de participation des personnage dans une scène
     return Participation::retrieveByField('scene_id', $id_scene, SimpleOrm::FETCH_MANY);
 }
 
-function recuperer_participations_pjs($id_scene): array {
+function recuperer_participations_pjs_scene(int $id_scene): array {
     // Renvoi les données de tout les participations JOUEURS dans une scène
 
     $participations = Participation::retrieveByField('scene_id', $id_scene, SimpleOrm::FETCH_MANY, SimpleOrm::options('exp_gagne', SimpleOrm::ORDER_DESC));
@@ -57,7 +64,7 @@ function recuperer_participations_pjs($id_scene): array {
     return $participations_pjs;    
 }
 
-function recuperer_participations_pnjs($id_scene): array {
+function recuperer_participations_pnjs_scene(int $id_scene): array {
     // Renvoi les données de tout les participations NON-JOUEURS dans une scène
 
     $participations = Participation::retrieveByField('scene_id', $id_scene, SimpleOrm::FETCH_MANY);
@@ -72,13 +79,13 @@ function recuperer_participations_pnjs($id_scene): array {
     return $participations_pnjs;    
 }
 
-function recuperer_participations_via_episodes(int $id_episode): array {
+function recuperer_participations_episodes(int $id_episode): array {
     require_once DOSSIER_MODELS . '/Scene.php';
     $scenes_trouvees = scenes_enfants_de_episode_triees_numero($id_episode);
     
     $toutes_les_participations = [];
     foreach($scenes_trouvees as $une_scene_trouvee)
-        $toutes_les_participations = array_merge($toutes_les_participations, recuperer_participations($une_scene_trouvee->id));
+        $toutes_les_participations = array_merge($toutes_les_participations, recuperer_participations_scene($une_scene_trouvee->id));
 
     $participations_episode = [];
 

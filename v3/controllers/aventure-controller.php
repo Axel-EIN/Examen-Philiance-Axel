@@ -71,7 +71,7 @@ function afficher_episode() {
 
     // Récupération des participations pour l'épisode
     require_once DOSSIER_MODELS . '/Participation.php';
-    $participations_episodes = recuperer_participations_via_episodes($episode_trouve->id);
+    $participations_episodes = recuperer_participations_episodes($episode_trouve->id);
 
     // AFFICHAGE
     

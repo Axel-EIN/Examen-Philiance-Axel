@@ -19,7 +19,7 @@ class Fiche extends SimpleOrm {
 
 }
 
-function recuperer_fiche_personnage(int $id_personnage): object {
+function recuperer_fiche_personnage(int $id_personnage) {
 
     $fiche_personnage = Fiche::retrieveByField('personnage_id', $id_personnage, SimpleOrm::FETCH_ONE);
 

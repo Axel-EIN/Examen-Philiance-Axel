@@ -113,9 +113,34 @@ function admin_creer_scene_handler() {
     // GESTION des participants (facultatif)
     require_once DOSSIER_MODELS . '/Participation.php';
 
+    // CLEAN des données POST
+    if(!empty($_POST['participants'])) {
+        $participants_pjs = $_POST['participants'];
+        $participants_pjs_xp = $_POST['participants_xp'];
+        if(!empty($_POST['participants_mort']))
+            $participants_pjs_mort = $_POST['participants_mort'];
+        else
+            $participants_pjs_mort = [];
+    } else {
+        $participants_pjs = [];
+        $participants_pjs_xp = [];
+        $participants_pjs_mort = [];
+    }
+
+    if(!empty($_POST['participants_pnjs'])) {
+        $participants_pnjs = $_POST['participants_pnjs'];
+        if(!empty($_POST['participants_pnjs_mort']))
+            $participants_pnjs_mort = $_POST['participants_pnjs_mort'];
+        else
+            $participants_pnjs_mort = [];
+    } else {
+        $participants_pnjs = [];
+        $participants_pnjs_mort = [];
+    }
+
     // REGROUPEMENT DES DONNEES POST PJS (ID, XP, MORT) & PNJS (ID, MORT)
-    $participants_a_ajoutes = regrouper_donnees_particpants($_POST['participants'], $_POST['participants_pnjs'], $_POST['participants_xp'],
-                                  $_POST['participants_mort'], $_POST['participants_pnjs_mort']);
+    $participants_a_ajoutes = regrouper_donnees_particpants($participants_pjs, $participants_pnjs, $participants_pjs_xp,
+                                  $participants_pjs_mort, $participants_pnjs_mort);
 
     // AJOUT
     if (!empty($participants_a_ajoutes)) {
@@ -161,8 +186,8 @@ function admin_modifier_scene() {
     // RECUPERATION des participations et participants
     require_once DOSSIER_MODELS . '/Participation.php';
     require_once DOSSIER_MODELS . '/Personnage.php';
-    $participations_pjs = recuperer_participations_pjs($scene_trouve->id);
-    $participations_pnjs = recuperer_participations_pnjs($scene_trouve->id);
+    $participations_pjs = recuperer_participations_pjs_scene($scene_trouve->id);
+    $participations_pnjs = recuperer_participations_pnjs_scene($scene_trouve->id);
 
     $participants_pjs = recuperer_pjs_par_scene($scene_trouve->id);
     $participants_pnjs = recuperer_pnjs_par_scene($scene_trouve->id);
@@ -238,8 +263,34 @@ function admin_modifier_scene_handler() {
     require_once DOSSIER_MODELS . '/Participation.php';
 
     // REGROUPEMENT DES DONNEES POST PJS (ID, XP, MORT) & PNJS (ID, MORT)
-    $participants_modifies = regrouper_donnees_particpants($_POST['participants'], $_POST['participants_pnjs'], $_POST['participants_xp'],
-                                  $_POST['participants_mort'], $_POST['participants_pnjs_mort']);
+
+    // Clean des Arguments POST
+    if(!empty($_POST['participants'])) {
+        $participants_pjs = $_POST['participants'];
+        $participants_pjs_xp = $_POST['participants_xp'];
+        if(!empty($_POST['participants_mort']))
+            $participants_pjs_mort = $_POST['participants_mort'];
+        else
+            $participants_pjs_mort = [];
+    } else {
+        $participants_pjs = [];
+        $participants_pjs_xp = [];
+        $participants_pjs_mort = [];
+    }
+
+    if(!empty($_POST['participants_pnjs'])) {
+        $participants_pnjs = $_POST['participants_pnjs'];
+        if(!empty($_POST['participants_pnjs_mort']))
+            $participants_pnjs_mort = $_POST['participants_pnjs_mort'];
+        else
+            $participants_pnjs_mort = [];
+    } else {
+        $participants_pnjs = [];
+        $participants_pnjs_mort = [];
+    }
+
+    $participants_modifies = regrouper_donnees_particpants($participants_pjs, $participants_pnjs, $participants_pjs_xp,
+                                  $participants_pjs_mort, $participants_pnjs_mort);
 
     // SUPPRESSION
     require_once DOSSIER_MODELS . '/Personnage.php';
@@ -261,7 +312,7 @@ function admin_modifier_scene_handler() {
     // MODIFICATION OU AJOUT
     if (!empty($participants_modifies)) {
         foreach ($participants_modifies as $cle => $un_participant_modifie) {
-            $participation_trouvee = recuperer_une_participation_via_personnage_scene($participants_modifies[$cle]['id'], $scene_trouve->id);
+            $participation_trouvee = recuperer_une_participation_personnage_scene($participants_modifies[$cle]['id'], $scene_trouve->id);
 
             if( !empty($participation_trouvee) )
                 modifier_une_participation_xp_mort($participation_trouvee, $participants_modifies[$cle]['xp'], $participants_modifies[$cle]['mort']);

@@ -29,20 +29,23 @@
                 
             </div>
             <div class="col-6">
-                <h2 class="mb-4">Mes Personnages</h2>
+                <h2 class="mb-4">Fiches Personnages Privées</h2>
 
                 <section class="row ml-3">
                     <?php if(!empty($personnages_utilisateur)): ?>
                         <?php foreach($personnages_utilisateur as $un_personnage): ?>
                             <article class="col-6 mb-3">
-                                <div class="card text-left">
-                                    <a href="<?= route('profil-personnage&id=' . $un_personnage->id); ?>"><img class="card-img-top survol" src="<?= url_img($un_personnage->icone); ?>" alt="Image du personnage"></a>
+                                <div class="card text-center">
+                                    <a href="<?= route('profil-personnage&id=' . $un_personnage->id); ?>">
+                                        <img class="card-img-top survol" src="<?= url_img($un_personnage->icone); ?>"
+                                             alt="Image du personnage">
+                                    </a>
                                     <div class="card-body">
                                         <h4 class="card-title"><?= $un_personnage->nom; ?> <strong><?= $un_personnage->prenom; ?></strong></h4>
                                         <p class="card-text text-center">
-                                            <i class="fas fa-eye"></i>&nbsp;&nbsp;<a href="<?= route('profil-personnage&id=' . $un_personnage->id); ?>">Profil Public</a><br/>
-                                            <i class="fas fa-user-secret"></i>&nbsp;&nbsp;<a href="<?= route('fiche-personnage&id=' . $un_personnage->id); ?>">Fiche Privée</a>
-
+                                            <a href="<?= route('fiche-personnage&id=' . $un_personnage->id); ?>">
+                                                <i class="fas fa-user-secret"></i>&nbsp;&nbsp;Fiche Privée
+                                            </a>
                                         </p>
                                     </div>
                                 </div>

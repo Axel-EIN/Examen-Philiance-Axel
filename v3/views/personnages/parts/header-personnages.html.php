@@ -1,5 +1,5 @@
 <!-- EN TETE -->
-<header class="header-fond py-md-4 py-sm-2"
+<header class="header-fond"
     style="background-image: linear-gradient( rgb(40,0,0,0.5), rgb(40,0,0,0.5) ), url('<?= url_img('empire.jpg'); ?>')">
     <div class="container">
         <div class="volatile"><?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?></div>
