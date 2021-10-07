@@ -32,7 +32,7 @@ style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('<
             </div>
 
             <hr class="w-50">     
-            <h1 class="lead-stylise grand"><?= titre_stylise($saison_trouve->titre); ?></h1>
+            <h1 class="lead-stylise grand ombre-txt"><?= titre_stylise($saison_trouve->titre); ?></h1>
 
                 <!-- ADMIN : MODIFIER / SUPPRIMER -->
                 <?php if(admin_connecte()): ?>

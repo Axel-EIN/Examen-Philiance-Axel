@@ -1,16 +1,65 @@
-html, body { margin: 0; height: 100%; font-size: 16px }
+/* -----------------------------------------  */
+/* BASE COULEURS                              */
+/* ------------------------------------------ */
+
+.couleur-primaire { color: #EA2027; }
+.bg-primaire { background-color: #EA2027; }
+
+
+/* -----------------------------------------  */
+/* HTML ET BODY                               */
+/* ------------------------------------------ */
+
+html, body {    margin: 0;
+                height: 100%;
+                font-size: 16px }
 
 .transform-enligne { display: inline-block; }
 
+
 /* -----------------------------------------  */
-/* NAVIGATION                                 */
+/* NAV BAR                                    */
 /* ------------------------------------------ */
 
-#logo{ width: 120px; height: auto; }
-.admin { color: #fff; }
-.admin:hover { color: #ea2027; }
-nav .active{ font-weight: bold; }
-nav button{ max-height: 3rem; }
+#logo{          width: 120px; height: auto; }
+.admin {        color: #fff; }
+.admin:hover {  color: #ea2027; }
+nav .active {    font-weight: bold; }
+nav button {     max-height: 3rem; }
+
+/* -----------------------------------------  */
+/* EFFECTS                                    */
+/* ------------------------------------------ */
+
+.ombre-txt {            text-shadow: 4px 4px 2rem black; }
+
+.fond-mask {            background-color: black; }
+.fond-mask img {        mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1));
+                        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1)); }
+
+.translucide {           filter: opacity(0.50); }
+.translucide:hover {     filter: opacity(1);
+                        transition-duration: 0.5s; }
+
+img.disabled { filter:grayscale(); }
+
+.survol:hover { filter: brightness(1.3); transition: .5s; }
+
+/* -----------------------------------------  */
+/* TITRES                                     */
+/* ------------------------------------------ */
+
+
+@font-face { font-family: "Hirosh"; src: url("assets/fonts/hirosh.otf"); }
+@font-face { font-family: "Present"; src: url("assets/fonts/present-it-black.otf"); }
+
+.titre-episode {        font-weight: 300;
+                        color: white;
+                        background-image: url("assets/img/back-title.png");
+                        background-size: 100% 130%;
+                        background-repeat: no-repeat;
+                        background-position: 50% 50%;
+                        font-family: "Present"; }
 
 /* -----------------------------------------  */
 /* HEADERS                                    */
@@ -18,18 +67,35 @@ nav button{ max-height: 3rem; }
 
 @font-face { font-family: "Shogun"; src: url("assets/fonts/shoguns-clan-accentued.otf"); }
 
-.header { min-height: 60vh; position: relative; color: #fff;
-          margin-bottom: 0; padding-top: 0.5rem; padding-bottom: 0.5rem; text-align: center; }
-.header-episode { position: relative; color: #fff; margin-bottom: 0; padding-top: 0.5rem;
-                  padding-bottom: 0.5rem; text-align: center; }        
-.header-fond { min-height: 60vh; background-size: cover; background-position: top; padding: 0; margin: 0; }
-header .container { position: relative; min-height: 60vh; }
+.header {       min-height: 60vh;
+                position: relative;
+                color: #fff;
+                margin-bottom: 0;
+                padding-top: 0.5rem; padding-bottom: 0.5rem;
+                text-align: center; }
 
-.pre-titre-saison { font-size: 3rem; margin: 0;}
-.pre-titre-chapitre { font-size: 2.5rem; margin: 0;}
+.header-episode {       position: relative;
+                        color: #fff;
+                        margin-bottom: 0;
+                        padding-top: 0.5rem; padding-bottom: 0.5rem;
+                        text-align: center; }
 
-.lead-stylise { text-align: center; font-family: "Shogun"; margin-top: 2rem; margin-bottom: 0; line-height: 1.2;
-                text-shadow: 0 0 2rem rgba(0, 0, 0, .5);}
+.header-fond {  min-height: 60vh;
+                background-size: cover;
+                background-position: top;
+                padding: 0; margin: 0; }
+
+header .container {     position: relative;
+                        min-height: 60vh; }
+
+.pre-titre-saison {     font-size: 3rem; margin: 0;}
+.pre-titre-chapitre {   font-size: 2.5rem; margin: 0;}
+
+.lead-stylise {         text-align: center;
+                        font-family: "Shogun";
+                        margin-top: 2rem;
+                        margin-bottom: 0;
+                        line-height: 1.2; }
 
 .fleche { width: 28px; }
 
@@ -138,10 +204,14 @@ a.perso-img { display: inline-block; }
 .btn-lire-ep { position: absolute; bottom: 1rem; }
 .newpad{ padding-right: 8px; padding-left: 8px; padding-top: 8px; padding-bottom: 8px; }
 @media(max-width: 480px) { .newpad { padding-right: 0; padding-left: 0; } .episode .newpad { padding: 0; } }
-.fond-mask { background-color: black; }
-.fond-mask img { mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1)); }
+
+
 .fond-mask-fonce { background-color: black; }
-.fond-mask-fonce img { mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1)); }
+.fond-mask-fonce img { 
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1));
+
+}
 .card-img-overlay { top: unset; padding: 0.5rem; }
 .card-img-overlay h4 { margin-bottom: 0; }
 
@@ -175,9 +245,7 @@ fieldset{ border: 1px solid #ccc; margin-bottom: 8px; }
 /* ASSETS                               */
 /* ------------------------------------ */
 
-img.disabled { filter:grayscale(); }
-img.survol:hover{ filter: brightness(1.3); transition: .5s; }
-.survol:hover{ filter: brightness(1.3); transition: .5s; }
+
 
 
 /* -----------------------------------  */

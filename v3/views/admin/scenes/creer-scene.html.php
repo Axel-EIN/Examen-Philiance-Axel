@@ -1,141 +1,147 @@
 <?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
-<!-- H1 -->
-<header class="container my-5">
-    <h1 class="text-center"><?= $h1; ?></h1>
+<div class="container-fluid bg-light">
+    <?php include DOSSIER_VIEWS . '/admin/parts/nav-admin.html.php'; ?>
 
-    <!-- LIEN SI ARRIVEE DEPUIS PAGE EPISODE = GET ID EPISODE PARENT FOURNI -->
-    <?php if(!empty($episode_parent)): ?> 
-        <h4 class="text-center"><small>pour </small>
-            <a href="<?= route('episode&id=' . $episode_parent->id, "#tete-lecture"); ?>">
-            <?= $episode_parent->titre ?>&nbsp;<i class="fas fa-eye"></i></a>
-        </h4>
-    <?php endif; ?>
+    <!-- H1 -->
+    <header class="container my-4">
+        <h1 class="text-center"><?= $h1; ?></h1>
 
-</header>
-
-<main class="container">
-    <form id="form1" class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-scene-handler' . $get_episode); ?>" enctype="multipart/form-data">
-
-        <!-- CHAMP TITRE -->
-        <label for="titre">Titre</label>
-        <input class="form-control" type="text" name="titre" id="titre" required autofocus placeholder="Entrez le titre de la Scène..."><br/>
-
-        <!-- SI SAISON PARENT ET CHAPITRE PARENT VIDE -->
-        <?php if (empty($saison_parent) && empty($chapitre_parent)): ?>
-            <div class="form-row">
+        <!-- LIEN SI ARRIVEE DEPUIS PAGE EPISODE = GET ID EPISODE PARENT FOURNI -->
+        <?php if(!empty($episode_parent)): ?> 
+            <h4 class="text-center"><small>pour </small>
+                <a href="<?= route('episode&id=' . $episode_parent->id, "#tete-lecture"); ?>">
+                <?= $episode_parent->titre ?>&nbsp;<i class="fas fa-eye"></i></a>
+            </h4>
         <?php endif; ?>
 
-            <!-- SAISON PARENT -->
-            <?php if(empty($saison_parent)): ?>
-                <div class="col">
-                    <label for="saison">Saison à rattacher</label>
-                    <select class="form-control" id="saison" required onchange="chapitreChange(this);">
+    </header>
 
-                        <option value="">Choisir une Saison...</option>
+    <main class="container">
+        <form id="form1" class="col-8 offset-2 mb-5" method="post" action="<?= route('admin-creer-scene-handler' . $get_episode); ?>" enctype="multipart/form-data">
 
-                        <?php foreach($toutes_les_saisons as $une_saison): ?>
-                            <option value="<?= $une_saison->id; ?>"><?= $une_saison->titre; ?></option>
-                        <?php endforeach; ?>
+            <!-- TITRE -->
+            <label for="titre">Titre</label>
+            <input class="form-control" type="text" name="titre" id="titre" required autofocus placeholder="Entrez le titre de la Scène..."><br/>
 
-                    </select>
-                </div>
+            <!-- SI SAISON PARENT ET CHAPITRE PARENT VIDE -->
+            <?php if (empty($saison_parent) && empty($chapitre_parent)): ?>
+                <div class="form-row">
             <?php endif; ?>
 
-            <!-- CHAPITRE PARENT -->
-            <?php if(empty($chapitre_parent)): ?>
-                <div class="col">
-                    <label for="chapitre">Chapitre à rattacher</label>
-                    <select class="form-control" id="chapitre" required onchange="episodeChange(this);">
-                        <option value="" disabled></option>
-                    </select>
-                </div>
-            <?php endif; ?>
+                <!-- SAISON PARENT -->
+                <?php if(empty($saison_parent)): ?>
+                    <div class="col">
+                        <label for="saison">Saison à rattacher</label>
+                        <select class="form-control" id="saison" required onchange="chapitreChange(this);">
 
-        <?php if (empty($saison_parent) && empty($chapitre_parent)): ?>
-            </div><br/>
-        <?php endif; ?>
+                            <option value="">Choisir une Saison...</option>
 
-
-        <div class="form-row">
-
-            <!-- EPISODE PARENT -->
-            <?php if(empty($episode_parent)): ?>
-                <div class="col">
-                    <label for="episode">Épisode à rattacher</label>
-                    <select class="form-control" id="episode" name="id_episode" required onchange="sceneChange(this);">
-                        <option value="" disabled></option>
-                    </select>
-                </div>
-            <?php endif; ?>
-
-            <!-- POSITION SCENE -->
-            <div class="col">
-                <label for="scene">Position de la scène</label>
-                <select class="form-control" id="scene" name="numero" required>
-                    <?php if(empty($episode_parent) || empty($_GET['numero'])): ?>
-                        <option value="" disabled></option>
-                    <?php else: ?>
-                        <?php if($scenes_enfants): ?>
-                            <?php foreach($scenes_enfants as $une_scene): ?>
-                                <option value="<?= $une_scene->numero ?>"
-                                    <?php if($une_scene->numero == $_GET['numero']) echo ' selected' ?>>
-                                        <?= $une_scene->numero; ?> - insérer devant <?= $une_scene->titre ?>
-                                </option>
+                            <?php foreach($toutes_les_saisons as $une_saison): ?>
+                                <option value="<?= $une_saison->id; ?>"><?= $une_saison->titre; ?></option>
                             <?php endforeach; ?>
-                                <option value="<?= $une_scene->numero+1; ?>"
-                                    <?php if($une_scene->numero+1 == $_GET['numero']) echo 'selected'; ?>>
-                                        <?= $une_scene->numero+1; ?> - insérer en dernier
-                                </option>
+
+                        </select>
+                    </div>
+                <?php endif; ?>
+
+                <!-- CHAPITRE PARENT -->
+                <?php if(empty($chapitre_parent)): ?>
+                    <div class="col">
+                        <label for="chapitre">Chapitre à rattacher</label>
+                        <select class="form-control" id="chapitre" required onchange="episodeChange(this);">
+                            <option value="" disabled></option>
+                        </select>
+                    </div>
+                <?php endif; ?>
+
+            <?php if (empty($saison_parent) && empty($chapitre_parent)): ?>
+                </div><br/>
+            <?php endif; ?>
+
+
+            <div class="form-row">
+
+                <!-- EPISODE PARENT -->
+                <?php if(empty($episode_parent)): ?>
+                    <div class="col">
+                        <label for="episode">Épisode à rattacher</label>
+                        <select class="form-control" id="episode" name="id_episode" required onchange="sceneChange(this);">
+                            <option value="" disabled></option>
+                        </select>
+                    </div>
+                <?php endif; ?>
+
+                <!-- POSITION SCENE -->
+                <div class="col">
+                    <label for="scene">Position de la scène</label>
+                    <select class="form-control" id="scene" name="numero" required>
+                        <?php if(empty($episode_parent) || empty($_GET['numero'])): ?>
+                            <option value="" disabled></option>
                         <?php else: ?>
-                            <option value="1">1 - Insérer en premier</option>
+                            <?php if($scenes_enfants): ?>
+                                <?php foreach($scenes_enfants as $une_scene): ?>
+                                    <option value="<?= $une_scene->numero ?>"
+                                        <?php if($une_scene->numero == $_GET['numero']) echo ' selected' ?>>
+                                            <?= $une_scene->numero; ?> - Insérer devant <?= $une_scene->titre ?>
+                                    </option>
+                                <?php endforeach; ?>
+                                    <option value="<?= $une_scene->numero+1; ?>"
+                                        <?php if($une_scene->numero+1 == $_GET['numero']) echo 'selected'; ?>>
+                                            <?= $une_scene->numero+1; ?> - Insérer en dernier
+                                    </option>
+                            <?php else: ?>
+                                <option value="1">1 - Insérer en premier</option>
+                            <?php endif; ?>
                         <?php endif; ?>
-                    <?php endif; ?>
-                </select>
+                    </select>
+                </div>
+
+            </div><br/>
+
+            <!-- TEMPS DU JEU -->
+            <label for="temps">Temps dans le jeu</label>
+            <input class="form-control" type="text" name="temps" id="temps" required placeholder="Précisez le moment de la journée ou la nuit dans le jeu"><br/>
+
+            <!-- TEXTE -->
+            <label for="texte">Texte</label>
+            <textarea style="resize: none;" class="form-control" name="texte" id="texte" cols="30" rows="7" required></textarea><br/>
+
+            <!-- IMAGE -->
+            <label for="image">Image (facultative)</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" name="image" aria-describedby="fileHelpId" id="image">
+                <label class="custom-file-label" for="image">Charger une image...</label>
+                <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
+            </div><br/><br/>
+
+            Participants (facultatif) :<br/>
+            <div class="form-row">
+
+                <!-- PARTICIPATION PJs -->
+                <div class="col-6 text-center">
+                    <div class="text-right"><small class="mr-3">XP gagné / mort</small></div>
+                    <button class="btn mt-2" style="background: #e9ecef;" id="add-participants">Ajouter un PJ</button>
+                </div>
+
+                <!-- PARTICIPATION PNJs -->
+                <div class="col-6 text-center">
+                    <div class="text-right"><small class="mr-4">Mort</small></div>
+                    <button class="btn mt-2" style="background: #e9ecef;" id="add-participants_pnjs">Ajouter un PNJ</button>
+                </div>
+
             </div>
+            
+            <!-- BOUTON VALIDER -->
+            <input class="form-control btn btn-primary mt-4" type="submit" value="Créer" name="creer" />
 
-        </div><br/>
+        </form>
+    </main>
+</div>
 
-        <!-- TEMPS DU JEU -->
-        <label for="temps">Temps dans le jeu</label>
-        <input class="form-control" type="text" name="temps" id="temps" required placeholder="Précisez le moment de la journée ou la nuit dans le jeu"><br/>
-
-        <!-- TEXTE -->
-        <label for="texte">Texte</label>
-        <textarea style="resize: none;" class="form-control" name="texte" id="texte" cols="30" rows="7" required>Veuillez entrer le récit de la scène ici...</textarea><br/>
-
-        <!-- IMAGE -->
-        <label for="image">Image (facultative)</label>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" name="image" aria-describedby="fileHelpId" id="image">
-            <label class="custom-file-label" for="image">Charger une image...</label>
-            <small id="fileHelpId" class="form-text text-muted">Taille conseillée : 1280x720 minimum, rapport 16/9</small>
-        </div><br/><br/>
-
-        Participants (facultatif) :<br/>
-        <div class="form-row">
-
-            <!-- PARTICIPATION PJs -->
-            <div class="col-6 text-center">
-                <div class="text-right"><small class="mr-3">XP gagné / mort</small></div>
-                <button class="btn mt-2" style="background: #e9ecef;" id="add-participants">Ajouter un PJ</button>
-            </div>
-
-            <!-- PARTICIPATION PNJs -->
-            <div class="col-6 text-center">
-                <div class="text-right"><small class="mr-4">Mort</small></div>
-                <button class="btn mt-2" style="background: #e9ecef;" id="add-participants_pnjs">Ajouter un PNJ</button>
-            </div>
-
-        </div>
-        
-        <!-- BOUTON VALIDER -->
-        <input class="form-control btn btn-primary mt-4" type="submit" value="Créer" name="creer" />
-
-    </form>
-</main>
-
+<?php include_once DOSSIER_SCRIPTS . '/scripts.js.php'; ?>
 <?php include_once DOSSIER_SCRIPTS . '/ajout_participations.js.php'; ?>
+<?php include_once DOSSIER_SCRIPTS . '/b4_customfile_change.js.php'; ?>
 <script type="text/javascript">
 // script pour la CONSTRUCTION des tableaux avec les données BDD qui seront utilisé pour les liste déroulantes
 
@@ -269,5 +275,4 @@
     }
 
 </script>
-
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>

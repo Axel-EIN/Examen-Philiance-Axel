@@ -1,6 +1,7 @@
 <?php
 require_once DOSSIER_MODELS . '/Personnage.php';
 require_once DOSSIER_MODELS . '/Clan.php';
+require_once DOSSIER_MODELS . '/Utilisateur.php';
 
 function afficher_personnages() {
     // Affiche la LISTE de tout les personnages
@@ -57,7 +58,6 @@ function afficher_profil_personnage() {
     require_once DOSSIER_MODELS . '/Ecole.php';
     $personnage_ecole = recuperer_une_ecole($personnage_trouve->ecole_id);
 
-    require_once DOSSIER_MODELS . '/Utilisateur.php';
     $personnage_utilisateur = recuperer_un_utilisateur($personnage_trouve->utilisateur_id);
 
     require_once DOSSIER_MODELS . '/Participation.php';
@@ -89,7 +89,6 @@ function afficher_fiche_personnage() {
     $personnage_ecole = recuperer_une_ecole($personnage_trouve->ecole_id);
     require_once DOSSIER_MODELS . '/Classe.php';
     $personnage_classe = recuperer_une_classe($personnage_trouve->classe_id);
-    require_once DOSSIER_MODELS . '/Utilisateur.php';
     $personnage_utilisateur = recuperer_un_utilisateur($personnage_trouve->utilisateur_id);
 
     require_once DOSSIER_MODELS . '/Fiche.php';

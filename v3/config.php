@@ -10,10 +10,8 @@ const BDD_NOM = 'exam_v3';
 const DOSSIER_MODELS = __DIR__ . '/models';
 const DOSSIER_VIEWS = __DIR__ . '/views';
 const DOSSIER_CONTROLLERS = __DIR__ . '/controllers';
-const DIR_ASSETS = __DIR__ . '/assets';
 const DOSSIER_SCRIPTS = __DIR__ . '/scripts';
 const DIR_IMG = __DIR__ . '/assets/img';
-const REL_IMG = '/img';
 
 // Autre constantes UTILES
 const URL_DU_SITE = 'http://localhost/exam/v3';

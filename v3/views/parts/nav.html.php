@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <ul class="navbar-nav">
-                        <li class="nav-item <?php if($_GET['page'] == 'aventure' || $_GET['page'] == 'episode') echo 'active'; ?>">
+                        <li class="nav-item <?php if($_GET['page'] == 'aventure' || $_GET['page'] == 'accueil' || $_GET['page'] == 'episode') echo 'active'; ?>">
                             <a class="nav-link" href="<?= route('aventure'); ?>">AVENTURE</a>
                         </li>
                         <li class="nav-item<?php if($_GET['page'] == 'personnages' || $_GET['page'] == 'profil-personnage'): ?> active<?php endif; ?>">
@@ -34,8 +34,8 @@
                         </li>
                         <?php if(utilisateur_connecte()): ?>
                             <li class="nav-item">
-                                <a class="nav-link<?php if($_GET['page'] == 'mon-compte'): ?> active<?php endif; ?>"
-                                href="<?= route('mon-compte&id=' . $_SESSION['id']); ?>"><i class="fas fa-torii-gate"></i>&nbsp; MON COMPTE</a>
+                                <a class="nav-link<?php if($_GET['page'] == 'mon-compte' || $_GET['page'] == 'fiche-personnage'): ?> active<?php endif; ?>"
+                                href="<?= route('mon-compte&id=' . $_SESSION['id']); ?>"><i class="fas fa-torii-gate couleur-primaire"></i>&nbsp; MON COMPTE</a>
                             </li>
                         <?php endif; ?>
                     </ul>

@@ -13,13 +13,13 @@
                 <a class="btn btn-primary btn-lg" href="<?= route('aventure&saison=' . $saison_parent->numero . '&chapitre=' . $chapitre_parent->numero
                                                             . '#tete-lecture-ch' . $chapitre_parent->numero); ?>" role="button">Retour</a>
             </div>
-            <h2 class="lead-stylise grand"><?= titre_stylise($chapitre_parent->titre); ?></h2>
-            <p id="tete-lecture" class="citation"><?php echo nl2br($chapitre_parent->citation); ?></p>
+            <h2 class="lead-stylise grand ombre-txt"><?= titre_stylise($chapitre_parent->titre); ?></h2>
+            <p class="citation"><?php echo nl2br($chapitre_parent->citation); ?></p>
         </div>
     </header>
 
     <!-- RESUME DE L'EPISODE -->
-    <main class="container mt-4">
+    <main id="tete-lecture" class="container pt-3">
 
     <!-- ADMIN : MODIFIER / SUPPRIMER -->
     <?php if(admin_connecte()): ?>
@@ -34,15 +34,19 @@
         </div>
     <?php endif; ?>
 
-        <section class="d-flex p-3 justify-content-center align-items-center">
+        <section class="d-flex pt-3 justify-content-center align-items-center">
             
             <!-- PRECEDENT -->                 
             <div class="d-flex flex-column justify-content-center" style="width: 180px;">
                 <?php if (!empty($episode_precedent)): ?>
-                    <div style="border: thick double <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>; border-radius: 15px;">
+                    <div class="fond-mask" style="position: relative; border: thick double <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>; border-radius: 15px;">
                         <a href="<?= route('episode&id=' . $episode_precedent->id . '#tete-lecture'); ?>">
+                            <span class="display-4 numero-episode-courant"
+                                style="color:white; position: absolute; bottom: 10px; left: 10px; line-height: 1;">
+                                    <?= $episode_precedent->numero; ?>
+                            </span>
                             <img src="<?= url_img($episode_precedent->image); ?>" alt="<?= $episode_precedent->titre; ?>"
-                                 class="img-fluid survol" style="width: 180px; border-radius: 15px;" />
+                                 class="img-fluid translucide" style="width: 180px; border-radius: 15px;" />
                         </a>
                     </div>
                 <?php elseif (admin_connecte()): ?>
@@ -62,7 +66,7 @@
             </div>
 
             <!-- COURANT -->
-            <div class="d-flex flex-column justify-content-center"
+            <div class="d-flex flex-column justify-content-center fond-mask"
                  style="border: thick double <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>; border-radius: 20px;">
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <div style="position: relative;">
@@ -77,18 +81,26 @@
             </div>
 
             <!-- CHEVRON RIGHT -->
-            <div class="d-flex flex-column justify-content-center px-3"
-                 style="width:64px; color: <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>;">
-                <?php echo file_get_contents(url_img("icons/chevron-right-solid.svg")); ?>
-            </div>
+            <?php if (!empty($episode_suivant)): ?>
+            <a href="<?= route('episode&id=' . $episode_suivant->id . '#tete-lecture'); ?>">
+                <div class="d-flex flex-column justify-content-center px-3"
+                    style="width:64px; color: <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>;">
+                    <?php echo file_get_contents(url_img("icons/chevron-right-solid.svg")); ?>
+                </div>
+            </a>
+            <?php endif; ?>
 
             <!-- SUIVANT -->
-            <div class="text-left d-flex flex-column justify-content-center" style="width: 180px;">
-                <?php if (!empty($episode_suivant)) : ?>
-                    <div style="border: thick double <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>; border-radius: 15px;">
+            <div class="text-left d-flex flex-column justify-content-center" style="width: 180px; position: relative;">
+                <?php if (!empty($episode_suivant)): ?>
+                    <div class="fond-mask" style="border: thick double <?= adjustBrightness($chapitre_parent->couleur, 0.2); ?>; border-radius: 15px;">
                         <a href="<?= route('episode&id=' . $episode_suivant->id . '#tete-lecture'); ?>">
+                            <span class="display-4 numero-episode-courant"
+                                  style="color:white; position: absolute; bottom: 10px; left: 10px; line-height: 1;">
+                                <?= $episode_suivant->numero; ?>
+                            </span>
                             <img src="<?= url_img($episode_suivant->image); ?>" alt="<?= $episode_suivant->titre; ?>"
-                                 class="img-fluid survol" style="width: 180px; border-radius: 15px;" />
+                                 class="img-fluid translucide" style="width: 180px; border-radius: 15px;" />
                         </a>
                     </div>
                 <?php elseif (admin_connecte()): ?>
@@ -109,15 +121,15 @@
         <?php endif; ?>
 
         <!-- TITRE EPISODE -->
-        <div class="mt-2">
-            <h2 class="display-3 text-center">
-                <span style="font-weight: 300; color: white"><?= $episode_trouve->titre; ?></span>
+        <div>
+            <h2 class="display-3 text-center titre-episode ombre-txt mb-0 mt-3 py-3" style="position: relative; z-index: 2;">
+                <?= $episode_trouve->titre; ?>
             </h2>
         </div>
 
-        <div class="row justify-content-center mt-3">
+        <div class="row justify-content-center" style="position: relative; top: -48px; z-index: 1;" >
             <div class="col-sm-12 col-xl-10 newpad">
-                <div class="card justify-content-center" style="min-height: 500px;">
+                <div class="card justify-content-center pt-5" style="min-height: 500px;">
 
                     <!-- AFFICHAGE DES SCENES -->
                     <section>
@@ -145,14 +157,16 @@
                         <?php endif; ?>
 
                         <h2 class="text-center">Classement de l'Episode</h2>
-                        <ol>
-                            <?php foreach($participations_episodes as $une_participation_episode): ?>
-                                <li>
-                                    <?= recuperer_un_personnage($une_participation_episode->personnage_id)->prenom; ?>
-                                    &nbsp;<?= $une_participation_episode->exp_gagne; ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ol> 
+                        <div class="d-flex justify-content-center">
+                            <ol class="text-center">
+                                <?php foreach($participations_episodes as $une_participation_episode): ?>
+                                    <li>
+                                        <?= recuperer_un_personnage($une_participation_episode->personnage_id)->prenom; ?>
+                                        &nbsp;<strong><?= $une_participation_episode->exp_gagne; ?>xp</strong>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ol>
+                        </div>
 
                         <div class="text-center pb-3">
                             <a href="#ch<?= $chapitre_parent->numero; ?>-header" class="btn btn-primary mt-3">Retour en haut</a>
@@ -166,4 +180,5 @@
 </div>
 
 <?php include_once DOSSIER_VIEWS . '/parts/modal.html.php'; ?>
+<?php include_once DOSSIER_SCRIPTS . '/scripts.js.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>

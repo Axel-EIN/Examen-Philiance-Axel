@@ -91,7 +91,7 @@ function admin_modifier_saison() {
     
     // AFFICHAGE
     $html_title = 'Modifier une saison' .  ' | Administration de ' . NOM_DU_SITE;
-    $h1 = 'Modifier un saison';
+    $h1 = 'Modifier une saison';
     include_once DOSSIER_VIEWS . '/admin/saisons/modifier-saison.html.php'; 
 }
 

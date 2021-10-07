@@ -112,7 +112,7 @@ function retirer_liens_personnages(string $texte): string {
 }
 
 function ajouter_liens_personnages(string $texte): string {
-    // Cette fonction parse le texte et y ajoute les liens et images pour les personnages trouvées
+    // Cette fonction parse le texte et ajoute les liens et images pour les personnages trouvées
 
     $tableau = [];
     preg_match_all('#\[(.*)\]#Ui', $texte, $tableau); // Caputre tout les mots entre [ ]

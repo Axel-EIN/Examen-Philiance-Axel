@@ -1,16 +1,15 @@
 <?php if(!admin_connecte()) redirection('403', 'Accès non-autorisé !'); ?>
 <?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 
-<div class="container-fluid">
+<div class="container-fluid bg-light">
+    <?php include DOSSIER_VIEWS . '/admin/parts/nav-admin.html.php'; ?>
 
-    <header class="container pt-5">
+    <header class="container my-4">
         <div class="row justify-content-center">
             
             <div class="col-12">
                 <h1 class="text-center">Bienvenue dans le Panneau d'Administration !</h1>
             </div>
-
-            <?php include DOSSIER_VIEWS . '/parts/nav-admin.html.php'; ?>
 
             <div class="col-12">
                 <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
@@ -107,5 +106,5 @@
     </main>
 
 </div>
-
+<?php include_once DOSSIER_SCRIPTS . '/scripts.js.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>

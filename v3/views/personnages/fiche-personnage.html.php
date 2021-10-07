@@ -235,5 +235,5 @@
         </article>
     </section>
 </main>     
-
+<?php include_once DOSSIER_SCRIPTS . '/scripts.js.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>

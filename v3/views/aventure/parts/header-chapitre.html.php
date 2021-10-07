@@ -22,7 +22,7 @@
             <?php endif; ?>
 
             <div class="mt-auto mb-3">
-                <h1 id="tete-lecture-ch<?= $chapitre->numero; ?>" class="lead-stylise grand"><?= titre_stylise($chapitre->titre); ?></h1>
+                <h1 id="tete-lecture-ch<?= $chapitre->numero; ?>" class="lead-stylise grand ombre-txt"><?= titre_stylise($chapitre->titre); ?></h1>
                 <p class="citation"><?php echo nl2br($chapitre->citation); ?></p>
 
                 <!-- ALERTE -->

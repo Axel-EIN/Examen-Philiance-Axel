@@ -9,7 +9,7 @@
         </div>
 
         <?php include DOSSIER_VIEWS . '/parts/alerte.html.php'; ?>
-        <?php include DOSSIER_VIEWS . '/parts/nav-admin.html.php'; ?>
+        <?php include DOSSIER_VIEWS . '/admin/parts/nav-admin.html.php'; ?>
 
     </div>
 </header>
@@ -17,5 +17,5 @@
 <main class="container">
 
 </main>
-
+<?php include_once DOSSIER_SCRIPTS . '/scripts.js.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>

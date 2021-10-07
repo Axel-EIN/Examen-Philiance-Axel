@@ -1,8 +1,8 @@
 <?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/personnages/parts/header-personnages.html.php'; ?>
 
-<main class="container-fluid">
-    <div class="container">
+<main class="container-fluid bg-light">
+    <div class="container mt-5">
         <h2>Personnages Joueurs (PJs) :</h2>
         <section class="row">
         <?php foreach($pjs as $un_pj): ?>
@@ -17,7 +17,10 @@
                         </div>
                         <div class="card-img-overlay">
                             <h4 class="card-title"><?= $un_pj->nom; ?> <?= $un_pj->prenom; ?></h4>
-                            <p class="card-text"><small><?= $un_pj->titres; ?></small></p>
+                            <p class="card-text" style="color: #fff;"><small><?= recuperer_un_utilisateur($un_pj->utilisateur_id)->prenom; ?></small></p>
+                            <?php if(!empty($un_pj->titres)): ?>
+                                <p class="card-text" style="color: #fff;"><small><?= $un_pj->titres; ?></small></p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </a>
@@ -26,7 +29,7 @@
         <?php endforeach; ?>
         </section>
 
-        <h2>Personnages Non-Joueurs (PNJs) :</h2>
+        <h2 class="mt-5">Personnages Non-Joueurs (PNJs) :</h2>
         <section class="row">
         <?php foreach($pnjs as $un_pnj): ?>
             <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
@@ -39,7 +42,7 @@
                             </div>
                             <div class="card-img-overlay">
                                 <h4 class="card-title"><?= $un_pnj->nom; ?> <?= $un_pnj->prenom; ?></h4>
-                                <p class="card-text"><small><?= $un_pnj->titres; ?></small></p>
+                                <p class="card-text" style="color: #fff;"><small><?= $un_pnj->titres; ?></small></p>
                             </div>
                     </div>
                 </a>
@@ -49,5 +52,5 @@
 
     </div>>
 </main>
-
+<?php include_once DOSSIER_SCRIPTS . '/scripts.js.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>
