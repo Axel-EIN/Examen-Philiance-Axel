@@ -12,8 +12,11 @@
                     <div class="card bg-dark text-white">    
                         <img src="<?= url_img(recuperer_un_clan($un_pj->clan_id)->mon); ?>" alt="Mon du clan"
                                 style="position: absolute; top: -12px; left: -12px; z-index: 1; width: 48px;" />
+                        <?php if(est_mort($un_pj->id)): ?>
+                            <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 156px; position: absolute; top: 4rem; left: 0.20rem; z-index: 1;" />
+                        <?php endif; ?>
                         <div class="fond-mask-fonce">
-                            <img class="card-img survol" src="<?= url_img($un_pj->illustration); ?>" alt="Illustration du personnage">
+                            <img class="card-img <?php if(est_mort($un_pj->id)): ?>mort<?php else: ?>survol<?php endif; ?>" src="<?= url_img($un_pj->illustration); ?>" alt="Illustration du personnage">
                         </div>
                         <div class="card-img-overlay">
                             <h4 class="card-title"><?= $un_pj->nom; ?> <?= $un_pj->prenom; ?></h4>
@@ -37,8 +40,11 @@
                     <div class="card bg-dark text-white">
                             <img src="<?= url_img(recuperer_un_clan($un_pnj->clan_id)->mon); ?>" alt="Mon du clan"
                                 style="position: absolute; top: -12px; left: -12px; z-index: 1; width: 48px;" />
+                            <?php if(est_mort($un_pnj->id)): ?>
+                                <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 156px; position: absolute; top: 4rem; left: 0.20rem; z-index: 1;" />
+                            <?php endif; ?>
                             <div class="fond-mask-fonce">
-                                <img class="card-img survol" src="<?= url_img($un_pnj->illustration); ?>" alt="Illustration du personnage">
+                                <img class="card-img <?php if(est_mort($un_pnj->id)): ?>mort<?php else: ?>survol<?php endif; ?>" src="<?= url_img($un_pnj->illustration); ?>" alt="Illustration du personnage">
                             </div>
                             <div class="card-img-overlay">
                                 <h4 class="card-title"><?= $un_pnj->nom; ?> <?= $un_pnj->prenom; ?></h4>

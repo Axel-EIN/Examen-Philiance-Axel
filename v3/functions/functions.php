@@ -191,7 +191,6 @@ function regrouper_donnees_particpants($form_pjs, $form_pnjs, $form_xp_pjs, $for
     }
 
     if(!empty($form_pnjs)) {
-        echo 'test';
         foreach($form_pnjs as $cle => $un_participant_pnj) {
             $participants_regroupes[$compteur]['id'] = $form_pnjs[$cle];
             $participants_regroupes[$compteur]['xp'] = 0;

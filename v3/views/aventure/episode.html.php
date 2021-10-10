@@ -168,8 +168,18 @@
                             </ol>
                         </div>
 
-                        <div class="text-center pb-3">
-                            <a href="#ch<?= $chapitre_parent->numero; ?>-header" class="btn btn-primary mt-3">Retour en haut</a>
+                        <div class="d-flex justify-content-between p-3">
+                            <?php if (!empty($episode_precedent)): ?>
+                                <a href="<?= route('episode&id=' . $episode_precedent->id . '#tete-lecture'); ?>" class="btn btn-primary">Précédent</a>
+                            <?php else: ?>
+                                <span style="width: 96px"></span>
+                            <?php endif; ?>
+                            <a href="#ch<?= $chapitre_parent->numero; ?>-header" class="btn btn-primary">Retour en haut</a>
+                            <?php if (!empty($episode_suivant)): ?>
+                                <a href="<?= route('episode&id=' . $episode_suivant->id . '#tete-lecture'); ?>" class="btn btn-primary">Suivant</a>
+                            <?php else: ?>
+                                <span style="width: 96px"></span>
+                            <?php endif; ?>
                         </div>
                     </section>
 

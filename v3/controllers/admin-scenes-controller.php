@@ -98,13 +98,17 @@ function admin_creer_scene_handler() {
 
     // GESTION de la position / numero
     reordonner_fratrie(-1, $_POST['numero'], [], scenes_enfants_de_episode($id_episode));
+
+    // GESTION des liens des personnages dans le texte
+    $texte = htmlspecialchars($_POST['texte']);
+    $nouveau_texte = tagger_personnages($texte);
     
     // CREATION et SAUVEGARDE des données
     $nouvelle_scene = new Scene;
     $nouvelle_scene->numero = $_POST['numero'];
     $nouvelle_scene->titre = htmlspecialchars($_POST['titre']);
     $nouvelle_scene->temps = htmlspecialchars($_POST['temps']);
-    $nouvelle_scene->texte = htmlspecialchars($_POST['texte']);
+    $nouvelle_scene->texte = $nouveau_texte;
     $nouvelle_scene->image = $image_nouvel_url;
     $nouvelle_scene->id_episode = $id_episode;;
 
@@ -181,7 +185,7 @@ function admin_modifier_scene() {
     $toutes_les_saisons = Saison::all();
 
     // GESTION des liens des personnages dans le texte de la scène
-    $scene_trouve->texte = retirer_liens_personnages($scene_trouve->texte);
+    $scene_trouve->texte = detagger_personnages($scene_trouve->texte);
 
     // RECUPERATION des participations et participants
     require_once DOSSIER_MODELS . '/Participation.php';
@@ -247,7 +251,7 @@ function admin_modifier_scene_handler() {
     
     // GESTION des liens des personnages dans le texte
     $texte = htmlspecialchars($_POST['texte']);
-    $nouveau_texte = ajouter_liens_personnages($texte);
+    $nouveau_texte = tagger_personnages($texte);
 
     // SAUVEGARDE des données de la scène
     $scene_trouve->numero = $_POST['numero'];

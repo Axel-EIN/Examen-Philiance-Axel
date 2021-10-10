@@ -32,6 +32,7 @@ nav button {     max-height: 3rem; }
 /* ------------------------------------------ */
 
 .ombre-txt {            text-shadow: 4px 4px 2rem black; }
+.ombre-img {            box-shadow: 2px 2px 4px black; }
 
 .fond-mask {            background-color: black; }
 .fond-mask img {        mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1));

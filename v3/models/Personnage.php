@@ -25,14 +25,13 @@ function recuperer_un_personnage($id_personnage): object {
 	return $personnage_trouve;
 }
 
-function recuperer_un_personnage_par_prenom($prenom): object {
+function recuperer_un_personnage_par_prenom($prenom) {
 	// Renvoi les données d'un personnage trouvé par prenom  en objet
 
 	$personnage_trouve = Personnage::retrieveByField('prenom', $prenom, SimpleOrm::FETCH_ONE);
-    if ($personnage_trouve === null) {
-        // redirection('500', 'Désolé ! Ce personnage n\'existe pas !');
-        return false;
-    }
+
+    if ($personnage_trouve == null)
+        $personnage_trouve = Personnage::retrieveByField('alias_prenom', $prenom, SimpleOrm::FETCH_ONE);
 
 	return $personnage_trouve;
 }
@@ -119,4 +118,18 @@ function somme_xp_participations_personnage(int $id_personnage): int {
         $somme_xp += $une_participation->exp_gagne;
 
     return $somme_xp;
+}
+
+function est_mort(int $id_personnage): bool {
+    $participations = Participation::retrieveByField('personnage_id', $id_personnage, SimpleOrm::FETCH_MANY);
+    
+    $est_mort = false;
+    foreach($participations as $une_participation) {
+        if ($une_participation->est_mort == 1) {
+            $est_mort = true;
+            break;
+        }
+    }
+
+    return $est_mort;
 }

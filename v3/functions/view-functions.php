@@ -102,29 +102,22 @@ function couleur_hexa_plus_sombre_rgb(string $couleur, int &$rouge, int &$vert, 
     $bleu = max($bleu - $palier, 0);
 }
 
-function retirer_liens_personnages(string $texte): string {
-    // Cette fonction permet d'enlever les balises liens et images sur un texte d'une scène et remet les balises []
-
-    $nouveau_texte = preg_replace( '#<a .*><img .*/> (.*)<\/a>#Ui', '[$1]', $texte);
-    // $1 sert a récupérer le contenu de la première paire de paranthèse capturante du match actuel pour éviter d'en faire d'autre
-
-    return $nouveau_texte;
-}
-
-function ajouter_liens_personnages(string $texte): string {
-    // Cette fonction parse le texte et ajoute les liens et images pour les personnages trouvées
+function tagger_personnages(string $texte): string {
+    // Cette fonction remplace les [PrenomDuPerosnnage] par @IdDuPersonnage@
 
     $tableau = [];
     preg_match_all('#\[(.*)\]#Ui', $texte, $tableau); // Caputre tout les mots entre [ ]
     $tableau_de_regexp = array_fill(0, count($tableau[1]), '#\[(.*)\]#Ui'); // On crée un tableau de regexp au nbr de matchs
 
-    // Recherche les perosnnages et crée le tableau de remplacement
+    // Recherche les personnages et crée le tableau de remplacement
     require_once DOSSIER_MODELS . '/Personnage.php';
     $tableau_remplacement = [];
     foreach ($tableau[1] as $key => $un_match) {
 
         if (!($perso_trouve = recuperer_un_personnage_par_prenom($un_match))) {
-            redirection('500', 'Personnage ' . $un_match .  ' non-trouvé, veuillez réessayer', 'warning');
+            $tableau_remplacement[] = $un_match;
+            continue;
+            // redirection('500', 'Personnage ' . $un_match .  ' non-trouvé, veuillez réessayer', 'warning');
 
             // AMELIORATION POSSIBLE : 
             // unset($tableau[1][$key]);
@@ -133,13 +126,45 @@ function ajouter_liens_personnages(string $texte): string {
             // (le truc avec la fonction car on met le nom du perso dedans)
         }
 
-        $tableau_remplacement[] = '<a class="perso-img" href="' . route('profil-personnage&id=' . $perso_trouve->id) . '">'
-                                  . '<img src="' . url_img($perso_trouve->icone) . '" alt="Icône du personnage" /> '
-                                  . $perso_trouve->prenom . '</a>';
+        $tableau_remplacement[] = '@' . $perso_trouve->id . '@';
     }
 
     return preg_replace( $tableau_de_regexp, $tableau_remplacement, $texte, 1);
     // Attention, si le second paramètre est un tableau, le 1er doit être aussi un tableau, c'est pour ça qu'on utilise le tableau de regexp
+}
+
+function lier_personnages(string $texte): string {
+    // Cette fonction remplace les @id@ d'un texte par les balises image et lien pour les personnages trouvées
+
+    $tableau = [];
+    preg_match_all('#\@(.*)\@#Ui', $texte, $tableau);
+    $tableau_de_regexp = array_fill(0, count($tableau[1]), '#\@(.*)\@#Ui');
+
+    require_once DOSSIER_MODELS . '/Personnage.php';
+    $tableau_remplacement = [];
+    foreach ($tableau[1] as $key => $un_match) {
+        $perso_trouve = recuperer_un_personnage($un_match);
+        $tableau_remplacement[] = '<a class="perso-img" href="' . route('profil-personnage&id=' . $perso_trouve->id) . '">'
+        . '<img src="' . url_img($perso_trouve->icone) . '" alt="Icône du personnage" /> '
+        . $perso_trouve->prenom . '</a>';
+    }
+
+    return preg_replace($tableau_de_regexp, $tableau_remplacement, $texte, 1);
+}
+
+function detagger_personnages(string $texte): string {
+    // Cette fonction remplace les balises @id@ par [PrenomDuPersonnage]
+
+    $tableau = [];
+    preg_match_all('#\@(.*)\@#Ui', $texte, $tableau);
+    $tableau_de_regexp = array_fill(0, count($tableau[1]), '#\@(.*)\@#Ui');
+
+    require_once DOSSIER_MODELS . '/Personnage.php';
+    $tableau_remplacement = [];
+    foreach ($tableau[1] as $key => $un_match)
+        $tableau_remplacement[] = '[' . recuperer_un_personnage($un_match)->prenom . ']';
+
+    return preg_replace($tableau_de_regexp, $tableau_remplacement, $texte, 1);
 }
 
 /**

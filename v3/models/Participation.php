@@ -85,7 +85,7 @@ function recuperer_participations_episodes(int $id_episode): array {
     
     $toutes_les_participations = [];
     foreach($scenes_trouvees as $une_scene_trouvee)
-        $toutes_les_participations = array_merge($toutes_les_participations, recuperer_participations_scene($une_scene_trouvee->id));
+        $toutes_les_participations = array_merge($toutes_les_participations, recuperer_participations_pjs_scene($une_scene_trouvee->id));
 
     $participations_episode = [];
 
@@ -103,6 +103,14 @@ function recuperer_participations_episodes(int $id_episode): array {
         if ($trouvee == false)
             $participations_episode[] = $une_participation;
     }
+
+    function cmp($a, $b) {
+        return strcmp($a->exp_gagne, $b->exp_gagne);
+    }
+
+    usort($participations_episode, "cmp");
+    $participations_episode = array_reverse($participations_episode);
+
     return $participations_episode;
 }
 

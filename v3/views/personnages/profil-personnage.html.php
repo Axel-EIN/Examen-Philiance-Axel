@@ -2,7 +2,7 @@
 
 <main class="container-fluid bg-light">
     <section class="container">
-        <h1 class="my-3">
+        <h1 class="pt-3 mb-3">
             <?= $personnage_trouve->nom; ?> <strong><?= $personnage_trouve->prenom; ?></strong>
             <?php if(utilisateur_connecte() && $_SESSION['id'] == $personnage_trouve->utilisateur_id): ?>
                 <span class="float-right">
@@ -25,19 +25,16 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <div class="d-inline-block">Clan :
-                                <img style="width: 64px;" src="<?= url_img($personnage_clan->mon) ?>" alt="Image du Mon du Clan" />
-                                <strong style="color:<?= $personnage_clan->couleur ?>;"><?= $personnage_clan->nom; ?></strong>
-                            </div> &nbsp; &nbsp; &nbsp;
-                            <div class="d-inline-block">Classe :
-                                <strong><?= $personnage_classe->nom; ?></strong>
+                            <div class="d-flex justify-content-between">
+                                <span>Clan&nbsp;:<br/><strong style="color:<?= $personnage_clan->couleur ?>;"><?= $personnage_clan->nom; ?></strong>
+                                <br/><img style="width: 64px;" src="<?= url_img($personnage_clan->mon) ?>" alt="Image du Mon du Clan" /></span>
+                                <span>Classe&nbsp;:<br/><strong><?= $personnage_classe->nom; ?></strong></span>
+                                <span>Ecole&nbsp;:<br/><strong><?= $personnage_ecole->nom; ?></strong></span>
+                                <span>Rang&nbsp;:<br/><strong class="display-4"><?= $rang; ?></strong></span>
+                                <span>XP&nbsp;:<br/><strong class="display-4"><?= $total_xp; ?></strong></span>
                             </div>
                         </li>
-                        <li class="list-group-item">
-                            Ecole: <strong><?= $personnage_ecole->nom; ?></strong> &nbsp; &nbsp; &nbsp;
-                            Rang : <strong class="display-4"><?= $rang; ?></strong>
-                        </li>
-                        <li class="list-group-item">Technique Rang 1 : <?= $personnage_ecole->technique1_nom; ?><br/><small><?= $personnage_ecole->technique1_desc; ?></small></li>
+                        <li class="list-group-item">Technique Rang 1 : <strong><?= $personnage_ecole->technique1_nom; ?></strong><br/><small><?= $personnage_ecole->technique1_desc; ?></small></li>
                         <li class="list-group-item">Joueur: <strong><?= $personnage_utilisateur->prenom; ?></strong></li>
                     </ul>
                 </div>
@@ -49,13 +46,13 @@
                                 <?php $une_scene_trouvee = scene_trouve_par_id($une_participation->scene_id); ?>
                                 <?php $episode_parent = episode_trouve_par_id($une_scene_trouvee->id_episode); ?>
                                 <?php if($une_participation->est_mort == 0): ?>
-                                    <?= $personnage_trouve->prenom; ?> a 
-                                        <?php if($une_participation->exp_gagne == 0): ?>
-                                            participé 
-                                        <?php else: ?>
-                                            gagné <strong><?= $une_participation->exp_gagne; ?>xp</strong> 
-                                        <?php endif; ?>
-                                            dans la scène <a href="<?= route('episode&id=' . $episode_parent->id . '#scn' . $une_scene_trouvee->numero); ?>" ><strong><?= $une_scene_trouvee->titre; ?></strong></a> de l'episode <strong><?= $episode_parent->titre; ?></strong><br/>
+                                    a
+                                    <?php if($une_participation->exp_gagne == 0): ?>
+                                        participé 
+                                    <?php else: ?>
+                                        gagné <strong><?= $une_participation->exp_gagne; ?>xp</strong> 
+                                    <?php endif; ?>
+                                        dans la scène <a href="<?= route('episode&id=' . $episode_parent->id . '#scn' . $une_scene_trouvee->numero); ?>" ><strong><?= $une_scene_trouvee->titre; ?></strong></a> de l'episode <strong><?= $episode_parent->titre; ?></strong><br/>
                                 <?php else: ?>
                                     <?= $personnage_trouve->prenom; ?> <strong style="color: red">est mort</strong> dans la scène <a href="<?= route('episode&id=' . $episode_parent->id . '#scn' . $une_scene_trouvee->numero); ?>" ><strong><?= $une_scene_trouvee->titre; ?></strong></a> de l'episode <strong><?= $episode_parent->titre; ?></strong><br/>
                                 <?php endif; ?>

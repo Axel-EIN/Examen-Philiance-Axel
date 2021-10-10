@@ -1,9 +1,29 @@
 <!-- UNE SCENE -->
-<article id="scn<?= $scene->numero; ?>" class="mb-3">
+<article id="scn<?= $scene->numero; ?>" class="mb-3" style="position: relative;">
 
     <!-- IMAGE -->
     <div class="fond-mask">
         <img src="<?= url_img($scene->image); ?>" class="card-img-top img-fluid" alt="<?php echo $scene->titre; ?>">
+    </div>
+
+    <div class="text-right" style="position: absolute; top: 1rem; right: 1rem;">
+    
+        <div class="d-flex flex-column">   
+            <?php $participations_pnjs = recuperer_participations_pnjs_scene($scene->id); ?>
+            <?php foreach($participations_pnjs as $une_participation_pnj): ?>
+                <div class="mb-2" style="display: inline-block; position: relative;">
+                    <a href="<?= route('profil-personnage&id=' . $une_participation_pnj->personnage_id); ?>" >
+                        <?php if($une_participation_pnj->est_mort == 1): ?>
+                            <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
+                        <?php endif; ?>
+                        <img class="ombre-img perso-icone<?php if($une_participation_pnj->est_mort != 0): ?> mort
+                                                <?php else: ?> survol<?php endif; ?>"
+                                src="<?= url_img(recuperer_un_personnage($une_participation_pnj->personnage_id)->icone); ?>"
+                                alt="Icone du Personnage" />
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <!-- CORPS DE LA SCENE -->
@@ -24,8 +44,8 @@
                 <h3 class="card-title"><?php echo $scene->titre; ?></h3>
 
                 <div class="text-right ligne-icones">
-                    <?php $participations = recuperer_participations_scene($scene->id); ?>
-                    <?php foreach($participations as $une_participation): ?>
+                    <?php $participations_pjs = recuperer_participations_pjs_scene($scene->id); ?>
+                    <?php foreach($participations_pjs as $une_participation): ?>
                         <div style="display: inline-block; position: relative;">
                             <?php if($une_participation->exp_gagne != 0 && $une_participation->est_mort != 1 ): ?>
                                 <strong class="xp">+<?= $une_participation->exp_gagne; ?>XP</strong>
@@ -34,7 +54,9 @@
                                 <?php if($une_participation->est_mort == 1): ?>
                                     <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
                                 <?php endif; ?>
-                                <img class="perso-icone <?php if($une_participation->est_mort != 0): ?> mort<?php else: ?> survol<?php endif; ?>"
+                                <img class="perso-icone<?php if($une_participation->est_mort != 0): ?> mort
+                                                       <?php elseif($une_participation->exp_gagne == 0): ?> disabled
+                                                       <?php else: ?> survol<?php endif; ?>"
                                      src="<?= url_img(recuperer_un_personnage($une_participation->personnage_id)->icone); ?>"
                                      alt="Icone du Personnage" />
                             </a>
@@ -47,6 +69,7 @@
         </div>
 
         <!-- TEXTE -->
+        <?php $scene->texte = lier_personnages($scene->texte); ?>
         <p class="card-text texte-scene"><?php echo nl2br($scene->texte); ?></p>
 
     </div>
