@@ -126,7 +126,9 @@ function tagger_personnages(string $texte): string {
             // (le truc avec la fonction car on met le nom du perso dedans)
         }
 
-        $tableau_remplacement[] = '@' . $perso_trouve->id . '@';
+        $tableau_remplacement[] = '<a class="perso-img" href="?page=profil-personnage&id=' . $perso_trouve->id . '">'
+                                    . '<img src="assets/img/' . $perso_trouve->icone . '" alt="Icône du personnage" /> ' . $perso_trouve->prenom
+                                    . '</a>';
     }
 
     return preg_replace( $tableau_de_regexp, $tableau_remplacement, $texte, 1);
@@ -136,35 +138,27 @@ function tagger_personnages(string $texte): string {
 function lier_personnages(string $texte): string {
     // Cette fonction remplace les @id@ d'un texte par les balises image et lien pour les personnages trouvées
 
-    $tableau = [];
-    preg_match_all('#\@(.*)\@#Ui', $texte, $tableau);
-    $tableau_de_regexp = array_fill(0, count($tableau[1]), '#\@(.*)\@#Ui');
+//     $tableau = [];
+//     preg_match_all('#\@(.*)\@#Ui', $texte, $tableau);
+//     $tableau_de_regexp = array_fill(0, count($tableau[1]), '#\@(.*)\@#Ui');
 
-    require_once DOSSIER_MODELS . '/Personnage.php';
-    $tableau_remplacement = [];
-    foreach ($tableau[1] as $key => $un_match) {
-        $perso_trouve = recuperer_un_personnage($un_match);
-        $tableau_remplacement[] = '<a class="perso-img" href="' . route('profil-personnage&id=' . $perso_trouve->id) . '">'
-        . '<img src="' . url_img($perso_trouve->icone) . '" alt="Icône du personnage" /> '
-        . $perso_trouve->prenom . '</a>';
-    }
+//     require_once DOSSIER_MODELS . '/Personnage.php';
+//     $tableau_remplacement = [];
+//     foreach ($tableau[1] as $key => $un_match) {
+//         $tableau_remplacement[] = route('profil-personnage&id=' . $un_match);
+//     }
 
-    return preg_replace($tableau_de_regexp, $tableau_remplacement, $texte, 1);
+//     return preg_replace($tableau_de_regexp, $tableau_remplacement, $texte, 1);
+    return $texte;
 }
 
 function detagger_personnages(string $texte): string {
     // Cette fonction remplace les balises @id@ par [PrenomDuPersonnage]
 
-    $tableau = [];
-    preg_match_all('#\@(.*)\@#Ui', $texte, $tableau);
-    $tableau_de_regexp = array_fill(0, count($tableau[1]), '#\@(.*)\@#Ui');
-
-    require_once DOSSIER_MODELS . '/Personnage.php';
-    $tableau_remplacement = [];
-    foreach ($tableau[1] as $key => $un_match)
-        $tableau_remplacement[] = '[' . recuperer_un_personnage($un_match)->prenom . ']';
-
-    return preg_replace($tableau_de_regexp, $tableau_remplacement, $texte, 1);
+    // $tableau = [];
+    // preg_match_all('#\@(.*)\@#Ui', $texte, $tableau);
+    // return preg_replace( '#<a .*><img .*/> (.*)<\/a>#Ui', '[$1]', $texte);
+    return $texte;
 }
 
 /**

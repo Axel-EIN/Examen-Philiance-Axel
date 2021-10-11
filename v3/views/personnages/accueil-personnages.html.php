@@ -1,8 +1,8 @@
 <?php include_once DOSSIER_VIEWS . '/parts/header.html.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/personnages/parts/header-personnages.html.php'; ?>
 
-<main class="container-fluid bg-light">
-    <div class="container mt-5">
+<main class="container-fluid bg-light pt-5">
+    <div class="container">
         <h2>Personnages Joueurs (PJs) :</h2>
         <section class="row">
         <?php foreach($pjs as $un_pj): ?>
@@ -58,5 +58,6 @@
 
     </div>>
 </main>
+<?php include_once DOSSIER_VIEWS . '/parts/modal.html.php'; ?>
 <?php include_once DOSSIER_SCRIPTS . '/scripts.js.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>
