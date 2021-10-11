@@ -66,5 +66,5 @@
 </main>
 
 <?php include_once DOSSIER_VIEWS . '/parts/modal.html.php'; ?>
-<?php include_once DOSSIER_SCRIPTS . '/scripts.js.php'; ?>
+<?php include_once DOSSIER_SCRIPTS . '/scripts/scripts.js.php'; ?>
 <?php include_once DOSSIER_VIEWS . '/parts/footer.html.php'; ?>

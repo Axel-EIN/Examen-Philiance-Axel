@@ -1,6 +1,9 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
 
+    globals:
+        nom_du_site: "Aventure d'Axel dans le Livre des Cinq Anneaux"
+
 when@test:
     twig:
         strict_variables: true
