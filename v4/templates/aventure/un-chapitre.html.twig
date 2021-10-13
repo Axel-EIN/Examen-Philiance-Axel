@@ -11,6 +11,7 @@ background-image:linear-gradient( rgb( 0,0,0,0.6 ), rgb( 0,0,0,0), rgb( 0,0,0,0.
                 <p class="citation">{{ un_chapitre.citation|nl2br }}</p>
 
                 {% if un_chapitre.episodes is not empty %}
+
                     <div class="mx-auto mb-2">
                         <a href="#tete-lecture-ch{{ un_chapitre.numero }}">
                             <button class="btn btn-primary btn-lg text-center" type="button" data-toggle="collapse"
@@ -20,11 +21,15 @@ background-image:linear-gradient( rgb( 0,0,0,0.6 ), rgb( 0,0,0,0), rgb( 0,0,0,0.
                             </button>
                         </a>
                     <div>
+
                 {% else %}
+
                     <div class="alert alert-light mx-auto persistante">
                         <strong>Pas encore d'épisode disponible !</strong>
                     </div>
+
                 {% endif %}
+                
             </div>
         </div>
 
@@ -39,7 +44,9 @@ background-image:linear-gradient( rgb( 0,0,0,0.6 ), rgb( 0,0,0,0), rgb( 0,0,0,0.
                             <div class="card episode-card-liste">
                                 <div class="episode-card-numero">{{ un_episode.numero }}</div>
                                 <div class="fond-masque">
-                                    <a href=""><img src="{{ asset(un_episode.image) }}" alt="Image episode" class="card-img-top img-fluid survol" /></a>
+                                    <a href="{{ path('aventure_episode', {id:un_episode.id} ) }}">
+                                        <img src="{{ asset(un_episode.image) }}" alt="Image episode" class="card-img-top img-fluid survol" />
+                                    </a>
                                 </div>
                                 <div class="card-body ancre-relatif">
                                     <h5 class="card-title">{{ un_episode.titre }}</h5>

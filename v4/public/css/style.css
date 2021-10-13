@@ -3,11 +3,8 @@
 /* -------------------------------- */
 
 .couleur-primaire {color: #EA2027; }
-
 .ombre-primaire { color: #b6252f; }
-
 .lumiere-primaire { color: #ff4147; }
-
 .fond-primaire { background-color: #EA2027; }
 
 
@@ -19,6 +16,16 @@
 
 .lien-blanc:hover { color: #aaa;
                     text-decoration: underline; }
+
+
+/* -------------------------------  */
+/* NAVIGATION                       */
+/* -------------------------------- */                  
+
+#barre-navigation {
+        box-shadow: 0px 2px 8px black;
+        position: relative;
+        z-index: 10; }
 
 
 /* -------------------------------  */
@@ -54,7 +61,10 @@
 .translucide:hover { filter: opacity(1);
                      transition-duration: 0.5s; }
 
+.ombre-txt { text-shadow: 4px 4px 2rem black; }
 
+.ombre-img { box-shadow: 2px 2px 4px black; }
+                     
 
 /* -------------------------------  */
 /* BUTTONS                          */
@@ -203,20 +213,22 @@
 /* VOIR UN EPISODE                      */
 /* ------------------------------------ */
 
-.vignette { width: 180px }
+.vignette { width: 180px; }
 
-.vignette .fond-masque {
+.vignette .fond-masque, .vignette-principale .fond-masque {
         position: relative;
         border: thick double;
         border-radius: 15px; }
 
-.vignette img { width: 180px;
-                border-radius: 15px; }
+.vignette img { border-radius: 15px; }
 
 .vignette-principale {
+        width: 420px;
         border: thick double;
         border-radius: 20px;
 }
+
+.vignette-principale img { border-radius: 20px; }
 
 .numero-episode-courant {
         position: absolute;
@@ -226,7 +238,50 @@
         font-weight: bold;
         line-height: 1;
         z-index: 10; } 
-        
+
+.titre-episode {
+        position: relative;
+        z-index: 2;
+        font-weight: 300;
+        color: white;
+        background-image: url('../assets/img/ui/back-title.png');
+        background-size: 100% 130%;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        text-shadow: 4px 4px 2rem black;
+        text-align: center;
+        font-family: "Present"; }
+
+.longue-card-episode {
+        position: relative;
+        top: -36px;
+        z-index: 1;
+}
+
+.bloc-card-episode {
+        min-height: 500px;
+}
+
+.scene-heure{
+        position: absolute;
+        color: white;
+        top: -5rem; }
+
+.scene-heure h3, .scene-heure h5 { margin-bottom: 0; }
+
+.corps-scene {
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-top: 3rem;
+        padding-bottom: 1rem; }
+
+.texte-scene a { font-weight: bold; }
+
+.division { width: 30%; }
+
+.division-motif { width: 36px; height: auto; }
+
+.division hr { background-color: #ffbbbb; height: 1px; width: 100%; }
 
 
 /* -----------------------------------  */

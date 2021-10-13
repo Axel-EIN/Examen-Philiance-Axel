@@ -1,0 +1,70 @@
+<article id="scn{{ une_scene.numero }}" class="mb-3 ancre-relatif">
+
+    <div class="fond-masque">
+        <img src="{{ asset(une_scene.image) }}" class="card-img-top img-fluid" alt="Image d'une scène">
+    </div>
+
+    {# <div class="text-right" style="position: absolute; top: 1rem; right: 1rem;">
+        <div class="d-flex flex-column">   
+            <?php $participations_pnjs = recuperer_participations_pnjs_scene($scene->id); ?>
+            <?php foreach($participations_pnjs as $une_participation_pnj): ?>
+                <div class="mb-2" style="display: inline-block; position: relative;">
+                    <a href="<?= route('profil-personnage&id=' . $une_participation_pnj->personnage_id); ?>" >
+                        <?php if($une_participation_pnj->est_mort == 1): ?>
+                            <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
+                        <?php endif; ?>
+                        <img class="ombre-img perso-icone<?php if($une_participation_pnj->est_mort != 0): ?> mort
+                                                <?php else: ?> survol<?php endif; ?>"
+                                src="<?= url_img(recuperer_un_personnage($une_participation_pnj->personnage_id)->icone); ?>"
+                                alt="Icone du Personnage" />
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div> #}
+
+    <div class="card-body corps-scene ancre-relatif">
+
+            <!-- LEGENDE OVERLAY -->
+            <div class="scene-heure w-100">
+                <h5 class="card-title">{{ une_scene.temps }}</h5>
+                <h3 class="card-title">{{ une_scene.titre }}</h3>
+                {# <div class="text-right ligne-icones">
+                    <?php $participations_pjs = recuperer_participations_pjs_scene($scene->id); ?>
+                    <?php foreach($participations_pjs as $une_participation): ?>
+                        <div style="display: inline-block; position: relative;">
+                            <?php if($une_participation->exp_gagne != 0 && $une_participation->est_mort != 1 ): ?>
+                                <strong class="xp">+<?= $une_participation->exp_gagne; ?>XP</strong>
+                            <?php endif; ?><br/>
+                            <a href="<?= route('profil-personnage&id=' . $une_participation->personnage_id); ?>" >
+                                <?php if($une_participation->est_mort == 1): ?>
+                                    <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
+                                <?php endif; ?>
+                                <img class="perso-icone<?php if($une_participation->est_mort != 0): ?> mort
+                                                       <?php elseif($une_participation->exp_gagne == 0): ?> disabled
+                                                       <?php else: ?> survol<?php endif; ?>"
+                                     src="<?= url_img(recuperer_un_personnage($une_participation->personnage_id)->icone); ?>"
+                                     alt="Icone du Personnage" />
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div> #}
+            </div>
+
+        <!-- TEXTE -->
+        {# <?php $scene->texte = lier_personnages($scene->texte); ?> #}
+        <p class="card-text texte-scene">{{ une_scene.texte|nl2br }}</p>
+
+    </div>
+
+    <!-- SEPARATEUR -->
+    <div class="d-flex justify-content-center">
+        <div class="d-flex align-items-center division text-center">
+            <div class="col py-0 px-2"><hr></div>
+            <div class="division-motif"><img src="{{ asset('assets/img/ui/ornament-1.png') }}" class="img-fluid" alt="ornament" /></div>
+            <div class="col py-0 px-2"><hr></div>
+        </div>
+    </div>
+
+</article>
+<!-- FIN : UNE SCENE -->
