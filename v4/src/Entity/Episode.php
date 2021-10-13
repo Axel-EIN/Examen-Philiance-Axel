@@ -47,6 +47,7 @@ class Episode
 
     /**
      * @ORM\OneToMany(targetEntity=Scene::class, mappedBy="episodeParent")
+     * @ORM\OrderBy( { "numero" = "ASC" } )
      */
     private $scenes;
 

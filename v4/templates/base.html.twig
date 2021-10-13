@@ -5,60 +5,67 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title>{% block title %} | {{ nom_du_site }}{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
+
         {% block stylesheets %}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
             integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
             <link rel="stylesheet" href="{{asset('css/style.css')}}" />
-            {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+
     </head>
+
     <body>
 
-        {{ include('/parts/nav.html.twig') }}
+    {% block nav %}{{ include('/parts/nav.html.twig') }}{% endblock %}
 
-        {% block body %}
-        
-        TEST
-        
-        {% endblock %}
+    {% block body %}TEST TEST{% endblock %}
 
-        {% block javascripts %}
-            {{ include('/scripts/scripts.twig') }}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
+    {% block javascripts %}{{ include('/scripts/scripts.twig') }}{% endblock %}
 
-        <!-- FOOTER -->
+
+    {% block footer %}
         <footer>
-            <div class="container-fluid bg-footer1 pt-5">
+            <div id="pied-de-page1" class="container-fluid py-5">
+
                 <div class="container">
                     <div class="row">
                         <div class="col-2 text-white">
                             <h5>Plan du site</h5>
                             <nav>
                                 <ul>
-                                    <li><a class="footer-link" href="{# <?= route('aventure'); ?> #}">L'Aventure</a></li>
-                                    <li><a class="footer-link" href="{# <?= route('empire'); ?> #}">L'Empire</a></li>
-                                    <li><a class="footer-link" href="{# <?= route('regles'); ?> #}">Les Règles</a></li>
-                                    <li><a class="footer-link" href="{# <?= route('se-connecter'); ?> #}">Se Connecter</a></li>
+                                    <li><a class="footer-link" href="">L'Aventure</a></li>
+                                    <li><a class="footer-link" href="">L'Aventure</a></li>
+                                    <li><a class="footer-link" href="">L'Empire</a></li>
+                                    <li><a class="footer-link" href="">Les Règles</a></li>
                                 </ul>
                             </nav>
                         </div>
                         <div class="col-2 offset-8 text-white">
                             <h5>Réseaux Sociaux</h5>
+                            <nav id="reseaux-sociaux" class="d-flex justify-content-around">
+                                <a href="" class="lien-blanc"><i class="fab fa-twitter"></i></a>
+                                <a href="" class="lien-blanc"><i class="fab fa-facebook"></i></a> 
+                                <a href="" class="lien-blanc"><i class="fab fa-instagram"></i></a>
+                            </nav>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="container-fluid bg-footer2 pt-4">
-                <div class="row justify-content-center">
-                    <div class="col-12 text-center text-white align-middle">
-                        &copy;&nbsp;Site réalisé par Axel Onçu pour l'examen final de Philiance
-                    </div>
+            <div id="pied-de-page2" class="container-fluid py-4">
+
+                <div class="container text-center align-middle">
+                    <small>&copy;&nbsp;Site réalisé par Axel Onçu pour l'examen final de Philiance</small>
                 </div>
+
             </div>
         </footer>
+    {% endblock %}
 
     </body>
 </html>

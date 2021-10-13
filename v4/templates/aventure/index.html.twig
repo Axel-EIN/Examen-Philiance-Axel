@@ -1,9 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}{% endblock %}
+{% block title %}L'Aventure Saison {{ saison.numero }} {{ parent() }}{% endblock %}
 
 {% block body %}
 
-{{ parent() }}
+    <header class="en-tete-fond"
+    style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('{{ asset(saison.image) }}');">
+        <div class="container">
+            <div class="en-tete">
+
+                <div class="text-center d-flex justify-content-center">
+
+                    <!-- PRECEDENT -->
+                    <div class="flex-grow-1 my-auto">
+                        <div class="fleche text-center mr-2 ml-auto">
+                            <a class="text-light" href="{{ path('aventure_saison', {numero : (saison.numero)-1 } ) }}">{{ source('icons/chevron-left-solid.svg') }}</a>
+                        </div>
+                    </div>
+
+                    <!-- EN COURS -->
+                    <h2 class="pre-titre-saison mx-2">SAISON&nbsp;{{ saison.numero }}</h2>
+
+                    <!-- SUIVANTE -->
+                    <div class="flex-grow-1 my-auto">
+                        <div class="fleche text-center mr-auto">
+                            <a class="text-light" href="{{ path('aventure_saison', {numero : (saison.numero)+1 } ) }}">{{ source('icons/chevron-right-solid.svg') }}</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr class="w-50">     
+                <h1 class="stylise grand">{{ saison.titre|stylise|raw }}</h1>
+
+            </div>
+        </div>
+    </header>
+
+
+    <!-- AFFICHAGE DES CHAPITRES DE LA SAISON -->
+    <main>
+
+        <div class="container-fluid" style="background-color: {{ saison.couleur }}">
+            <div class="container py-3">
+                <h2 class="display-4 text-center text-light">Liste des Chapitres</h2>
+            </div>
+        </div>
+
+        {% for un_chapitre in saison.chapitres %}
+            
+            {{ include('/aventure/un-chapitre.html.twig') }}
+
+            <!-- SEPARATEUR -->
+            <div class="chapitre-separateur text-center"></div>
+
+        {% else %}
+
+            <div class="chapitre-separateur text-center">
+                <div class="alert alert-light mx-auto persistante mt-3 mb-3">
+                    <strong>Désolé il n'y a pas encore de Chapitre !</strong>
+                </div>
+            </div>
+            
+        {% endfor %}
+
+</main>
+
+{{ include('/parts/modal.html.twig') }}
 
 {% endblock %}

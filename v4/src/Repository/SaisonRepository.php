@@ -47,4 +47,26 @@ class SaisonRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /*
+    // setParameter il bind la variable isPublished avec sa valeur true
+    // faire un leftJoin avec saison.chapitres, le deuxieme paramètre est la table de jointure 
+    // c'est le addSelect qui choisit l'entité à renvoyer après le join
+    // le getQuery permet de recupérer le SQL (DQL)
+    /**
+     * @return Genus[]
+     *
+    public function findAllPublishedOrderedByRecentlyActive()
+    {
+        return $this->createQueryBuilder('genus')
+            ->andWhere('genus.isPublished = :isPublished')
+            ->setParameter('isPublished', true)
+            ->leftJoin('genus.notes', 'genus_note')
+            ->orderBy('genus_note.createdAt', 'DESC')
+            ->leftJoin('genus.genusScientists', 'genusScientist')
+            ->addSelect('genusScientist')
+            ->getQuery()
+            ->execute();
+    }
+    */
 }

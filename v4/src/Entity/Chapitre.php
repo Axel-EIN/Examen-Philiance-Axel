@@ -52,6 +52,7 @@ class Chapitre
 
     /**
      * @ORM\OneToMany(targetEntity=Episode::class, mappedBy="chapitreParent")
+     * @ORM\OrderBy( { "numero" = "ASC" } )
      */
     private $episodes;
 

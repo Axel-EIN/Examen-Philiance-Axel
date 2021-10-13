@@ -41,6 +41,8 @@ class Saison
 
     /**
      * @ORM\OneToMany(targetEntity=Chapitre::class, mappedBy="saisonParent")
+     * @ORM\OrderBy( { "numero" = "ASC" } )
+     * /!\ permet d'ordonner les éléments de la collection lors de leur récupération automatique /!\
      */
     private $chapitres;
 

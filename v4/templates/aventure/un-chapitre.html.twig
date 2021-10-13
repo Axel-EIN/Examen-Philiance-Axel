@@ -1,0 +1,63 @@
+<section class="chapitre-fond" style="background-color: {{ un_chapitre.couleur }};
+background-image:linear-gradient( rgb( 0,0,0,0.6 ), rgb( 0,0,0,0), rgb( 0,0,0,0.3), rgb( 0,0,0,0.6) ), url( {{ asset(un_chapitre.image) }} );">
+    <div class="container">
+
+        <div class="sous-en-tete d-flex flex-column justify-content-end" >
+            <h2 class="pre-titre-chapitre text-left">CHAPITRE {{ un_chapitre.numero }}</h2>
+            <div><hr></div>
+
+            <div class="mt-auto mb-3">
+                <h1 id="tete-lecture-ch{{ un_chapitre.numero }}" class="stylise grand">{{ un_chapitre.titre|stylise|raw }}</h1>
+                <p class="citation">{{ un_chapitre.citation|nl2br }}</p>
+
+                {% if un_chapitre.episodes is not empty %}
+                    <div class="mx-auto mb-2">
+                        <a href="#tete-lecture-ch{{ un_chapitre.numero }}">
+                            <button class="btn btn-primary btn-lg text-center" type="button" data-toggle="collapse"
+                                data-target="#ch{{ un_chapitre.numero }}-episodes" aria-controls="ch{{ un_chapitre.numero }}-episodes"
+                                aria-expanded="true" aria-label="Toggle Chapitre {{ un_chapitre.numero }} Episodes">
+                                    Voir les Episodes
+                            </button>
+                        </a>
+                    <div>
+                {% else %}
+                    <div class="alert alert-light mx-auto persistante">
+                        <strong>Pas encore d'épisode disponible !</strong>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+         <!-- EPISODES -->
+        <div id="ch{{ un_chapitre.numero }}-episodes" class="collapse">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    {% for un_episode in un_chapitre.episodes %}
+
+                        <article class="col-lg-3 col-md-4 col-sm-6 order-8 episode-card">
+                            <div class="card episode-card-liste">
+                                <div class="episode-card-numero">{{ un_episode.numero }}</div>
+                                <div class="fond-masque">
+                                    <a href=""><img src="{{ asset(un_episode.image) }}" alt="Image episode" class="card-img-top img-fluid survol" /></a>
+                                </div>
+                                <div class="card-body ancre-relatif">
+                                    <h5 class="card-title">{{ un_episode.titre }}</h5>
+                                    <p class="card-text">{{ un_episode.resume }}</p>
+                                </div>
+                                <div class="text-center p-2">
+                                    <a href="" class="btn btn-primary"><i class="fab fa-readme"></i>&nbsp;&nbsp;Lire l'épisode</a>
+                                </div>
+                            </div>
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+            
