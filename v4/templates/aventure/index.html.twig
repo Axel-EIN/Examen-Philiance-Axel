@@ -14,7 +14,9 @@
                     <!-- PRECEDENT -->
                     <div class="flex-grow-1 my-auto">
                         <div class="fleche text-center mr-2 ml-auto">
-                            <a class="text-light" href="{{ path('aventure_saison', {numero : (saison.numero)-1 } ) }}">{{ source('icons/chevron-left-solid.svg') }}</a>
+                        {% if saison_precedente is not empty %}
+                            <a class="text-light" href="{{ path('aventure_saison', {numero : (saison_precedente.numero) } ) }}">{{ source('icons/chevron-left-solid.svg') }}</a>
+                        {% endif %}
                         </div>
                     </div>
 
@@ -24,7 +26,9 @@
                     <!-- SUIVANTE -->
                     <div class="flex-grow-1 my-auto">
                         <div class="fleche text-center mr-auto">
-                            <a class="text-light" href="{{ path('aventure_saison', {numero : (saison.numero)+1 } ) }}">{{ source('icons/chevron-right-solid.svg') }}</a>
+                        {% if saison_suivante is not empty %}
+                            <a class="text-light" href="{{ path('aventure_saison', {numero : (saison_suivante.numero) } ) }}">{{ source('icons/chevron-right-solid.svg') }}</a>
+                        {% endif %}
                         </div>
                     </div>
 

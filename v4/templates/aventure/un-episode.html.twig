@@ -22,14 +22,17 @@
         <main id="tete-lecture" class="container pt-3">
 
             <section class="d-flex pt-3 justify-content-center align-items-center">
-                                
+
+                           
                 <div class="d-flex flex-column justify-content-center vignette">
+                {% if episode_precedent is not empty %} 
                     <div class="fond-masque">
-                        <a href="">
-                            <span class="display-4 numero-episode-courant">{{ (episode.numero)-1 }}</span>
-                            <img src="{{ asset(episode.image) }}" alt="image d'un episode" class="img-fluid translucide" />
+                        <a href="{{ path('aventure_episode', { id : episode_precedent.id } ) }}">
+                            <span class="display-4 numero-episode-courant">{{ episode_precedent.numero }}</span>
+                            <img src="{{ asset(episode_precedent.image) }}" alt="image d'un episode" class="img-fluid translucide" />
                         </a>
                     </div>
+                {% endif %}
                 </div>
 
                 <div class="px-3 fleche">{{ source('icons/chevron-left-solid.svg') }}</div>
@@ -44,12 +47,14 @@
                 <div class="px-3 fleche">{{ source('icons/chevron-right-solid.svg') }}</div>
 
                 <div class="d-flex flex-column justify-content-center vignette">
+                {% if episode_suivant is not empty %} 
                     <div class="fond-masque">
-                        <a href="">
-                            <span class="display-4 numero-episode-courant">{{ (episode.numero)+1 }}</span>
-                            <img src="{{ asset(episode.image) }}" alt="image d'un episode" class="img-fluid translucide" />
+                        <a href="{{ path('aventure_episode', { id : episode_suivant.id } ) }}">
+                            <span class="display-4 numero-episode-courant">{{ episode_suivant.numero }}</span>
+                            <img src="{{ asset(episode_suivant.image) }}" alt="image d'un episode" class="img-fluid translucide" />
                         </a>
                     </div>
+                {% endif %}
                 </div>
 
             </section>

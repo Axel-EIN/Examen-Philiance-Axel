@@ -19,6 +19,24 @@ class EpisodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Episode::class);
     }
 
+    public function findPrevious($numero) {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.numero = :value_numero')
+            ->setParameter('value_numero', $numero-1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function findNext($numero) {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.numero = :value_numero')
+            ->setParameter('value_numero', $numero+1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return Episode[] Returns an array of Episode objects
     //  */

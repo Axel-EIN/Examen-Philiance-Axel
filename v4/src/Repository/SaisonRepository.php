@@ -19,6 +19,43 @@ class SaisonRepository extends ServiceEntityRepository
         parent::__construct($registry, Saison::class);
     }
 
+    public function findPrevious($numero) {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.numero = :value_numero')
+            ->setParameter('value_numero', $numero-1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function findNext($numero) {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.numero = :value_numero')
+            ->setParameter('value_numero', $numero+1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    // /**
+    //  * @return Saison[] Returns an array of Saison objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+
+
     // /**
     //  * @return Saison[] Returns an array of Saison objects
     //  */
@@ -48,14 +85,15 @@ class SaisonRepository extends ServiceEntityRepository
     }
     */
 
-    /*
+    
     // setParameter il bind la variable isPublished avec sa valeur true
     // faire un leftJoin avec saison.chapitres, le deuxieme paramètre est la table de jointure 
     // c'est le addSelect qui choisit l'entité à renvoyer après le join
     // le getQuery permet de recupérer le SQL (DQL)
+
     /**
      * @return Genus[]
-     *
+     **/
     public function findAllPublishedOrderedByRecentlyActive()
     {
         return $this->createQueryBuilder('genus')
@@ -68,5 +106,5 @@ class SaisonRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
-    */
+
 }
