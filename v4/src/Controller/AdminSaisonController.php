@@ -22,4 +22,12 @@ class AdminSaisonController extends AbstractController
             'saisons' => $saisons,
         ]);
     }
+
+    /**
+     * @Route("/{id}/edit", name="admin_saison_edit")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function editerSaison(Saison $saison): Response {
+        
+    }
 }

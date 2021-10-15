@@ -1,10 +1,11 @@
 {% extends 'back_office/index.html.twig' %}
 
-{% block title %}Hello AdminSaisonController!{% endblock %}
+{% block title %}Administrer les Saisons {{ parent() }}{% endblock %}
 
 {% block h1 %}Administrer les Saisons{% endblock %}
 
 {% block child %}
+
     <section id="saisons">
         <div class="ml-auto text-right my-3">
             <a href="" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer une nouvelle saison</a>
@@ -23,8 +24,8 @@
                 <tr>
                     <td class="p-2" colspan="5"></td>
                 </tr>
-                <tr>
-                    <td class="p-2 border text-center bg-light" rowspan="3">
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" rowspan="3">
                         <img class="img-fluid img-540" src="{{ asset(une_saison.image) }}" alt="Image d'une Saison" />
                     </td>
                     <td class="p-2 border text-center" colspan="3" rowspan="2"><strong>{{ une_saison.titre }}</strong></td>
@@ -32,10 +33,10 @@
                         <a href="{{ path('aventure_saison', { numero: une_saison.numero }) }}"><i class="fas fa-eye"></i></a>
                     </td>
                 </tr>
-                <tr>
+                <tr class="bg-white">
                     <td class="p-2 border text-center"><a href=""><i class="fas fa-edit"></i></a></td>
                 </tr>
-                <tr>
+                <tr class="bg-white">
                     <td class="p-2 border text-center"><strong>ID :</strong><br/>{{ une_saison.id }}</td>
                     <td class="p-2 border text-center"><strong>N° :</strong><br/>{{ une_saison.numero }}</td>
                     <td class="p-2 border text-center"><strong>Couleur :</strong><br/>{{ une_saison.couleur }}</td>
