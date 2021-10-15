@@ -53,7 +53,8 @@
 
         <!-- TEXTE -->
         {# <?php $scene->texte = lier_personnages($scene->texte); ?> #}
-        <p class="card-text texte-scene">{{ une_scene.texte|nl2br }}</p>
+        <p class="card-text texte-scene">{{ une_scene.texte|raw|nl2br }}</p>
+        {# Je ne sais pas pourquoi mais il faut mettre le RAW avant #}
 
     </div>
 

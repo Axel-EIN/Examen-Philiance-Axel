@@ -23,11 +23,11 @@
 
             <section class="d-flex pt-3 justify-content-center align-items-center">
 
-                           
+                {# EPISODE PRECEDENT #}           
                 <div class="d-flex flex-column justify-content-center vignette">
                 {% if episode_precedent is not empty %} 
                     <div class="fond-masque">
-                        <a href="{{ path('aventure_episode', { id : episode_precedent.id } ) }}">
+                        <a href="{{ path('aventure_episode', { id : episode_precedent.id, '_fragment': 'tete-lecture' } ) }}">
                             <span class="display-4 numero-episode-courant">{{ episode_precedent.numero }}</span>
                             <img src="{{ asset(episode_precedent.image) }}" alt="image d'un episode" class="img-fluid translucide" />
                         </a>
@@ -37,6 +37,7 @@
 
                 <div class="px-3 fleche">{{ source('icons/chevron-left-solid.svg') }}</div>
 
+                {# EPISODE COURANT #}
                 <div class="d-flex flex-column justify-content-center vignette-principale">
                     <div class="fond-masque">
                         <span class="display-1 numero-episode-courant">{{ episode.numero }}</span>
@@ -46,10 +47,11 @@
 
                 <div class="px-3 fleche">{{ source('icons/chevron-right-solid.svg') }}</div>
 
+                {# EPISODE SUIVANT #}
                 <div class="d-flex flex-column justify-content-center vignette">
                 {% if episode_suivant is not empty %} 
                     <div class="fond-masque">
-                        <a href="{{ path('aventure_episode', { id : episode_suivant.id } ) }}">
+                        <a href="{{ path('aventure_episode', { id : episode_suivant.id, '_fragment': 'tete-lecture' } ) }}">
                             <span class="display-4 numero-episode-courant">{{ episode_suivant.numero }}</span>
                             <img src="{{ asset(episode_suivant.image) }}" alt="image d'un episode" class="img-fluid translucide" />
                         </a>

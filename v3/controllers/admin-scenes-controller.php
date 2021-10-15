@@ -293,6 +293,7 @@ function admin_modifier_scene_handler() {
         $participants_pnjs_mort = [];
     }
 
+    // faire array_unique() ça renvoi un tableau qui ne garde qu'une version d'un personnage s'il est en doublon
     $participants_modifies = regrouper_donnees_particpants($participants_pjs, $participants_pnjs, $participants_pjs_xp,
                                   $participants_pjs_mort, $participants_pnjs_mort);
 
