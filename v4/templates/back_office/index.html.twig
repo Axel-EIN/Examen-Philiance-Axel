@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BackOfficeController!{% endblock %}
+
+{% block body %}
+
+<main class="container-fluid bg-light page-min">
+    <div class="container py-5">
+        <h1 class="text-center">{% block h1 %}Bienvenue dans le Panneau d'Administration !{% endblock %}</h1>
+
+        {{ include('back_office/admin-nav.html.twig') }}
+
+        {% block child %}{% endblock %}
+
+    </div> 
+</main>
+
+{% endblock %}
