@@ -22,7 +22,7 @@ class AdminChapitreController extends AbstractController
      */
     public function afficherAdminChapitres(ChapitreRepository $chapitreRepository): Response
     {
-        $chapitres = $chapitreRepository->findAll();
+        $chapitres = $chapitreRepository->findBy(array(), array('saisonParent' => 'ASC'));
         return $this->render('admin_chapitre/index.html.twig', [
             'controller_name' => 'AdminChapitreController',
             'chapitres' => $chapitres,
@@ -62,7 +62,7 @@ class AdminChapitreController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_chapitre_edit")
+     * @Route("/admin/chapitre/{id}/edit", name="admin_chapitre_edit")
      * @IsGranted("ROLE_ADMIN")
      */
     public function editerChapitre(Request $request, Chapitre $chapitre, Uploader $uploadeur): Response {
@@ -103,7 +103,7 @@ class AdminChapitreController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="admin_chapitre_delete", methods={"GET"})
+     * @Route("/admin/chapitre/{id}/delete", name="admin_chapitre_delete", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function effacerChapitre(Request $request, Chapitre $chapitre): Response {

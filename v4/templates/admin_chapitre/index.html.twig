@@ -40,10 +40,10 @@
                     </td>
                 </tr>
                 <tr class="bg-white">
-                    <td class="p-2 border text-center"><strong>ID :</strong><br/>{{ un_chapitre.id }}</td>
-                    <td class="p-2 border text-center"><strong>N° :</strong><br/>{{ un_chapitre.numero }}</td>
-                    <td class="p-2 border text-center"><strong>Saison Parent :</strong><br/>Saison N°{{ un_chapitre.saisonParent.numero }}</td>
-                    <td class="p-2 border text-center"><strong>Couleur :</strong><br/>{{ un_chapitre.couleur }}</td>
+                    <td class="p-2 border text-center">N° :<br/><strong>{{ un_chapitre.numero }}</strong></td>
+                    <td class="p-2 border text-center">ID :<br/>{{ un_chapitre.id }}</td>
+                    <td class="p-2 border text-center">Saison Parent :<br/><strong>Saison N°{{ un_chapitre.saisonParent.numero }}</strong></td>
+                    <td class="p-2 border text-center">Couleur :<br/>{{ un_chapitre.couleur }}</td>
                     <td class="p-2 border text-center">
                         <a href="{{ path('admin_chapitre_delete', {'id': un_chapitre.id}) }}?csrf={{ csrf_token('delete' ~ un_chapitre.id) }}"
                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce chapitre : {{ un_chapitre.titre }} ?');"><i class="fas fa-trash-alt"></i></a>
