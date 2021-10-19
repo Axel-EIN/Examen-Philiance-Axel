@@ -3,32 +3,37 @@
 namespace App\Form;
 
 use App\Entity\Saison;
+use App\Entity\Chapitre;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class AdminSaisonType extends AbstractType
+class AdminChapitreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('numero', IntegerType::class)
             ->add('titre', TextType::class)
+            ->add('citation', TextType::class)
             ->add('image', FileType::class, array('mapped' => false, 'data_class' => null, 'required' => false))
-            // mapped => false permet de ne pas le considerer comme un file ou string
-            // data_class => null permet d'avoir un null
             ->add('couleur', ColorType::class)
+            ->add('saisonParent', EntityType::class, [
+                'class' => Saison::class,
+                'choice_label' => 'titre'
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Saison::class,
+            'data_class' => Chapitre::class,
         ]);
     }
 }

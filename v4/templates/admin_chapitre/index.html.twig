@@ -1,0 +1,66 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Administrer les Chapitres {{ parent() }}{% endblock %}
+
+{% block h1 %}Administrer les Chapitres{% endblock %}
+
+{% block child %}
+
+    <section id="chapitres">
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_chapitre_create') }}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer un nouveau chapitre</a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2">Image</th>
+                <th class="p-2" colspan="4">Titre</th>
+                <th class="p-2">Actions</th>
+            </tr>
+
+            {% for un_chapitre in chapitres %}
+
+                <tr>
+                    <td class="p-2" colspan="6"></td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" rowspan="3">
+                        <img class="img-fluid img-540" src="{{ asset(un_chapitre.image) }}" alt="Image d'un Chapitre" />
+                    </td>
+                    <td class="p-2 border text-center" colspan="4"><strong>{{ un_chapitre.titre }}</strong></td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('aventure_saison', { numero: un_chapitre.saisonParent.numero }) }}"><i class="fas fa-eye"></i></a>
+                    </td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" colspan="4">{{ un_chapitre.citation }}</td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_chapitre_edit', {id: un_chapitre.id} ) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center"><strong>ID :</strong><br/>{{ un_chapitre.id }}</td>
+                    <td class="p-2 border text-center"><strong>N° :</strong><br/>{{ un_chapitre.numero }}</td>
+                    <td class="p-2 border text-center"><strong>Saison Parent :</strong><br/>Saison N°{{ un_chapitre.saisonParent.numero }}</td>
+                    <td class="p-2 border text-center"><strong>Couleur :</strong><br/>{{ un_chapitre.couleur }}</td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_chapitre_delete', {'id': un_chapitre.id}) }}?csrf={{ csrf_token('delete' ~ un_chapitre.id) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce chapitre : {{ un_chapitre.titre }} ?');"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td class="p-2" colspan="5"></td>
+                </tr>
+                <tr>
+                    <td colspan="5">Désolé ! Il n'y a pas encore de Chapitre !</td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
+{% endblock %}

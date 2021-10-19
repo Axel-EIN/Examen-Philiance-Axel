@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Créer une Saison {{ parent() }}{% endblock %}
+
+{% block h1 %}Créer une Saison{% endblock %}
+
+{% block child %}
+    {{ include('admin_saison/_form.html.twig', {'button_label': 'Créer'}) }}
+{% endblock %}

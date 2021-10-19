@@ -32,6 +32,8 @@
         position: relative;
         z-index: 10; }
 
+nav .active { font-weight: bold; }
+
 .connecte {
         color: white;
         text-align: right; }
