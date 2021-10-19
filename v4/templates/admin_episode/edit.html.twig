@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Modifier un Épisode {{ parent() }}{% endblock %}
+
+{% block h1 %}Modifier un Épisode{% endblock %}
+
+{% block child %}
+    {{ include('admin_episode/_form.html.twig', {'button_label': 'Éditer'}) }}
+{% endblock %}

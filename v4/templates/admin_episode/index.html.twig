@@ -1,0 +1,66 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Administrer les Episodes {{ parent() }}{% endblock %}
+
+{% block h1 %}Administrer les Episodes{% endblock %}
+
+{% block child %}
+
+    <section id="episodes">
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_episode_create') }}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer un nouveau épisode</a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2">Image</th>
+                <th class="p-2" colspan="4">Titre</th>
+                <th class="p-2">Actions</th>
+            </tr>
+
+            {% for un_episode in episodes %}
+
+                <tr>
+                    <td class="p-2" colspan="6"></td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" rowspan="3">
+                        <img class="img-fluid img-540" src="{{ asset(un_episode.image) }}" alt="Image d'un Épisode" />
+                    </td>
+                    <td class="p-2 border text-center" colspan="4"><strong>{{ un_episode.titre }}</strong></td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('aventure_episode', { id: un_episode.id }) }}"><i class="fas fa-eye"></i></a>
+                    </td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" colspan="4">{{ un_episode.resume }}</td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_episode_edit', {id: un_episode.id} ) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center">N° :<br/><strong>{{ un_episode.numero }}</strong></td>
+                    <td class="p-2 border text-center">ID :<br/>{{ un_episode.id }}</td>
+                    <td class="p-2 border text-center">Chapitre Parent :<br/><strong>{{ un_episode.chapitreParent.titre }}</strong></td>
+                    <td class="p-2 border text-center">Saison Parent :<br/><strong>{{ un_episode.chapitreParent.saisonParent.numero }}</strong></td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_episode_delete', {'id': un_episode.id}) }}?csrf={{ csrf_token('delete' ~ un_episode.id) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette épisode : {{ un_episode.titre }} ?');"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td class="p-2" colspan="5"></td>
+                </tr>
+                <tr>
+                    <td colspan="5">Désolé ! Il n'y a pas encore d'épisodes !</td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
+{% endblock %}

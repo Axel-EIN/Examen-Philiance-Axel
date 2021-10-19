@@ -1,9 +1,14 @@
 <nav class="nav justify-content-center">
     <a class="nav-link {% if app.request.get('_route') == 'admin_scene' %}active{% endif %}" href="">Scènes</a>
-    <a class="nav-link {% if app.request.get('_route') == 'admin_episode' %}active{% endif %}" href="">Episodes</a>
+
+    <a class="nav-link {% if app.request.get('_route') == 'admin_episode'
+                          or app.request.get('_route') == 'admin_episode_create'
+                          or app.request.get('_route') == 'admin_episode_edit' %}active{% endif %}" href="{{ path('admin_episode') }}">Episodes</a>
+
     <a class="nav-link {% if app.request.get('_route') == 'admin_chapitre'
                           or app.request.get('_route') == 'admin_chapitre_create'
                           or app.request.get('_route') == 'admin_saison_edit' %}active{% endif %}" href="{{ path('admin_chapitre') }}">Chapitres</a>
+
     <a class="nav-link {% if app.request.get('_route') == 'admin_saison'
                           or app.request.get('_route') == 'admin_saison_create'
                           or app.request.get('_route') == 'admin_saison_edit' %}active{% endif %}" href="{{ path('admin_saison') }}">Saisons</a>
