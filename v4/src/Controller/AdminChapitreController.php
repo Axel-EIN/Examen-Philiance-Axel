@@ -52,6 +52,8 @@ class AdminChapitreController extends AbstractController
             $em->persist($chapitre);
             $em->flush();
 
+            $this->addFlash('success', 'Le chapitre a bien été crée !');
+
             return $this->redirectToRoute('admin_chapitre');
         } else {
             return $this->render('admin_chapitre/create.html.twig', [
@@ -90,6 +92,7 @@ class AdminChapitreController extends AbstractController
             }
 
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Le chapitre a bien été modifié !');
 
             return $this->redirectToRoute('admin_chapitre', [], Response::HTTP_SEE_OTHER);
         }
@@ -108,6 +111,12 @@ class AdminChapitreController extends AbstractController
      */
     public function effacerChapitre(Request $request, Chapitre $chapitre): Response {
         if ($this->isCsrfTokenValid('delete' . $chapitre->getId(), $request->query->get('csrf'))) {
+
+            if (!$chapitre->getEpisodes()->isEmpty()) {
+                $this->addFlash('warning', 'Veuillez supprimer les épisodes enfants au prélable !');
+                return $this->redirectToRoute('admin_chapitre', [], Response::HTTP_SEE_OTHER);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $nomImageASupprimer = basename($chapitre->getImage());
@@ -120,6 +129,8 @@ class AdminChapitreController extends AbstractController
 
             $entityManager->remove($chapitre);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Le chapitre a bien été supprimé !');
         }
 
         return $this->redirectToRoute('admin_chapitre', [], Response::HTTP_SEE_OTHER);

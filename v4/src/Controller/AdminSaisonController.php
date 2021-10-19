@@ -53,6 +53,8 @@ class AdminSaisonController extends AbstractController
             $em->persist($saison);
             $em->flush();
 
+            $this->addFlash('success', 'La saison a bien été créee !');
+
             return $this->redirectToRoute('admin_saison');
         } else {
             return $this->render('admin_saison/create.html.twig', [
@@ -92,6 +94,8 @@ class AdminSaisonController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'La saison a bien été modifiée !');
+
             return $this->redirectToRoute('admin_saison', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -109,18 +113,26 @@ class AdminSaisonController extends AbstractController
      */
     public function effacerSaison(Request $request, Saison $saison): Response {
         if ($this->isCsrfTokenValid('delete' . $saison->getId(), $request->query->get('csrf'))) {
+
+            if (!$saison->getChapitres()->isEmpty()) {
+                $this->addFlash('warning', 'Veuillez supprimer les chapitres enfants au prélable !');
+                return $this->redirectToRoute('admin_saison', [], Response::HTTP_SEE_OTHER);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $nomImageASupprimer = basename($saison->getImage());
             $cheminImageASupprimer = $this->getParameter('image_directory') . '/saisons/' . $nomImageASupprimer;
+
+            $entityManager->remove($saison);
+            $entityManager->flush();
 
             if (file_exists($cheminImageASupprimer)) {
                 $filesystem = new Filesystem();
                 $filesystem->remove($cheminImageASupprimer);
             }
 
-            $entityManager->remove($saison);
-            $entityManager->flush();
+            $this->addFlash('success', 'La saison a bien été supprimée !');
         }
 
         return $this->redirectToRoute('admin_saison', [], Response::HTTP_SEE_OTHER);
