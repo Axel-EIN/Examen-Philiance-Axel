@@ -15,7 +15,7 @@
 
             <tr class="bg-dark text-light">
                 <th class="p-2">Image</th>
-                <th class="p-2" colspan="4">Titre</th>
+                <th class="p-2 text-center" colspan="4">Titre</th>
                 <th class="p-2">Actions</th>
             </tr>
 
@@ -26,11 +26,11 @@
                 </tr>
                 <tr class="bg-white">
                     <td class="p-2 border text-center" rowspan="3">
-                        <img class="img-fluid img-540" src="{{ asset(un_episode.image) }}" alt="Image d'un Épisode" />
+                        <img class="img-480" src="{{ asset(un_episode.image) }}" alt="Image d'un Épisode" />
                     </td>
                     <td class="p-2 border text-center" colspan="4"><strong>{{ un_episode.titre }}</strong></td>
                     <td class="p-2 border text-center">
-                        <a href="{{ path('aventure_episode', { id: un_episode.id }) }}"><i class="fas fa-eye"></i></a>
+                        <a href="{{ path('aventure_episode', { id: un_episode.id, '_fragment': 'tete-lecture' }) }}"><i class="fas fa-eye"></i></a>
                     </td>
                 </tr>
                 <tr class="bg-white">

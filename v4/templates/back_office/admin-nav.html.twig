@@ -1,5 +1,7 @@
 <nav class="nav justify-content-center">
-    <a class="nav-link {% if app.request.get('_route') == 'admin_scene' %}active{% endif %}" href="">Scènes</a>
+    <a class="nav-link {% if app.request.get('_route') == 'admin_scene'
+                          or app.request.get('_route') == 'admin_scene_create'
+                          or app.request.get('_route') == 'admin_scene_edit' %}active{% endif %}" href="{{ path('admin_scene') }}">Scènes</a>
 
     <a class="nav-link {% if app.request.get('_route') == 'admin_episode'
                           or app.request.get('_route') == 'admin_episode_create'

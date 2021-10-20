@@ -18,9 +18,12 @@
                     text-decoration: underline; }
 
 .lien-gris { color: rgba(255,255,255, 0.75) !important; }
+
 .lien-gris:hover {
         color: rgba(255,255,255,0.9) !important;
         text-decoration: none !important; }
+
+.lien-gris.active { color: rgba(255,255,255, 1) !important; }
 
 
 /* -------------------------------  */
@@ -33,6 +36,8 @@
         z-index: 10; }
 
 nav .active { font-weight: bold; }
+
+
 
 .connecte {
         color: white;
@@ -348,4 +353,7 @@ nav .active { font-weight: bold; }
 /* BACK OFFICEES                    */
 /* -------------------------------- */
 
-.img-540 { width: 540px }
+.img-360 { min-width: 180px; max-width: 360px; }
+.img-480 { min-width: 240px; max-width: 480px; }
+.img-540 { min-width: 320px; max-width: 540px; }
+.img-640 { min-width: 320px; max-width: 640px; }

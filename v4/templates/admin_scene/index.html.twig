@@ -1,0 +1,76 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Administrer les Scènes {{ parent() }}{% endblock %}
+
+{% block h1 %}Administrer les Scènes{% endblock %}
+
+{% block child %}
+
+    <section id="scenes">
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_scene_create') }}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Créer une nouvelle Scène</a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2 text-center" colspan="2">ID, N°, Image, Parents</th>
+                <th class="p-2 text-center">Titre, Texte, Participants</th>
+                <th class="p-2 text-center">Actions</th>
+            </tr>
+
+            {% for une_scene in scenes %}
+
+                <tr>
+                    <td class="p-2" colspan="4"></td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center">
+                        N° :<br/><strong>{{ une_scene.numero }}</strong>
+                    </td>
+                    <td class="p-2 border text-center">
+                       ID :<br/>{{ une_scene.id }}
+                    </td>
+                    <td class="p-2 border text-center"><strong>{{ une_scene.titre }}</strong></td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('aventure_episode', { id: une_scene.episodeParent.id, '_fragment': 'scn' ~ une_scene.numero  }) }}"><i class="fas fa-eye"></i></a>
+                    </td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" colspan="2">
+                        <img class="img-360" src="{{ asset(une_scene.image) }}" alt="Image d'une scène" />
+                    </td>
+                    <td class="p-2 border text-center" rowspan="3">{{ une_scene.texte }}</td>
+                    <td class="p-2 border text-center" rowspan="3">
+                        <a href="{{ path('admin_scene_edit', {id: une_scene.id} ) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" colspan="2">Episode Parent :<br/>{{ une_scene.episodeParent.numero }} - {{ une_scene.episodeParent.titre }}</td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" colspan="2">Chapitre Parent :<br/>{{ une_scene.episodeParent.chapitreParent.numero }} - {{ une_scene.episodeParent.chapitreParent.titre }}</td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" colspan="2">Saison Parent :<br/>{{ une_scene.episodeParent.chapitreParent.saisonParent.numero }} - {{ une_scene.episodeParent.chapitreParent.saisonParent.titre }}</td>
+                    <td class="p-2 border">Participants :<br/><strong>Test</strong></td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_scene_delete', {'id': une_scene.id}) }}?csrf={{ csrf_token('delete' ~ une_scene.id) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette scène : {{ une_scene.titre }} ?');"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td class="p-2" colspan="4"></td>
+                </tr>
+                <tr>
+                    <td colspan="4">Désolé ! Il n'y a pas encore de scènes !</td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
+{% endblock %}

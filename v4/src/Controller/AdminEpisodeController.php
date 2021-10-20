@@ -20,7 +20,7 @@ class AdminEpisodeController extends AbstractController
      * @Route("/admin/episode", name="admin_episode")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function afficherEpisodes(EpisodeRepository $episodeRepository): Response
+    public function afficherAdminEpisodes(EpisodeRepository $episodeRepository): Response
     {
         $episodes = $episodeRepository->findBy(array(), array('chapitreParent' => 'ASC'));
         return $this->render('admin_episode/index.html.twig', [
