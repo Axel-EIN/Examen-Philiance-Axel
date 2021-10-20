@@ -113,7 +113,7 @@ class AdminEpisodeController extends AbstractController
      * @Route("/admin/episode/{id}/delete", name="admin_episode_delete", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function effacerEpisode(Request $request, Episode $episode): Response {
+    public function supprimerEpisode(Request $request, Episode $episode): Response {
         if ($this->isCsrfTokenValid('delete' . $episode->getId(), $request->query->get('csrf'))) {
 
             if (!$episode->getScenes()->isEmpty()) {

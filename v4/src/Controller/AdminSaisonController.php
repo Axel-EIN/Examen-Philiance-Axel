@@ -111,7 +111,7 @@ class AdminSaisonController extends AbstractController
      * @Route("/admin/saison/{id}/delete", name="admin_saison_delete", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function effacerSaison(Request $request, Saison $saison): Response {
+    public function supprimerSaison(Request $request, Saison $saison): Response {
         if ($this->isCsrfTokenValid('delete' . $saison->getId(), $request->query->get('csrf'))) {
 
             if (!$saison->getChapitres()->isEmpty()) {

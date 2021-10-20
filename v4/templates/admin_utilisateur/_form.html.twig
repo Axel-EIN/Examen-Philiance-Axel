@@ -1,0 +1,12 @@
+<main class="offset-2 col-8">
+    {{ form_start(form) }}
+        {% if type != 'Créer' %}
+            <img class="img-fluid" src="{{ utilisateur.avatar ? asset(utilisateur.avatar) : 'https://i.pravatar.cc/300' }}" alt="Avatar de l'utilisateur" />
+        {% endif %}
+        {{ form_row(form.avatar) }}
+            {{ form_widget(form) }}
+            <div class="text-center">
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            </div>
+    {{ form_end(form) }}
+</main>

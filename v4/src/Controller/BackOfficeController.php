@@ -6,6 +6,7 @@ use App\Repository\ChapitreRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\SaisonRepository;
 use App\Repository\SceneRepository;
+use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +19,8 @@ class BackOfficeController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     public function afficherBackOffice(SaisonRepository $saisonRepository, ChapitreRepository $chapitreRepository,
-                                       EpisodeRepository $episodeRepository, SceneRepository $sceneRepository): Response
+                                       EpisodeRepository $episodeRepository, SceneRepository $sceneRepository,
+                                       UtilisateurRepository $utilisateurRepository): Response
     {
 
         $nbrSaisons = $saisonRepository->countSaisons();
@@ -33,6 +35,9 @@ class BackOfficeController extends AbstractController
         $nbrScenes = $sceneRepository->countScenes();
         $dernierScene = $sceneRepository->findOneBy(array(),array('id' => 'DESC'));
 
+        $nbrUtilisateurs = $utilisateurRepository->countUtilisateurs();
+        $dernierUtilisateur = $utilisateurRepository->findOneBy(array(),array('id' => 'DESC'));
+
         return $this->render('back_office/index.html.twig', [
             'controller_name' => 'BackOfficeController',
             'nbrSaisons' => $nbrSaisons,
@@ -43,6 +48,8 @@ class BackOfficeController extends AbstractController
             'dernierEpisode' => $dernierEpisode,
             'nbrScenes' => $nbrScenes,
             'dernierScene' => $dernierScene,
+            'nbrUtilisateurs' => $nbrUtilisateurs,
+            'dernierUtilisateur' => $dernierUtilisateur,
         ]);
     }
 }

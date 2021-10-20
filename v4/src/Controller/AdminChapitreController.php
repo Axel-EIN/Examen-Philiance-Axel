@@ -109,7 +109,7 @@ class AdminChapitreController extends AbstractController
      * @Route("/admin/chapitre/{id}/delete", name="admin_chapitre_delete", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function effacerChapitre(Request $request, Chapitre $chapitre): Response {
+    public function supprimerChapitre(Request $request, Chapitre $chapitre): Response {
         if ($this->isCsrfTokenValid('delete' . $chapitre->getId(), $request->query->get('csrf'))) {
 
             if (!$chapitre->getEpisodes()->isEmpty()) {

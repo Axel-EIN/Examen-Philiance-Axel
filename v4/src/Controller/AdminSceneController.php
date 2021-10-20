@@ -117,7 +117,7 @@ class AdminSceneController extends AbstractController
      * @Route("/admin/scene/{id}/delete", name="admin_scene_delete", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function effacerScene(Request $request, Scene $scene): Response {
+    public function supprimerScene(Request $request, Scene $scene): Response {
         if ($this->isCsrfTokenValid('delete' . $scene->getId(), $request->query->get('csrf'))) {
 
             $entityManager = $this->getDoctrine()->getManager();

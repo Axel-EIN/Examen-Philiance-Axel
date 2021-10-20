@@ -1,0 +1,66 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Administrer les Utilisateurs {{ parent() }}{% endblock %}
+
+{% block h1 %}Administrer les Utilisateurs{% endblock %}
+
+{% block child %}
+
+    <section id="utilisateurs">
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_utilisateur_create') }}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Ajouter un nouveau Utilisateur</a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2 text-center">ID</th>
+                <th class="p-2 text-center">Pseudo</th>
+                <th class="p-2 text-center">Email</th>
+                <th class="p-2 text-center">Vérifié</th>
+                <th class="p-2 text-center">Roles</th>
+                <th class="p-2 text-center">Avatar</th>
+                <th class="p-2 text-center"></th>
+                <th class="p-2 text-center"></th>
+                <th class="p-2 text-center"></th>
+            </tr>
+
+            {% for un_utilisateur in utilisateurs %}
+
+                <tr>
+                    <td class="p-2" colspan="9"></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center">{{ un_utilisateur.id }}</td>
+                    <td class="p-2 border text-center"><strong>{{ un_utilisateur.pseudo }}</strong></td>
+                    <td class="p-2 border text-center"><strong>{{ un_utilisateur.email }}</strong></td>
+                    <td class="p-2 border text-center">{{ un_utilisateur.isVerified == 1 ? '<strong class="text-success">vérifié</strong>' : 'non' }}</td>
+                    <td class="p-2 border text-center">{{ un_utilisateur.roles ? un_utilisateur.roles|join(', ') : '' }}</td>
+                    <td class="p-2 border text-center">
+                        {% if un_utilisateur.avatar %}
+                            <img class="img-64" src="{{ asset(un_utilisateur.avatar) }}" alt="Avatar d'un utilisateur" />
+                        {% else %}
+                            <img class="img-64" src="https://i.pravatar.cc/300" alt="Avatar d'un utilisateur" />
+                        {% endif %}
+                    </td>
+                    <td class="p-2 border text-center"><a href="{# {{ path('utilisateur_profile', {id: un_utilisateur.id} ) }} #}" ><i class="fas fa-eye"></i></a></td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_utilisateur_edit', {id: un_utilisateur.id} ) }}" ><i class="fas fa-edit"></i></a></td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_utilisateur_delete', {'id': un_utilisateur.id}) }}?csrf={{ csrf_token('delete' ~ un_utilisateur.id) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer l'utilisateur {{ un_utilisateur.pseudo }} ?');"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td class="p-2" colspan="9"></td>
+                </tr>
+                <tr>
+                    <td colspan="9">Désolé ! Il n'y a pas encore d'utilisateur !</td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
+{% endblock %}

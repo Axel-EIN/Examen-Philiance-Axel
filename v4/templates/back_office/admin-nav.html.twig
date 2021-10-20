@@ -14,4 +14,8 @@
     <a class="nav-link {% if app.request.get('_route') == 'admin_saison'
                           or app.request.get('_route') == 'admin_saison_create'
                           or app.request.get('_route') == 'admin_saison_edit' %}active{% endif %}" href="{{ path('admin_saison') }}">Saisons</a>
+
+    <a class="nav-link {% if app.request.get('_route') == 'admin_utilisateur'
+                          or app.request.get('_route') == 'admin_utilisateur_create'
+                          or app.request.get('_route') == 'admin_utilisateur_edit' %}active{% endif %}" href="{{ path('admin_utilisateur') }}">Utilisateurs</a>
 </nav>

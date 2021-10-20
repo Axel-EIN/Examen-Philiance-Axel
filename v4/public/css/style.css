@@ -37,8 +37,6 @@
 
 nav .active { font-weight: bold; }
 
-
-
 .connecte {
         color: white;
         text-align: right; }
@@ -353,6 +351,8 @@ nav .active { font-weight: bold; }
 /* BACK OFFICEES                    */
 /* -------------------------------- */
 
+.img-64 { min-width: 48px; max-width: 64px; }
+.img-128 { min-width: 96px; max-width: 128px; }
 .img-360 { min-width: 180px; max-width: 360px; }
 .img-480 { min-width: 240px; max-width: 480px; }
 .img-540 { min-width: 320px; max-width: 540px; }

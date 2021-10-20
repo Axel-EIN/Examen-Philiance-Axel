@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Modifier un Utilisateur {{ parent() }}{% endblock %}
+
+{% block h1 %}Modifier un Utilisateur{% endblock %}
+
+{% block child %}
+    {{ include('admin_utilisateur/_form.html.twig', {'button_label': 'Éditer'}) }}
+{% endblock %}

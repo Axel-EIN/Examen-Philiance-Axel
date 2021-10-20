@@ -33,69 +33,80 @@
         <section class="row">
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
-                    <h5><strong>Saisons</strong> <small><a class="float-right" href="{{ path('admin_saison') }}"><strong>Gérer</strong></a></small></h5>
+                    <h5><span class="display-4">{{ nbrSaisons }}</span> &nbsp; <strong>Saisons</strong></h5>
                     <small>Dernier ajout :</small><br/>
                     <a href="{{ path('aventure_saison', {numero: dernierSaison.numero} ) }}" >
-                        <strong>{{ dernierSaison.titre }}</strong>
                         <img class="img-fluid" src="{{ dernierSaison.image }}" alt="Image d'une Saison" />
                     </a><br/>
-                    <div class="d-flex justify-content-between align-items-end">
-                        <div><a href="{{ path('admin_saison_create') }}" class="btn btn-primary">Ajouter</a></div>
-                        <div class="ml-auto">
-                            <small>Total :</small>
-                            <span class="display-4"><strong>{{ nbrSaisons }}</strong></span>
-                        </div>
+                    <strong>{{ dernierSaison.titre }}</strong>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <a href="{{ path('admin_saison') }}">Tout Gérer</a>
+                        <a href="{{ path('admin_saison_create') }}" class="btn btn-primary float-right">Ajouter</a>
                     </div>
                 </article>
             </div>
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
-                    <h5><strong>Chapitres</strong> <small><a class="float-right" href="{{ path('admin_chapitre') }}"><strong>Gérer</strong></a></small></h5>
+                    <h5><span class="display-4">{{ nbrChapitres }}</span> &nbsp; <strong>Chapitres</strong></h5>
                     <small>Dernier ajout :</small><br/>
                     <a href="{{ path('aventure_saison', {numero: dernierChapitre.saisonParent.numero, '_fragment' : 'tete-lecture-ch'~dernierChapitre.numero} ) }}" >
-                        <strong>{{ dernierChapitre.titre }}</strong>
                         <img class="img-fluid" src="{{ dernierChapitre.image }}" alt="Image d'un Chapitre" />
                     </a><br/>
-                    <div class="d-flex justify-content-between align-items-end">
-                        <div><a href="{{ path('admin_chapitre_create') }}" class="btn btn-primary">Ajouter</a></div>
-                        <div class="ml-auto">
-                            <small>Total :</small>
-                            <span class="display-4"><strong>{{ nbrChapitres }}</strong></span>
-                        </div>
+                    <strong>{{ dernierChapitre.titre }}</strong>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <a href="{{ path('admin_chapitre') }}">Tout Gérer</a>
+                        <a href="{{ path('admin_chapitre_create') }}" class="btn btn-primary float-right">Ajouter</a>
                     </div>
                 </article>
             </div>
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
-                    <h5><strong>Épisodes</strong> <small><a class="float-right" href="{{ path('admin_episode') }}"><strong>Gérer</strong></a></small></h5>
+                    <h5><span class="display-4">{{ nbrEpisodes }}</span> &nbsp; <strong>Épisodes</strong></h5>
                     <small>Dernier ajout :</small><br/>
                     <a href="{{ path('aventure_episode', {id: dernierEpisode.id} ) }}" >
-                        <strong>{{ dernierEpisode.titre }}</strong>
                         <img class="img-fluid" src="{{ dernierEpisode.image }}" alt="Image d'un Episode" />
                     </a><br/>
-                    <div class="d-flex justify-content-between align-items-end">
-                        <div><a href="{{ path('admin_episode_create') }}" class="btn btn-primary">Ajouter</a></div>
-                        <div class="ml-auto">
-                            <small>Total :</small>
-                            <span class="display-4"><strong>{{ nbrEpisodes }}</strong></span>
-                        </div>
+                    <strong>{{ dernierEpisode.titre }}</strong>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <a href="{{ path('admin_episode') }}">Tout Gérer</a>
+                        <a href="{{ path('admin_episode_create') }}" class="btn btn-primary float-right">Ajouter</a>
                     </div>
                 </article>
             </div>
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
-                    <h5><strong>Scènes</strong> <small><a class="float-right" href="{{ path('admin_scene') }}"><strong>Gérer</strong></a></small></h5>
+                    <h5><span class="display-4">{{ nbrScenes }}</span> &nbsp; <strong>Scènes</strong></h5>
                     <small>Dernier ajout :</small><br/>
                     <a href="{{ path('aventure_episode', {id: dernierScene.episodeParent.id, '_fragment' : 'scn'~dernierScene.numero} ) }}" >
-                        <strong>{{ dernierScene.titre }}</strong>
                         <img class="img-fluid" src="{{ dernierScene.image }}" alt="Image d'une Scène" />
                     </a><br/>
+                    <strong>{{ dernierScene.titre }}</strong>
                     <div class="d-flex justify-content-between align-items-end">
-                        <div><a href="{{ path('admin_scene_create') }}" class="btn btn-primary">Ajouter</a></div>
-                        <div>
-                            <small>Total :</small>
-                            <span class="display-4"><strong>{{ nbrScenes }}</strong></span>
-                        </div>
+                        <a href="{{ path('admin_scene') }}">Tout Gérer</a>
+                        <a href="{{ path('admin_scene_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <h2 class="mt-4">Utilisateurs</h2>
+        <hr>
+        <p class="mb-4 text-muted">Voici le tableau de bord relatif aux utilisateurs.</p>
+        <section class="row">
+            <div class="col-3 px-2">
+                <article class="border p-3 bg-white d-flex flex-column">
+                    <h5><span class="display-4">{{ nbrUtilisateurs }}</span> &nbsp; <strong>Utilisateurs</strong></h5>
+                    <small>Dernier ajout :</small><br/>
+                    <a href="{#{{ path('utilisateur_profile', {id: dernierUtilisateur.id} ) }}#}" >
+                        {% if dernierUtilisateur.avatar %}
+                            <img class="img-128" src="{{ dernierUtilisateur.avatar }}" alt="Avatar de l'utilisateur" />
+                        {% else %}
+                            <img class="img-128" src="https://i.pravatar.cc/300" alt="Avatar de l'utilisateur" />
+                        {% endif %}
+                    </a><br/>
+                    <strong>{{ dernierUtilisateur.pseudo }}</strong><br/>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <a href="{{ path('admin_utilisateur') }}">Tout Gérer</a>
+                        <a href="{{ path('admin_utilisateur_create') }}" class="btn btn-primary float-right">Ajouter</a>
                     </div>
                 </article>
             </div>
