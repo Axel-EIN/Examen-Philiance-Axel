@@ -19,6 +19,13 @@ class ChapitreRepository extends ServiceEntityRepository
         parent::__construct($registry, Chapitre::class);
     }
 
+    public function countChapitres() {
+        return $this->createQueryBuilder('c')
+            ->select('count(c.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Chapitre[] Returns an array of Chapitre objects
     //  */

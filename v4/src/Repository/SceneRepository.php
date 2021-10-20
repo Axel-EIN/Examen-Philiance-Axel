@@ -19,6 +19,13 @@ class SceneRepository extends ServiceEntityRepository
         parent::__construct($registry, Scene::class);
     }
 
+    public function countScenes() {
+        return $this->createQueryBuilder('s')
+            ->select('count(s.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Scene[] Returns an array of Scene objects
     //  */

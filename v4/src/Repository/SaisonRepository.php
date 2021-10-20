@@ -37,6 +37,13 @@ class SaisonRepository extends ServiceEntityRepository
         ;
     }
 
+    public function countSaisons() {
+        return $this->createQueryBuilder('s')
+            ->select('count(s.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Saison[] Returns an array of Saison objects
     //  */

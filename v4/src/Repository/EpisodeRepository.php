@@ -37,6 +37,13 @@ class EpisodeRepository extends ServiceEntityRepository
         ;
     }
 
+    public function countEpisodes() {
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Episode[] Returns an array of Episode objects
     //  */
