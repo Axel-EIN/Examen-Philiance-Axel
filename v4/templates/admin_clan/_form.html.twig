@@ -1,0 +1,16 @@
+<main class="offset-2 col-8">
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.chef) }}
+        {{ form_row(form.est_majeur) }}
+        {% if type != 'Créer' %}
+            <img class="img-fluid" src="{{ asset(clan.mon) }}" />
+        {% endif %}
+        {{ form_row(form.mon) }}
+        {{ form_row(form.couleur) }}
+            {{ form_widget(form) }}
+            <div class="text-center">
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            </div>
+    {{ form_end(form) }}
+</main>

@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Modifier un Clan {{ parent() }}{% endblock %}
+
+{% block h1 %}Modifier un Clan{% endblock %}
+
+{% block child %}
+    {{ include('admin_clan/_form.html.twig', {'button_label': 'Éditer'}) }}
+{% endblock %}

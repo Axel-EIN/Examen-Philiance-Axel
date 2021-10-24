@@ -27,67 +27,122 @@
         {% endfor %}
 
         {% block child %}
+
         <h2 class="mt-4">Aventure</h2>
         <hr>
         <p class="mb-4 text-muted">Voici le tableau de bord relatif aux derniers éléments narratifs ajoutés.</p>
         <section class="row">
+
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
                     <h5><span class="display-4">{{ nbrSaisons }}</span> &nbsp; <strong>Saisons</strong></h5>
                     <small>Dernier ajout :</small><br/>
-                    <a href="{{ path('aventure_saison', {numero: dernierSaison.numero} ) }}" >
-                        <img class="img-fluid" src="{{ dernierSaison.image }}" alt="Image d'une Saison" />
-                    </a><br/>
-                    <strong>{{ dernierSaison.titre }}</strong>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a href="{{ path('admin_saison') }}">Tout Gérer</a>
-                        <a href="{{ path('admin_saison_create') }}" class="btn btn-primary float-right">Ajouter</a>
-                    </div>
+
+                    {% if dernierSaison %}
+                        <a href="{{ path('aventure_saison', {numero: dernierSaison.numero} ) }}" >
+                            <img class="img-fluid" src="{{ dernierSaison.image }}" alt="Image d'une Saison" />
+                        </a><br/>
+                        <strong>{{ dernierSaison.titre }}</strong>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <a href="{{ path('admin_saison') }}">Tout Gérer</a>
+                            <a href="{{ path('admin_saison_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Il n'y a pas encore de saison disponible !</p>
+                    {% endif %}
+
                 </article>
             </div>
+
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
                     <h5><span class="display-4">{{ nbrChapitres }}</span> &nbsp; <strong>Chapitres</strong></h5>
                     <small>Dernier ajout :</small><br/>
-                    <a href="{{ path('aventure_saison', {numero: dernierChapitre.saisonParent.numero, '_fragment' : 'tete-lecture-ch'~dernierChapitre.numero} ) }}" >
-                        <img class="img-fluid" src="{{ dernierChapitre.image }}" alt="Image d'un Chapitre" />
-                    </a><br/>
-                    <strong>{{ dernierChapitre.titre }}</strong>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a href="{{ path('admin_chapitre') }}">Tout Gérer</a>
-                        <a href="{{ path('admin_chapitre_create') }}" class="btn btn-primary float-right">Ajouter</a>
-                    </div>
+                    {% if dernierChapitre %}
+                        <a href="{{ path('aventure_saison', {numero: dernierChapitre.saisonParent.numero, '_fragment' : 'tete-lecture-ch'~dernierChapitre.numero} ) }}" >
+                            <img class="img-fluid" src="{{ dernierChapitre.image }}" alt="Image d'un Chapitre" />
+                        </a><br/>
+                        <strong>{{ dernierChapitre.titre }}</strong>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <a href="{{ path('admin_chapitre') }}">Tout Gérer</a>
+                            <a href="{{ path('admin_chapitre_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Il n'y a pas encore de chapitre disponible !</p>
+                    {% endif %}
                 </article>
             </div>
+
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
                     <h5><span class="display-4">{{ nbrEpisodes }}</span> &nbsp; <strong>Épisodes</strong></h5>
                     <small>Dernier ajout :</small><br/>
-                    <a href="{{ path('aventure_episode', {id: dernierEpisode.id} ) }}" >
-                        <img class="img-fluid" src="{{ dernierEpisode.image }}" alt="Image d'un Episode" />
-                    </a><br/>
-                    <strong>{{ dernierEpisode.titre }}</strong>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <a href="{{ path('admin_episode') }}">Tout Gérer</a>
-                        <a href="{{ path('admin_episode_create') }}" class="btn btn-primary float-right">Ajouter</a>
-                    </div>
+                    {% if dernierEpisode %}
+                        <a href="{{ path('aventure_episode', {id: dernierEpisode.id} ) }}" >
+                            <img class="img-fluid" src="{{ dernierEpisode.image }}" alt="Image d'un Episode" />
+                        </a><br/>
+                        <strong>{{ dernierEpisode.titre }}</strong>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <a href="{{ path('admin_episode') }}">Tout Gérer</a>
+                            <a href="{{ path('admin_episode_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Il n'y a pas encore d'épisode disponible !</p>
+                    {% endif %}
                 </article>
             </div>
+
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
                     <h5><span class="display-4">{{ nbrScenes }}</span> &nbsp; <strong>Scènes</strong></h5>
                     <small>Dernier ajout :</small><br/>
-                    <a href="{{ path('aventure_episode', {id: dernierScene.episodeParent.id, '_fragment' : 'scn'~dernierScene.numero} ) }}" >
-                        <img class="img-fluid" src="{{ dernierScene.image }}" alt="Image d'une Scène" />
-                    </a><br/>
-                    <strong>{{ dernierScene.titre }}</strong>
-                    <div class="d-flex justify-content-between align-items-end">
-                        <a href="{{ path('admin_scene') }}">Tout Gérer</a>
-                        <a href="{{ path('admin_scene_create') }}" class="btn btn-primary float-right">Ajouter</a>
-                    </div>
+                    {% if dernierScene %}
+                        <a href="{{ path('aventure_episode', {id: dernierScene.episodeParent.id, '_fragment' : 'scn'~dernierScene.numero} ) }}" >
+                            <img class="img-fluid" src="{{ dernierScene.image }}" alt="Image d'une Scène" />
+                        </a><br/>
+                        <strong>{{ dernierScene.titre }}</strong>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <a href="{{ path('admin_scene') }}">Tout Gérer</a>
+                            <a href="{{ path('admin_scene_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Il n'y a pas encore de scène disponible !</p>
+                    {% endif %}
                 </article>
             </div>
+
         </section>
+
+        <h2 class="mt-4">Empire</h2>
+        <hr>
+        <p class="mb-4 text-muted">Voici le tableau de bord relatif à l'univers de Jeu.</p>
+        <section class="row">
+
+            <div class="col-3 px-2">
+                <article class="border p-3 bg-white d-flex flex-column">
+                    <h5><span class="display-4">{{ nbrClans }}</span> &nbsp; <strong>Clans et Factions</strong></h5>
+                    <small>Dernier ajout :</small><br/>
+                    {% if dernierClan %}
+                        <a href="{#{{ path('empire_clan', {id: dernierClan.id} ) }}#}" >
+                            {% if dernierClan.mon %}
+                                <img class="img-320" src="{{ asset(dernierClan.mon) }}" alt="Mon du Clan" />
+                            {% else %}
+                                <img class="img-320" src="{{ asset('img/clans/na_mon.png') }}" alt="Mon du Clan" />
+                            {% endif %}
+                        </a><br/>
+                        <strong>{{ dernierClan.nom }}</strong><br/>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <a href="{{ path('admin_clan') }}">Tout Gérer</a>
+                            <a href="{{ path('admin_clan_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Il n'y a pas encore de Clan disponible !</p>
+                    {% endif %}
+                </article>
+            </div>
+            
+        </section>
+
         <h2 class="mt-4">Utilisateurs</h2>
         <hr>
         <p class="mb-4 text-muted">Voici le tableau de bord relatif aux utilisateurs.</p>
@@ -111,6 +166,7 @@
                 </article>
             </div>
         </section>
+
         {% endblock %}
 
     </div> 

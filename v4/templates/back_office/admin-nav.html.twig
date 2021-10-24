@@ -18,4 +18,8 @@
     <a class="nav-link {% if app.request.get('_route') == 'admin_utilisateur'
                           or app.request.get('_route') == 'admin_utilisateur_create'
                           or app.request.get('_route') == 'admin_utilisateur_edit' %}active{% endif %}" href="{{ path('admin_utilisateur') }}">Utilisateurs</a>
+
+    <a class="nav-link {% if app.request.get('_route') == 'admin_clan'
+                        or app.request.get('_route') == 'admin_clan_create'
+                        or app.request.get('_route') == 'admin_clan_edit' %}active{% endif %}" href="{{ path('admin_clan') }}">Clans</a>
 </nav>
