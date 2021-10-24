@@ -22,4 +22,8 @@
     <a class="nav-link {% if app.request.get('_route') == 'admin_clan'
                         or app.request.get('_route') == 'admin_clan_create'
                         or app.request.get('_route') == 'admin_clan_edit' %}active{% endif %}" href="{{ path('admin_clan') }}">Clans</a>
+
+    <a class="nav-link {% if app.request.get('_route') == 'admin_classe'
+                        or app.request.get('_route') == 'admin_classe_create'
+                        or app.request.get('_route') == 'admin_classe_edit' %}active{% endif %}" href="{{ path('admin_classe') }}">Classes</a>
 </nav>

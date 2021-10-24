@@ -34,6 +34,11 @@ class Classe
      */
     private $personnages;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $icone;
+
     public function __construct()
     {
         $this->ecoles = new ArrayCollection();
@@ -113,6 +118,18 @@ class Classe
                 $personnage->setClasse(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIcone(): ?string
+    {
+        return $this->icone;
+    }
+
+    public function setIcone(string $icone): self
+    {
+        $this->icone = $icone;
 
         return $this;
     }

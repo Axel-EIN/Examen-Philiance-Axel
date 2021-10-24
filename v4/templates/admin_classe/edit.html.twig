@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Modifier une Classe {{ parent() }}{% endblock %}
+
+{% block h1 %}Modifier une Classe{% endblock %}
+
+{% block child %}
+    {{ include('admin_classe/_form.html.twig', {'button_label': 'Éditer'}) }}
+{% endblock %}

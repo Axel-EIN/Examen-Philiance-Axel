@@ -125,9 +125,9 @@
                     {% if dernierClan %}
                         <a href="{#{{ path('empire_clan', {id: dernierClan.id} ) }}#}" >
                             {% if dernierClan.mon %}
-                                <img class="img-320" src="{{ asset(dernierClan.mon) }}" alt="Mon du Clan" />
+                                <img class="img-128" src="{{ asset(dernierClan.mon) }}" alt="Mon du Clan" />
                             {% else %}
-                                <img class="img-320" src="{{ asset('img/clans/na_mon.png') }}" alt="Mon du Clan" />
+                                <img class="img-128" src="{{ asset('img/clans/na_mon.png') }}" alt="Mon du Clan" />
                             {% endif %}
                         </a><br/>
                         <strong>{{ dernierClan.nom }}</strong><br/>
@@ -137,6 +137,29 @@
                         </div>
                     {% else %}
                         <p class="my-5">Il n'y a pas encore de Clan disponible !</p>
+                    {% endif %}
+                </article>
+            </div>
+
+            <div class="col-3 px-2">
+                <article class="border p-3 bg-white d-flex flex-column">
+                    <h5><span class="display-4">{{ nbrClasses }}</span> &nbsp; <strong>Classes</strong></h5>
+                    <small>Dernier ajout :</small><br/>
+                    {% if dernierClasse %}
+                        <a href="{#{{ path('empire_clan', {id: dernierClasse.id} ) }}#}" >
+                            {% if dernierClasse.icone %}
+                                <img class="img-128" src="{{ asset(dernierClasse.icone) }}" alt="Icone de la Classe" />
+                            {% else %}
+                                <img class="img-128" src="{{ asset('img/placeholders/320x320.png') }}" alt="Icone de la Classe" />
+                            {% endif %}
+                        </a><br/>
+                        <strong>{{ dernierClasse.nom }}</strong><br/>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <a href="{{ path('admin_classe') }}">Tout Gérer</a>
+                            <a href="{{ path('admin_classe_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Il n'y a pas encore de Classe disponible !</p>
                     {% endif %}
                 </article>
             </div>

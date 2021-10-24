@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ChapitreRepository;
 use App\Repository\ClanRepository;
+use App\Repository\ClasseRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\SaisonRepository;
 use App\Repository\SceneRepository;
@@ -21,7 +22,8 @@ class BackOfficeController extends AbstractController
      */
     public function afficherBackOffice(SaisonRepository $saisonRepository, ChapitreRepository $chapitreRepository,
                                        EpisodeRepository $episodeRepository, SceneRepository $sceneRepository,
-                                       UtilisateurRepository $utilisateurRepository, ClanRepository $clanRepository): Response
+                                       UtilisateurRepository $utilisateurRepository, ClanRepository $clanRepository,
+                                       ClasseRepository $classeRepository): Response
     {
 
         $nbrSaisons = $saisonRepository->countSaisons();
@@ -42,6 +44,9 @@ class BackOfficeController extends AbstractController
         $nbrClans = $clanRepository->countClans();
         $dernierClan = $clanRepository->findOneBy(array(),array('id' => 'DESC'));
 
+        $nbrClasses = $classeRepository->countClasses();
+        $dernierClasse = $classeRepository->findOneBy(array(),array('id' => 'DESC'));
+
         return $this->render('back_office/index.html.twig', [
             'controller_name' => 'BackOfficeController',
             'nbrSaisons' => $nbrSaisons,
@@ -56,6 +61,8 @@ class BackOfficeController extends AbstractController
             'dernierUtilisateur' => $dernierUtilisateur,
             'nbrClans' => $nbrClans,
             'dernierClan' => $dernierClan,
+            'nbrClasses' => $nbrClasses,
+            'dernierClasse' => $dernierClasse,
         ]);
     }
 }

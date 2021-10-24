@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Créer une Classe {{ parent() }}{% endblock %}
+
+{% block h1 %}Créer une Classe{% endblock %}
+
+{% block child %}
+    {{ include('admin_classe/_form.html.twig', {'button_label': 'Créer'}) }}
+{% endblock %}
