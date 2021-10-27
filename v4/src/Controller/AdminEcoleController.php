@@ -14,13 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use function PHPUnit\Framework\fileExists;
+
 class AdminEcoleController extends AbstractController
 {
     /**
      * @Route("/admin/ecole", name="admin_ecole")
      */
-    public function afficherAdminEcoles(EcoleRepository $ecoleRepository): Response
-    {
+    public function afficherAdminEcoles(EcoleRepository $ecoleRepository): Response {
+
         $ecoles = $ecoleRepository->findAll();
         return $this->render('admin_ecole/index.html.twig', [
             'ecoles' => $ecoles
@@ -42,11 +44,12 @@ class AdminEcoleController extends AbstractController
             $nouvelleImage = $form->get('image')->getData();
 
             if (!empty($nouvelleImage)) {
-                $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'ecole-' . $ecole->getClan() . '-' .  strtolower($ecole->getNom()) . '-image', 'ecoles');
-                $nouveauCheminRelatif = 'assets/img/ecoles/' . $nouvelleImageNomFichier;
-                $ecole->setImage($nouveauCheminRelatif);
-            } else { $ecole->setImage('assets/img/placeholders/na_ecole.png'); }
 
+                $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'ecole-' . strtolower($ecole->getClan()->getNom()) . '-' . strtolower($ecole->getNom()), 'ecoles');
+                $nouveauChemingRelatif = 'assets/img/ecoles/' . $nouvelleImageNomFichier;
+                $ecole->setImage($nouveauChemingRelatif);
+
+            } else { $ecole->setImage('assets/img/placeholders/na_ecole.png'); }
 
             $em->persist($ecole);
             $em->flush();
@@ -74,17 +77,21 @@ class AdminEcoleController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
+            $nouvelleImage = $form->get('image')->getData();
+
             if (!empty($nouvelleImage)) {
 
                 $ancienneImageNomFichier = basename($ecole->getImage());
 
-                $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'ecole-' . $ecole->getClan() . '-' . $ecole->getNom() . '-icon', 'ecoles');
+                $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'ecole-' . strtolower($ecole->getClan()->getNom()) . '-' . strtolower($ecole->getNom()), 'ecoles');
                 $nouveauChemingRelatif = 'assets/img/ecoles/' . $nouvelleImageNomFichier;
                 $ecole->setImage($nouveauChemingRelatif);
 
                 $ancienneImageCheminComplet = $this->getParameter('image_directory') . '/ecoles/' . $ancienneImageNomFichier;
-                $filesystem = new Filesystem();
-                $filesystem->remove($ancienneImageCheminComplet);
+                if (file_exists($ancienneImageCheminComplet)) {
+                    $filesystem = new Filesystem();
+                    $filesystem->remove($ancienneImageCheminComplet);
+                }
 
             }
 

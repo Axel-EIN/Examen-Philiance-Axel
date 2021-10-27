@@ -1,7 +1,11 @@
 <main class="offset-2 col-8">
     {{ form_start(form) }}
         {% if type != 'Créer' %}
-            <img class="img-fluid" src="{{ asset(ecole.image) }}" />
+            {% if ecole.image is not empty %}
+                <img class="img-fluid" src="{{ asset(ecole.image) }}" />
+            {% else %}
+                <img class="img-fluid" src="{{ asset('assets/img/placeholders/na_ecole.png') }}" />
+            {% endif %}
         {% endif %}
         {{ form_row(form.image) }}
             {{ form_widget(form) }}

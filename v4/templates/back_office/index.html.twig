@@ -50,12 +50,11 @@
                         <strong>{{ dernierSaison.titre }}</strong>
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <a href="{{ path('admin_saison') }}">Tout Gérer</a>
-                            <a href="{{ path('admin_saison_create') }}" class="btn btn-primary float-right">Ajouter</a>
                         </div>
                     {% else %}
                         <p class="my-5">Il n'y a pas encore de saison disponible !</p>
                     {% endif %}
-
+                    <a href="{{ path('admin_saison_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
                 </article>
             </div>
 
@@ -72,11 +71,11 @@
                         <strong>{{ dernierChapitre.titre }}</strong>
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <a href="{{ path('admin_chapitre') }}">Tout Gérer</a>
-                            <a href="{{ path('admin_chapitre_create') }}" class="btn btn-primary float-right">Ajouter</a>
                         </div>
                     {% else %}
                         <p class="my-5">Il n'y a pas encore de chapitre disponible !</p>
                     {% endif %}
+                    <a href="{{ path('admin_chapitre_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
                 </article>
             </div>
 
@@ -93,11 +92,11 @@
                         <strong>{{ dernierEpisode.titre }}</strong>
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <a href="{{ path('admin_episode') }}">Tout Gérer</a>
-                            <a href="{{ path('admin_episode_create') }}" class="btn btn-primary float-right">Ajouter</a>
                         </div>
                     {% else %}
                         <p class="my-5">Il n'y a pas encore d'épisode disponible !</p>
                     {% endif %}
+                    <a href="{{ path('admin_episode_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
                 </article>
             </div>
 
@@ -112,13 +111,13 @@
                             <img class="img-fluid" src="{{ dernierScene.image }}" alt="Image d'une Scène" />
                         </a><br/>
                         <strong>{{ dernierScene.titre }}</strong>
-                        <div class="d-flex justify-content-between align-items-end">
+                        <div class="d-flex justify-content-between align-items-end mt-3">
                             <a href="{{ path('admin_scene') }}">Tout Gérer</a>
-                            <a href="{{ path('admin_scene_create') }}" class="btn btn-primary float-right">Ajouter</a>
                         </div>
                     {% else %}
                         <p class="my-5">Il n'y a pas encore de scène disponible !</p>
                     {% endif %}
+                    <a href="{{ path('admin_scene_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
                 </article>
             </div>
 
@@ -152,7 +151,7 @@
                     {% else %}
                         <p class="my-5">Il n'y a pas encore de Clan disponible !</p>
                     {% endif %}
-                    <a href="{{ path('admin_clan_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                    <a href="{{ path('admin_clan_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
                 </article>
             </div>
 
@@ -229,7 +228,7 @@
                     {% else %}
                         <p class="my-5">Désolé ! Il n'y a pas encore d'utilisateur disponible !</p>
                     {% endif %}
-                    <a href="{{ path('admin_utilisateur_create') }}" class="btn btn-primary float-right">Ajouter</a>
+                    <a href="{{ path('admin_utilisateur_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
                 </article>
             </div>
         </section>
