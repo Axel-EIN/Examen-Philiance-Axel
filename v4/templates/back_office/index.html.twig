@@ -28,13 +28,18 @@
 
         {% block child %}
 
+
+        {# AVENTURE #}
+
         <h2 class="mt-4">Aventure</h2>
         <hr>
         <p class="mb-4 text-muted">Voici le tableau de bord relatif aux derniers éléments narratifs ajoutés.</p>
         <section class="row">
 
+            {# SAISONS #}
+
             <div class="col-3 px-2">
-                <article class="border p-3 bg-white d-flex flex-column">
+                <article class="border p-3 bg-white d-flex flex-column h-100">
                     <h5><span class="display-4">{{ nbrSaisons }}</span> &nbsp; <strong>Saisons</strong></h5>
                     <small>Dernier ajout :</small><br/>
 
@@ -54,8 +59,10 @@
                 </article>
             </div>
 
+            {# CHAPITRES #}
+
             <div class="col-3 px-2">
-                <article class="border p-3 bg-white d-flex flex-column">
+                <article class="border p-3 bg-white d-flex flex-column h-100">
                     <h5><span class="display-4">{{ nbrChapitres }}</span> &nbsp; <strong>Chapitres</strong></h5>
                     <small>Dernier ajout :</small><br/>
                     {% if dernierChapitre %}
@@ -73,8 +80,10 @@
                 </article>
             </div>
 
+            {# EPISODES #}
+
             <div class="col-3 px-2">
-                <article class="border p-3 bg-white d-flex flex-column">
+                <article class="border p-3 bg-white d-flex flex-column h-100">
                     <h5><span class="display-4">{{ nbrEpisodes }}</span> &nbsp; <strong>Épisodes</strong></h5>
                     <small>Dernier ajout :</small><br/>
                     {% if dernierEpisode %}
@@ -92,8 +101,10 @@
                 </article>
             </div>
 
+            {# SCENES #}
+
             <div class="col-3 px-2">
-                <article class="border p-3 bg-white d-flex flex-column">
+                <article class="border p-3 bg-white d-flex flex-column h-100">
                     <h5><span class="display-4">{{ nbrScenes }}</span> &nbsp; <strong>Scènes</strong></h5>
                     <small>Dernier ajout :</small><br/>
                     {% if dernierScene %}
@@ -113,58 +124,87 @@
 
         </section>
 
+        {# EMPIRE LORE #}
+
         <h2 class="mt-4">Empire</h2>
         <hr>
         <p class="mb-4 text-muted">Voici le tableau de bord relatif à l'univers de Jeu.</p>
         <section class="row">
 
+            {# CLANS & FACTIONS #}
+
             <div class="col-3 px-2">
-                <article class="border p-3 bg-white d-flex flex-column">
+                <article class="border p-3 bg-white d-flex flex-column h-100">
                     <h5><span class="display-4">{{ nbrClans }}</span> &nbsp; <strong>Clans et Factions</strong></h5>
-                    <small>Dernier ajout :</small><br/>
                     {% if dernierClan %}
+                        <small>Dernier ajout :</small><br/>
                         <a href="{#{{ path('empire_clan', {id: dernierClan.id} ) }}#}" >
                             {% if dernierClan.mon %}
                                 <img class="img-128" src="{{ asset(dernierClan.mon) }}" alt="Mon du Clan" />
                             {% else %}
-                                <img class="img-128" src="{{ asset('img/clans/na_mon.png') }}" alt="Mon du Clan" />
+                                <img class="img-128" src="{{ asset('assets/img/clans/na_mon.png') }}" alt="Mon du Clan" />
                             {% endif %}
                         </a><br/>
                         <strong>{{ dernierClan.nom }}</strong><br/>
                         <div class="d-flex justify-content-between align-items-end">
                             <a href="{{ path('admin_clan') }}">Tout Gérer</a>
-                            <a href="{{ path('admin_clan_create') }}" class="btn btn-primary float-right">Ajouter</a>
                         </div>
                     {% else %}
                         <p class="my-5">Il n'y a pas encore de Clan disponible !</p>
                     {% endif %}
+                    <a href="{{ path('admin_clan_create') }}" class="btn btn-primary float-right">Ajouter</a>
                 </article>
             </div>
 
+            {# CLASSES #}
+
             <div class="col-3 px-2">
-                <article class="border p-3 bg-white d-flex flex-column">
+                <article class="border p-3 bg-white d-flex flex-column h-100">
                     <h5><span class="display-4">{{ nbrClasses }}</span> &nbsp; <strong>Classes</strong></h5>
-                    <small>Dernier ajout :</small><br/>
                     {% if dernierClasse %}
-                        <a href="{#{{ path('empire_clan', {id: dernierClasse.id} ) }}#}" >
+                        <small>Dernier ajout :</small><br/>
+                        <a href="{#{{ path('empire_classe', {id: dernierClasse.id} ) }}#}" >
                             {% if dernierClasse.icone %}
                                 <img class="img-128" src="{{ asset(dernierClasse.icone) }}" alt="Icone de la Classe" />
                             {% else %}
-                                <img class="img-128" src="{{ asset('img/placeholders/320x320.png') }}" alt="Icone de la Classe" />
+                                <img class="img-128" src="{{ asset('assets/img/placeholders/na_class.png') }}" alt="Icone de la Classe" />
                             {% endif %}
                         </a><br/>
                         <strong>{{ dernierClasse.nom }}</strong><br/>
                         <div class="d-flex justify-content-between align-items-end">
                             <a href="{{ path('admin_classe') }}">Tout Gérer</a>
-                            <a href="{{ path('admin_classe_create') }}" class="btn btn-primary float-right">Ajouter</a>
                         </div>
                     {% else %}
-                        <p class="my-5">Il n'y a pas encore de Classe disponible !</p>
+                        <p class="my-5">Désolé ! Il n'y a pas encore de classe disponible !</p>
                     {% endif %}
+                    <a href="{{ path('admin_classe_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
+                </article>
+            </div>
+
+            {# ECOLES #}
+
+            <div class="col-3 px-2">
+                <article class="border p-3 bg-white d-flex flex-column h-100">
+                    <h5><span class="display-4">{{ nbrEcoles }}</span> &nbsp; <strong>Écoles</strong></h5>
+                    {% if dernierEcole %}
+                        <small>Dernier ajout :</small><br/>
+                        <a href="{#{{ path('empire_ecole', {id: dernierEcole.id} ) }}#}" >
+                            <img class="img-128" src="{{ asset('assets/img/placeholders/320x320.png') }}" alt="Icone de l'Ecole" />
+                        </a><br/>
+                        <strong>{{ dernierEcole.nom }}</strong><br/>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <a href="{{ path('admin_ecole') }}">Tout Gérer</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Désolé ! Il n'y a pas encore d'école disponible !</p>
+                    {% endif %}
+                    <a href="{{ path('admin_ecole_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
                 </article>
             </div>
             
         </section>
+
+        {# UTILISATEURS #}
 
         <h2 class="mt-4">Utilisateurs</h2>
         <hr>
@@ -173,19 +213,23 @@
             <div class="col-3 px-2">
                 <article class="border p-3 bg-white d-flex flex-column">
                     <h5><span class="display-4">{{ nbrUtilisateurs }}</span> &nbsp; <strong>Utilisateurs</strong></h5>
-                    <small>Dernier ajout :</small><br/>
-                    <a href="{#{{ path('utilisateur_profile', {id: dernierUtilisateur.id} ) }}#}" >
-                        {% if dernierUtilisateur.avatar %}
-                            <img class="img-128" src="{{ dernierUtilisateur.avatar }}" alt="Avatar de l'utilisateur" />
-                        {% else %}
-                            <img class="img-128" src="https://i.pravatar.cc/300" alt="Avatar de l'utilisateur" />
-                        {% endif %}
-                    </a><br/>
-                    <strong>{{ dernierUtilisateur.pseudo }}</strong><br/>
-                    <div class="d-flex justify-content-between align-items-end">
-                        <a href="{{ path('admin_utilisateur') }}">Tout Gérer</a>
-                        <a href="{{ path('admin_utilisateur_create') }}" class="btn btn-primary float-right">Ajouter</a>
-                    </div>
+                    {% if dernierUtilisateur %}
+                        <small>Dernier ajout :</small><br/>
+                        <a href="{#{{ path('utilisateur_profile', {id: dernierUtilisateur.id} ) }}#}" >
+                            {% if dernierUtilisateur.avatar %}
+                                <img class="img-128" src="{{ dernierUtilisateur.avatar }}" alt="Avatar de l'utilisateur" />
+                            {% else %}
+                                <img class="img-128" src="https://i.pravatar.cc/300" alt="Avatar de l'utilisateur" />
+                            {% endif %}
+                        </a><br/>
+                        <strong>{{ dernierUtilisateur.pseudo }}</strong><br/>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <a href="{{ path('admin_utilisateur') }}">Tout Gérer</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Désolé ! Il n'y a pas encore d'utilisateur disponible !</p>
+                    {% endif %}
+                    <a href="{{ path('admin_utilisateur_create') }}" class="btn btn-primary float-right">Ajouter</a>
                 </article>
             </div>
         </section>

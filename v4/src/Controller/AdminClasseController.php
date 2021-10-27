@@ -45,7 +45,7 @@ class AdminClasseController extends AbstractController
                 $nouvelleIconeNomFichier = $uploadeur->upload($nouvelleIcone, 'classe-' . strtolower($classe->getNom()) . '-icon', 'classes');
                 $nouveauCheminRelatif = 'assets/img/classes/' . $nouvelleIconeNomFichier;
                 $classe->setIcone($nouveauCheminRelatif);
-            } else { $classe->setIcone('assets/img/placeholders/320x320.png'); }
+            } else { $classe->setIcone('assets/img/placeholders/na_class.png'); }
 
             $em->persist($classe);
             $em->flush();
@@ -118,6 +118,7 @@ class AdminClasseController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
+            // Gestion de l'image
             $nomIconeASupprimer = basename($classe->getIcone());
             $cheminIconeASupprimer = $this->getParameter('image_directory') . '/classes/' . $nomIconeASupprimer;
 

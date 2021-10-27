@@ -19,6 +19,13 @@ class EcoleRepository extends ServiceEntityRepository
         parent::__construct($registry, Ecole::class);
     }
 
+    public function countEcoles() {
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Ecole[] Returns an array of Ecole objects
     //  */

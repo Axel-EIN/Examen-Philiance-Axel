@@ -1,0 +1,100 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Administrer les Écoles {{ parent() }}{% endblock %}
+
+{% block h1 %}Administrer les Écoles{% endblock %}
+
+{% block child %}
+
+    <section id="ecoles">
+
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_ecole_create') }}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Ajouter une nouvelle école</a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2">Image</th>
+                <th class="p-2">Clan</th>
+                <th class="p-2">ID</th>
+                <th class="p-2">Nom</th>
+                <th class="p-2">Classe</th>
+                <th class="p-2"></th>
+                <th class="p-2"></th>
+                <th class="p-2"></th>
+            </tr>
+
+            {% for une_ecole in ecoles %}
+
+                <tr>
+                    <td class="p-2" colspan="8"></td>
+                </tr>
+
+                <tr class="bg-white">
+
+                    <td class="p-2 border text-center" rowspan="8">
+                        {% if une_ecole.image is not empty %}
+                            <img class="img-240" src="{{ asset(une_ecole.image) }}" alt="Image d'illustration de l'École" />
+                        {% else %}
+                            <img class="img-240" src="{{ asset('assets/img/placeholders/na_ecole.png') }}" alt="Pas d'image pour l'École disponible" />
+                        {% endif %}
+                    </td>
+                    <td class="p-2 border text-center" rowspan="8"><img class="img-128" src="{{ asset(une_ecole.clan.mon) }}" alt="Mon du Clan de l'École" /></td>
+                    <td class="p-2 border text-center">{{ une_ecole.id }}</td>
+                    <td class="p-2 border text-center">{{ une_ecole.nom }}</td>
+                    <td class="p-2 border text-center"><strong>{{ une_ecole.classe.nom }}</strong></td>
+                    <td class="p-2 border text-center"><a href="{# {{ path('empire_ecole', { id: une_ecole.id }) }} #}"><i class="fas fa-eye"></i></a></td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_ecole_edit', {id: une_ecole.id} ) }}"><i class="fas fa-edit"></i></a></td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_ecole_delete', {'id': une_ecole.id}) }}?csrf={{ csrf_token('delete' ~ une_ecole.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette école : {{ une_ecole.nom }} ?');"><i class="fas fa-trash-alt"></i></a></td>
+
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" colspan="6"><strong>{{ une_ecole.description }}</strong></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center"><strong>{{ une_ecole.tech1Nom }}</strong></td>
+                    <td class="p-2 border text-center" colspan="5"><strong>{{ une_ecole.tech1Desc }}</strong></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center"><strong>{{ une_ecole.tech2Nom }}</strong></td>
+                    <td class="p-2 border text-center" colspan="5"><strong>{{ une_ecole.tech2Desc }}</strong></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center"><strong>{{ une_ecole.tech3Nom }}</strong></td>
+                    <td class="p-2 border text-center" colspan="5"><strong>{{ une_ecole.tech3Desc }}</strong></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center"><strong>{{ une_ecole.tech4Nom }}</strong></td>
+                    <td class="p-2 border text-center" colspan="5"><strong>{{ une_ecole.tech4Desc }}</strong></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center"><strong>{{ une_ecole.tech5Nom }}</strong></td>
+                    <td class="p-2 border text-center" colspan="5"><strong>{{ une_ecole.tech5Desc }}</strong></td>
+                </tr>
+                
+                <tr class="bg-white">
+                    <td class="p-2 border text-center"><strong>{{ une_ecole.techSpecialNom }}</strong></td>
+                    <td class="p-2 border text-center" colspan="5"><strong>{{ une_ecole.techSpecialDesc }}</strong></td>
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td class="p-2" colspan="8"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" colspan="8">Désolé ! Il n'y a pas encore d'École !</td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
+{% endblock %}

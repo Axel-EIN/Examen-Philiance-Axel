@@ -15,10 +15,6 @@
                           or app.request.get('_route') == 'admin_saison_create'
                           or app.request.get('_route') == 'admin_saison_edit' %}active{% endif %}" href="{{ path('admin_saison') }}">Saisons</a>
 
-    <a class="nav-link {% if app.request.get('_route') == 'admin_utilisateur'
-                          or app.request.get('_route') == 'admin_utilisateur_create'
-                          or app.request.get('_route') == 'admin_utilisateur_edit' %}active{% endif %}" href="{{ path('admin_utilisateur') }}">Utilisateurs</a>
-
     <a class="nav-link {% if app.request.get('_route') == 'admin_clan'
                         or app.request.get('_route') == 'admin_clan_create'
                         or app.request.get('_route') == 'admin_clan_edit' %}active{% endif %}" href="{{ path('admin_clan') }}">Clans</a>
@@ -26,4 +22,12 @@
     <a class="nav-link {% if app.request.get('_route') == 'admin_classe'
                         or app.request.get('_route') == 'admin_classe_create'
                         or app.request.get('_route') == 'admin_classe_edit' %}active{% endif %}" href="{{ path('admin_classe') }}">Classes</a>
+
+    <a class="nav-link {% if app.request.get('_route') == 'admin_ecole'
+                        or app.request.get('_route') == 'admin_ecole_create'
+                        or app.request.get('_route') == 'admin_ecole_edit' %}active{% endif %}" href="{{ path('admin_ecole') }}">Écoles</a>
+
+    <a class="nav-link {% if app.request.get('_route') == 'admin_utilisateur'
+                          or app.request.get('_route') == 'admin_utilisateur_create'
+                          or app.request.get('_route') == 'admin_utilisateur_edit' %}active{% endif %}" href="{{ path('admin_utilisateur') }}">Utilisateurs</a>
 </nav>
