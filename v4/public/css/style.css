@@ -68,6 +68,15 @@ nav .active { font-weight: bold; }
 .fond-masque img { mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1));
                    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1)); }
 
+.fond-masque-fonce { background-color: black; }
+.fond-masque-fonce img { 
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1));
+}
+
+.card-img-overlay { top: unset; padding: 0.5rem; }
+.card-img-overlay h4 { margin-bottom: 0; }
+
 .ancre-relatif { position:relative; }
 
 .translucide { filter: opacity(0.50); }

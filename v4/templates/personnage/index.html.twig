@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personnages de l'Aventure {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <header class="en-tete-fond"
+    style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('{{ asset('assets/img/rubriques/personnages.jpg') }}');">
+        <div class="container">
+            <div class="en-tete">
+
+                <div class="text-center d-flex justify-content-center"></div>
+
+                <hr class="w-50">     
+                <h1 class="stylise grand">{{ 'Les Héros de l\'Histoire'|stylise|raw }}</h1>
+
+            </div>
+        </div>
+    </header>
+
+
+    <main class="container-fluid bg-light pt-5">
+        <div class="container">
+
+            <h2>Personnages Joueurs (PJs) :</h2>
+
+            <section class="row">
+
+                {% for un_pj in pjs %}
+
+                    <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
+                        <a href="{# {{ path('') }}#}">
+                            <div class="card bg-dark text-white">    
+                                <img src="{{ asset(un_pj.clan.mon) }}" alt="Mon du clan" style="position: absolute; top: -12px; left: -12px; z-index: 1; width: 48px;" />
+                                {# <?php if(est_mort($un_pj->id)): ?>
+                                    <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 156px; position: absolute; top: 4rem; left: 0.20rem; z-index: 1;" />
+                                <?php endif; ?> #}
+                                <div class="fond-masque-fonce">
+                                    <img class="card-img {# <?php if(est_mort($un_pj->id)): ?>mort<?php else: ?>#}survol{#<?php endif; ?>#}" src="{{ asset(un_pj.illustration) }}" alt="Illustration du personnage">
+                                </div>
+                                <div class="card-img-overlay">
+                                    <h4 class="card-title">{{ un_pj.nom }} {{ un_pj.prenom }}</h4>
+                                    <p class="card-text" style="color: #fff;"><small>{{ un_pj.joueur.pseudo }}</small></p>
+                                    <p class="card-text" style="color: #fff;"><small>{{ un_pj.titres }}</small></p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                {% endfor %}
+
+            </section>
+
+            <h2 class="mt-5">Personnages Non-Joueurs (PNJs) :</h2>
+
+            <section class="row">
+
+                {% for un_pnj in pnjs %}
+
+                    <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
+                        <a href="{# <?= route('profil-personnage&id=' . $un_pnj->id); ?>#}">
+                            <div class="card bg-dark text-white">
+                                    <img src="{{ asset(un_pnj.clan.mon) }}" alt="Mon du clan" style="position: absolute; top: -12px; left: -12px; z-index: 1; width: 48px;" />
+                                {# <?php if(est_mort($un_pnj->id)): ?>
+                                    <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 156px; position: absolute; top: 4rem; left: 0.20rem; z-index: 1;" />
+                                <?php endif; ?> #}
+                                <div class="fond-masque-fonce">
+                                    <img class="card-img {# <?php if(est_mort($un_pnj->id)): ?>mort<?php else: ?>#}survol{#<?php endif; ?>#}" src="{{ asset(un_pnj.illustration) }}" alt="Illustration du personnage">
+                                </div>
+                                <div class="card-img-overlay">
+                                    <h4 class="card-title">{{ un_pnj.nom }} {{ un_pnj.prenom }}</h4>
+                                    <p class="card-text" style="color: #fff;"><small>{{ un_pnj.titres }}</small></p>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+
+                {% endfor %}
+
+            </section>
+
+        </div>>
+    </main>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}
