@@ -1,0 +1,16 @@
+<main class="offset-2 col-8">
+    {{ form_start(form) }}
+        {% if type != 'Créer' %}
+            <img class="img-fluid" src="{{ asset(personnage.icone) }}" />
+        {% endif %}
+        {{ form_row(form.icone) }}
+        {% if type != 'Créer' %}
+            <img class="img-fluid" src="{{ asset(personnage.illustration) }}" />
+        {% endif %}
+        {{ form_row(form.illustration) }}
+            {{ form_widget(form) }}
+            <div class="text-center">
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            </div>
+    {{ form_end(form) }}
+</main>

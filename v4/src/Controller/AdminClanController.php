@@ -19,8 +19,7 @@ class AdminClanController extends AbstractController
     /**
      * @Route("/admin/clan", name="admin_clan")
      */
-    public function afficherAdminClans(ClanRepository $clanRepository): Response
-    {
+    public function afficherAdminClans(ClanRepository $clanRepository): Response {
         $clans = $clanRepository->findBy(array(), array('est_majeur' => 'DESC'));
         return $this->render('admin_clan/index.html.twig', [
             'controller_name' => 'AdminClanController',

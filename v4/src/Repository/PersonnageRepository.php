@@ -19,6 +19,13 @@ class PersonnageRepository extends ServiceEntityRepository
         parent::__construct($registry, Personnage::class);
     }
 
+    public function countPersonnages() {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Personnage[] Returns an array of Personnage objects
     //  */

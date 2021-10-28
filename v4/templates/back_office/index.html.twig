@@ -31,7 +31,7 @@
 
         {# AVENTURE #}
 
-        <h2 class="mt-4">Aventure</h2>
+        <h2 class="mt-5">Aventure</h2>
         <hr>
         <p class="mb-4 text-muted">Voici le tableau de bord relatif aux derniers éléments narratifs ajoutés.</p>
         <section class="row">
@@ -125,7 +125,7 @@
 
         {# EMPIRE LORE #}
 
-        <h2 class="mt-4">Empire</h2>
+        <h2 class="mt-5">Empire</h2>
         <hr>
         <p class="mb-4 text-muted">Voici le tableau de bord relatif à l'univers de Jeu.</p>
         <section class="row">
@@ -203,9 +203,39 @@
             
         </section>
 
+        {# PERSONNAGES #}
+
+        <h2 class="mt-5">Personnages</h2>
+        <hr>
+        <p class="mb-4 text-muted">Voici le tableau de bord relatif aux personnages.</p>
+        <section class="row">
+            <div class="col-3 px-2">
+                <article class="border p-3 bg-white d-flex flex-column">
+                    <h5><span class="display-4">{{ nbrPersonnages }}</span> &nbsp; <strong>Personnages</strong></h5>
+                    {% if dernierPersonnage %}
+                        <small>Dernier ajout :</small><br/>
+                        <a href="{#{{ path('personnage_profile', {id: dernierPersonnage.id} ) }}#}" >
+                            {% if dernierPersonnage.icone is not empty %}
+                                <img class="img-128" src="{{ dernierPersonnage.icone }}" alt="Icône Avatar du Personnage" />
+                            {% else %}
+                                <img class="img-128" src="https://i.pravatar.cc/300" alt="Icône Avatar du Personnage" />
+                            {% endif %}
+                        </a><br/>
+                        <strong>{{ dernierPersonnage.nom }} {{ dernierPersonnage.prenom }}</strong><br/>
+                        <div class="d-flex justify-content-between align-items-end">
+                            <a href="{{ path('admin_personnage') }}">Tout Gérer</a>
+                        </div>
+                    {% else %}
+                        <p class="my-5">Désolé ! Il n'y a pas encore de personnage disponible !</p>
+                    {% endif %}
+                    <a href="{{ path('admin_personnage_create') }}" class="btn btn-primary mt-auto">Ajouter</a>
+                </article>
+            </div>
+        </section>
+
         {# UTILISATEURS #}
 
-        <h2 class="mt-4">Utilisateurs</h2>
+        <h2 class="mt-5">Utilisateurs</h2>
         <hr>
         <p class="mb-4 text-muted">Voici le tableau de bord relatif aux utilisateurs.</p>
         <section class="row">

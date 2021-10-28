@@ -1,20 +1,84 @@
-{% extends 'base.html.twig' %}
+{% extends 'back_office/index.html.twig' %}
 
-{% block title %}Hello AdminPersonnageController!{% endblock %}
+{% block title %}Administrer les Personnages {{ parent() }}{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block h1 %}Administrer les Personnages{% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block child %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/exam/v4/src/Controller/AdminPersonnageController.php'|file_link(0) }}">src/Controller/AdminPersonnageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/exam/v4/templates/admin_personnage/index.html.twig'|file_link(0) }}">templates/admin_personnage/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <section id="personnages">
+
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_personnage_create') }}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Ajouter un nouveau personnage</a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2 text-center">ID</th>
+                <th class="p-2 text-center">Est PJ?</th>
+                <th class="p-2 text-center">Icone</th>
+                <th class="p-2 text-center">Illustration</th>
+                <th class="p-2 text-center">Nom</th>
+                <th class="p-2 text-center">Prenom</th>
+                <th class="p-2 text-center">Titres</th>
+                <th class="p-2 text-center">Clan</th>
+                <th class="p-2 text-center">Classe</th>
+                <th class="p-2 text-center">Ecole</th>
+                <th class="p-2 text-center">Joueur</th>
+                <th class="p-2 text-center">Description</th>
+                <th class="p-2"></th>
+                <th class="p-2"></th>
+                <th class="p-2"></th>
+            </tr>
+
+            {% for un_personnage in personnages %}
+
+                <tr>
+                    <td class="p-2" colspan="15"></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center">{{ un_personnage.id }}</td>
+                    <td class="p-2 border text-center">
+                        {% if un_personnage.estPj == false %}
+                            <span>Non</span>
+                        {% else %}
+                            <span>Oui</span>
+                        {% endif %}
+                    </td>
+                    <td class="p-2 border text-center"><img class="img-128" src="{{ asset(un_personnage.icone) }}" alt="Icône Avatar d'un personnage" /></td>
+                    <td class="p-2 border text-center"><img class="img-128" src="{{ asset(un_personnage.illustration) }}" alt="Illustration d'un personnage" /></td>
+                    <td class="p-2 border text-center"><strong>{{ un_personnage.nom }}</strong></td>
+                    <td class="p-2 border text-center"><strong>{{ un_personnage.prenom }}</strong></td>
+                    <td class="p-2 border text-center"><strong>{{ un_personnage.titres }}</strong></td>
+                    <td class="p-2 border text-center"><strong>{{ un_personnage.clan.nom }}</strong></td>
+                    <td class="p-2 border text-center"><strong>{{ un_personnage.classe.nom }}</strong></td>
+                    <td class="p-2 border text-center"><strong>{{ un_personnage.ecole.nom }}</strong></td>
+                    <td class="p-2 border text-center"><strong>{{ un_personnage.joueur.pseudo }}</strong></td>
+                    <td class="p-2 border text-center">
+                        <a href="{# {{ path('personnage_profil', { id: un_personnage.id }) }} #}"><i class="fas fa-eye"></i></a>
+                    </td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_personnage_edit', {id: un_personnage.id} ) }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_personnage_delete', {'id': un_personnage.id}) }}?csrf={{ csrf_token('delete' ~ un_personnage.id) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce personnage : {{ un_personnage.nom }} ?');"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+
+            {% else %}
+
+                <tr>
+                    <td class="p-2" colspan="15"></td>
+                </tr>
+                <tr>
+                    <td class="text-center" colspan="15">Désolé ! Il n'y a pas encore de Personnage !</td>
+                </tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
 {% endblock %}

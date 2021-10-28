@@ -27,6 +27,10 @@
                         or app.request.get('_route') == 'admin_ecole_create'
                         or app.request.get('_route') == 'admin_ecole_edit' %}active{% endif %}" href="{{ path('admin_ecole') }}">Écoles</a>
 
+    <a class="nav-link {% if app.request.get('_route') == 'admin_personnage'
+                          or app.request.get('_route') == 'admin_personnage_create'
+                          or app.request.get('_route') == 'admin_personnage_edit' %}active{% endif %}" href="{{ path('admin_personnage') }}">Personnages</a>
+
     <a class="nav-link {% if app.request.get('_route') == 'admin_utilisateur'
                           or app.request.get('_route') == 'admin_utilisateur_create'
                           or app.request.get('_route') == 'admin_utilisateur_edit' %}active{% endif %}" href="{{ path('admin_utilisateur') }}">Utilisateurs</a>

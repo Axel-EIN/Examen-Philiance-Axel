@@ -31,6 +31,6 @@ class Uploader
 
     public function getTargetDirectory($categorie)
     {
-        return $this->targetDirectory = $this->targetDirectory . '/' . $categorie;
+        return $this->targetDirectory . '/' . $categorie;
     }
 }
