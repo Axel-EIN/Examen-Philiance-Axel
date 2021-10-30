@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdminClanType extends AbstractType
 {
@@ -21,6 +22,7 @@ class AdminClanType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('est_majeur', CheckboxType::class, ['required' => false])
+            ->add('description', TextareaType::class)
             ->add('couleur', ColorType::class)
             ->add('mon', FileType::class, array('mapped' => false, 'data_class' => null, 'required' => false))
             ->add('chef', EntityType::class, [

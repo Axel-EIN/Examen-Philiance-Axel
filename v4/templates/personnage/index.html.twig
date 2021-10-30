@@ -29,9 +29,9 @@
                 {% for un_pj in pjs %}
 
                     <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
-                        <a href="{# {{ path('') }}#}">
+                        <a href="{{ path('personnages_profil', {id: un_pj.id} ) }}">
                             <div class="card bg-dark text-white">    
-                                <img src="{{ asset(un_pj.clan.mon) }}" alt="Mon du clan" style="position: absolute; top: -12px; left: -12px; z-index: 1; width: 48px;" />
+                                <img class="badge" src="{{ asset(un_pj.clan.mon) }}" alt="Mon du clan" />
                                 {# <?php if(est_mort($un_pj->id)): ?>
                                     <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 156px; position: absolute; top: 4rem; left: 0.20rem; z-index: 1;" />
                                 <?php endif; ?> #}
@@ -58,9 +58,9 @@
                 {% for un_pnj in pnjs %}
 
                     <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
-                        <a href="{# <?= route('profil-personnage&id=' . $un_pnj->id); ?>#}">
+                        <a href="{{ path('personnages_profil', {id: un_pnj.id} ) }}">
                             <div class="card bg-dark text-white">
-                                    <img src="{{ asset(un_pnj.clan.mon) }}" alt="Mon du clan" style="position: absolute; top: -12px; left: -12px; z-index: 1; width: 48px;" />
+                                    <img class="badge" src="{{ asset(un_pnj.clan.mon) }}" alt="Mon du clan" />
                                 {# <?php if(est_mort($un_pnj->id)): ?>
                                     <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 156px; position: absolute; top: 4rem; left: 0.20rem; z-index: 1;" />
                                 <?php endif; ?> #}

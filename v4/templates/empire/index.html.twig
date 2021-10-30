@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L'Univers de l'Aventure {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <header class="en-tete-fond"
+    style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('{{ asset('assets/img/rubriques/personnages.jpg') }}');">
+        <div class="container">
+            <div class="en-tete">
+
+                <div class="text-center d-flex justify-content-center"></div>
+
+                <hr class="w-50">     
+                <h1 class="stylise grand">{{ 'L\'Empire et son Univers'|stylise|raw }}</h1>
+
+            </div>
+        </div>
+    </header>
+
+
+    <main class="container-fluid bg-light pt-5">
+        <div class="container">
+
+            <h2 class="display-4">Les <strong>Clans</Strong> :</h2>
+            <hr>
+            <br/>
+
+                <section class="row">
+
+                {% for un_clan in clans %}
+
+                    <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
+                        <a href="{# {{ path('empire_clan', {id: un_clan.id} ) }}#}"><img class="img-160" src="{{ asset(un_clan.mon) }}" alt="Mon du clan" /></a>
+                        <br/>
+                        <h3 class="text-center my-3"><strong><a href="{# {{ path('empire_clan', {id: un_clan.id} ) }}#}">{{ un_clan.nom }}</a></strong></h3>
+                    </article>
+
+                {% endfor %}
+
+            </section>
+
+        </div>>
+    </main>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}

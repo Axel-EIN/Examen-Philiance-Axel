@@ -41,9 +41,6 @@ class BackOfficeController extends AbstractController
         $nbrScenes = $sceneRepository->countScenes();
         $dernierScene = $sceneRepository->findOneBy(array(),array('id' => 'DESC'));
 
-        $nbrUtilisateurs = $utilisateurRepository->countUtilisateurs();
-        $dernierUtilisateur = $utilisateurRepository->findOneBy(array(),array('id' => 'DESC'));
-
         $nbrClans = $clanRepository->countClans();
         $dernierClan = $clanRepository->findOneBy(array(),array('id' => 'DESC'));
 
@@ -53,8 +50,14 @@ class BackOfficeController extends AbstractController
         $nbrEcoles = $ecoleRepository->countEcoles();
         $dernierEcole = $ecoleRepository->findOneBy(array(),array('id' => 'DESC'));
 
-        $nbrPersonnages = $personnageRepository->countPersonnages();
-        $dernierPersonnage = $personnageRepository->findOneBy(array(),array('id' => 'DESC'));
+        $nbrPJs = $personnageRepository->countPJs();
+        $dernierPJ = $personnageRepository->findOneBy(array("est_pj" => "1"),array('id' => 'DESC'));
+
+        $nbrPNJs = $personnageRepository->countPNJs();
+        $dernierPNJ = $personnageRepository->findOneBy(array("est_pj" => "0"),array('id' => 'DESC'));
+
+        $nbrUtilisateurs = $utilisateurRepository->countUtilisateurs();
+        $dernierUtilisateur = $utilisateurRepository->findOneBy(array(),array('id' => 'DESC'));
 
         return $this->render('back_office/index.html.twig', [
             'controller_name' => 'BackOfficeController',
@@ -66,16 +69,18 @@ class BackOfficeController extends AbstractController
             'dernierEpisode' => $dernierEpisode,
             'nbrScenes' => $nbrScenes,
             'dernierScene' => $dernierScene,
-            'nbrUtilisateurs' => $nbrUtilisateurs,
-            'dernierUtilisateur' => $dernierUtilisateur,
             'nbrClans' => $nbrClans,
             'dernierClan' => $dernierClan,
             'nbrClasses' => $nbrClasses,
             'dernierClasse' => $dernierClasse,
             'nbrEcoles' => $nbrEcoles,
             'dernierEcole' => $dernierEcole,
-            'nbrPersonnages' => $nbrPersonnages,
-            'dernierPersonnage' => $dernierPersonnage,
+            'nbrPJs' => $nbrPJs,
+            'dernierPJ' => $dernierPJ,
+            'nbrPNJs' => $nbrPNJs,
+            'dernierPNJ' => $dernierPNJ,
+            'nbrUtilisateurs' => $nbrUtilisateurs,
+            'dernierUtilisateur' => $dernierUtilisateur,
         ]);
     }
 }

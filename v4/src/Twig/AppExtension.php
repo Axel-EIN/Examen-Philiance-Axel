@@ -82,6 +82,18 @@ class AppExtension extends AbstractExtension
         $search = 'l\'';
         $replace = '<span class=petit>l\'&nbsp; </span>';
         $titre = str_replace($search,$replace,$titre);
+
+        $search = 'L\'';
+        $replace = '<span class=petit>L\'</span>';
+        $titre = str_replace($search,$replace,$titre);
+
+        $search = ' et ';
+        $replace = ' <span class=petit>et</span> ';
+        $titre = str_replace($search,$replace,$titre);
+
+        $search = ' son ';
+        $replace = ' <span class=petit>son</span> ';
+        $titre = str_replace($search,$replace,$titre);
     
         return $titre;
     }

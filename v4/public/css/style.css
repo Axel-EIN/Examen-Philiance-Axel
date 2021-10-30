@@ -352,6 +352,19 @@ nav .active { font-weight: bold; }
 
 
 /* -------------------------------  */
+/* PERSONNAGE                       */
+/* -------------------------------- */
+
+.badge {
+        position: absolute;
+        top: -12px;
+        left: -12px;
+        z-index: 1;
+        width: 48px;
+}
+
+
+/* -------------------------------  */
 /* GENERAL PAGES                    */
 /* -------------------------------- */
 
@@ -359,11 +372,13 @@ nav .active { font-weight: bold; }
 
 
 /* -------------------------------  */
-/* BACK OFFICEES                    */
+/* BACK OFFICE                      */
 /* -------------------------------- */
 
+.coin-droit { position: absolute; right:24px; }
 .img-64 { min-width: 48px; max-width: 64px; }
-.img-128 { min-width: 96px; max-width: 128px; }
+.img-128 { min-width: 64px; max-width: 128px; }
+.img-160 { min-width: 80px; max-width: 160px; }
 .img-240 { min-width: 120px; max-width: 240px; }
 .img-320 { min-width: 160px; max-width: 320px; }
 .img-360 { min-width: 180px; max-width: 360px; }

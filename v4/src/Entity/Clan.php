@@ -54,6 +54,11 @@ class Clan
      */
     private $mon;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
     public function __construct()
     {
         $this->ecoles = new ArrayCollection();
@@ -181,6 +186,18 @@ class Clan
     public function setMon(?string $mon): self
     {
         $this->mon = $mon;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

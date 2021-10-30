@@ -26,6 +26,24 @@ class PersonnageRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function countPJs() {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->andWhere('p.est_pj = :val')
+            ->setParameter('val', 1)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countPNJs() {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->andWhere('p.est_pj = :val')
+            ->setParameter('val', 0)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Personnage[] Returns an array of Personnage objects
     //  */
