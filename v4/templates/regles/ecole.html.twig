@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Description d'une École {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <main class="container-fluid bg-light">
+        <div class="container">
+
+            <nav class="pt-3">
+                <span class="text-muted">
+                    <a href="{{ path('aventure') }}"><i class="fas fa-home"></i></a>
+                    > <a href="{{ path('regles') }}"><strong>Règles</strong></a>
+                    > <a href="{{ path('regles', {'_fragment': 'ecoles'} ) }}"><strong>Écoles</strong></a>
+                    > <strong>{{ ecole.nom }}</strong>
+                </span>
+            </nav>
+
+            <h1 class="py-5">L'École <strong>{{ ecole.nom }}</strong></h1>
+
+            <div class="row">
+
+                <div class="col-4 text-center">
+                    <img class="img-fluid" src="{{ asset(ecole.image) }}" alt="Image de l'école" />
+                </div>
+
+                <div class="col-8">
+                    <div class="card card-body h-100">
+                        <div class="row mb-5 ml-2">
+                            <div class="col">
+                                <strong>Clan :</strong><br/>
+                                <a href="{{ path('empire_clan', {id: ecole.clan.id}) }}">
+                                    <img class="img-128" src="{{ asset(ecole.clan.mon) }}" alt="Mon du Clan" />
+                                </a>
+                            </div>
+                            <div class="col">
+                                <strong>Classe :</strong><br/>
+                                <a href="{{ path('regles_classe', {id: ecole.classe.id}) }}">
+                                    <img class="img-128" src="{{ asset(ecole.classe.icone) }}" alt="Icône de l'École" />
+                                </a>
+                            </div>
+                        </div>
+                        <p class="card-text"><strong>Description :</strong></p>
+                        <p class="card-text">{{ ecole.description }}</p>
+                    </div>
+                </div>
+
+                <section class="col-12 my-3">
+                    <div class="card card-body h-100">
+                        <h2 class="card-title py-3">Techniques de l'école <strong>{{ ecole.nom }}</strong> :</h2>
+
+                        {% if ecole.tech1Nom is not empty %}
+                            <div class="row mb-5">
+                                <div class="col-2 text-center" style="color: {{ ecole.clan.couleur }}">
+                                    <strong>Rang</strong><br/>
+                                    <span class="stylise-couleur display-1" >{{ '1'|stylise|raw }}</span>
+                                </div>
+                                <div class="col">
+                                    <p><strong>{{ ecole.tech1Nom }}</strong></p>
+                                    <p>{{ ecole.tech1Desc }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if ecole.tech2Nom is not empty %}
+                            <div class="row mb-5">
+                                <div class="col-2 text-center" style="color: {{ ecole.clan.couleur }}">
+                                    <strong>Rang</strong><br/>
+                                    <span class="stylise-couleur display-1">{{ '2'|stylise|raw }}</span>
+                                </div>
+                                <div class="col">
+                                    <p><strong>{{ ecole.tech2Nom }}</strong></p>
+                                    <p>{{ ecole.tech2Desc }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if ecole.tech3Nom is not empty %}
+                            <div class="row mb-5">
+                                <div class="col-2 text-center" style="color: {{ ecole.clan.couleur }}">
+                                    <strong>Rang</strong><br/>
+                                    <span class="stylise-couleur display-1">{{ '3'|stylise|raw }}</span>
+                                </div>
+                                <div class="col">
+                                    <p><strong>{{ ecole.tech3Nom }}</strong></p>
+                                    <p>{{ ecole.tech3Desc }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if ecole.tech4Nom is not empty %}
+                            <div class="row mb-5">
+                                <div class="col-2 text-center" style="color: {{ ecole.clan.couleur }}">
+                                    <strong>Rang</strong><br/>
+                                    <span class="stylise-couleur display-1">{{ '4'|stylise|raw }}</span>
+                                </div>
+                                <div class="col">
+                                    <p><strong>{{ ecole.tech4Nom }}</strong></p>
+                                    <p>{{ ecole.tech4Desc }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                       
+                        {% if ecole.tech5Nom is not empty %}
+                            <div class="row mb-5">
+                                <div class="col-2 text-center" style="color: {{ ecole.clan.couleur }}">
+                                    <strong>Rang</strong><br/>
+                                    <span class="stylise-couleur display-1">{{ '5'|stylise|raw }}</span>
+                                </div>
+                                <div class="col">
+                                    <p><strong>{{ ecole.tech5Nom }}</strong></p>
+                                    <p>{{ ecole.tech5Desc }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if ecole.techSpecialNom is not empty %}
+                            <div class="row mb-5">
+                                <div class="col-2 text-center" style="color: {{ ecole.clan.couleur }}">
+                                    <strong>Technique</strong><br/>
+                                    <span class="stylise-couleur plus-petit">{{ 'Spéciale'|stylise|raw }}</span>
+                                </div>
+                                <div class="col">
+                                    <p><strong>{{ ecole.techSpecialNom }}</strong></p>
+                                    <p>{{ ecole.techSpecialDesc }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </section>
+
+                <section class="col-12 my-3">
+                    <div class="card card-body h-100">
+                        <h2 class="card-title py-3">Personnages de l'école <strong>{{ ecole.nom }}</strong> :</h2>
+                        <div class="card-text ml-3 row">
+                            {% for un_personnage in ecole.personnages %}
+                                <div class="p-1">
+                                    <a href="{{ path('personnage_profil', {id: un_personnage.id} ) }}">
+                                        <img class="img-128" src="{{ asset(un_personnage.icone) }}" alt="Icône du personnage" />
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span class="text-muted">Désolé ! Il n'y a pas encore de personnages disponible pour cette école !</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </main>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}

@@ -23,7 +23,7 @@ class AdminEcoleController extends AbstractController
      */
     public function afficherAdminEcoles(EcoleRepository $ecoleRepository): Response {
 
-        $ecoles = $ecoleRepository->findAll();
+        $ecoles = $ecoleRepository->findBy(array(), array('clan' => 'ASC'));
         return $this->render('admin_ecole/index.html.twig', [
             'ecoles' => $ecoles
         ]);
@@ -45,7 +45,7 @@ class AdminEcoleController extends AbstractController
 
             if (!empty($nouvelleImage)) {
 
-                $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'ecole-' . strtolower($ecole->getClan()->getNom()) . '-' . strtolower($ecole->getNom()), 'ecoles');
+                $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'ecole-' . $ecole->getClan()->getNom() . '-' . $ecole->getNom(), 'ecoles');
                 $nouveauChemingRelatif = 'assets/img/ecoles/' . $nouvelleImageNomFichier;
                 $ecole->setImage($nouveauChemingRelatif);
 
@@ -83,7 +83,7 @@ class AdminEcoleController extends AbstractController
 
                 $ancienneImageNomFichier = basename($ecole->getImage());
 
-                $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'ecole-' . strtolower($ecole->getClan()->getNom()) . '-' . strtolower($ecole->getNom()), 'ecoles');
+                $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'ecole' . '-' . $ecole->getClan()->getNom() . '-' . $ecole->getNom(), 'ecoles');
                 $nouveauChemingRelatif = 'assets/img/ecoles/' . $nouvelleImageNomFichier;
                 $ecole->setImage($nouveauChemingRelatif);
 

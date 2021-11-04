@@ -1,0 +1,70 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Administrer les Archives {{ parent() }}{% endblock %}
+
+{% block h1 %}Administrer les Archives{% endblock %}
+
+{% block child %}
+
+    <section id="archives">
+
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_archive_create') }}" class="btn btn-primary">
+                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Ajouter une nouvelle archive
+            </a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2 text-center">Image</th>
+                <th class="p-2 text-center">ID</th>
+                <th class="p-2 text-center">Titre</th>
+                <th class="p-2 text-center">Auteur</th>
+                <th class="p-2 text-center"></th>
+                <th class="p-2 text-center"></th>
+                <th class="p-2 text-center"></th>
+            </tr>
+
+            {% for une_archive in archives %}
+
+                <tr><td class="p-2" colspan="7"></td></tr>
+
+                <tr class="bg-white">
+
+                    <td class="p-2 bg-light text-center align-top" rowspan="2"><img class="img-320" src="{{ asset(une_archive.image) }}" alt="Image de l'Archive" /></td>
+                    
+                    <td class="p-2 border text-center">{{ une_archive.id }}</td>
+                    <td class="p-2 border text-center"><strong>{{ une_archive.titre }}</strong></td>
+                    <td class="p-2 border text-center">
+                        {% if une_archive.auteur is not empty %}
+                            {{ une_archive.auteur.nom }} <strong>{{ une_archive.auteur.prenom }}</strong>
+                        {% else %}
+                            <small class="text-muted">n/a</small>
+                        {% endif %}
+                    </td>
+
+                    <td class="p-2 border text-center"><a href="{{ path('empire_archive', { id: une_archive.id }) }}"><i class="fas fa-eye"></i></a></td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_archive_edit', {id: une_archive.id} ) }}"><i class="fas fa-edit"></i></a></td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_archive_delete', {'id': une_archive.id}) }}?csrf={{ csrf_token('delete' ~ une_archive.id) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette archive : {{ une_archive.titre }} ?');"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td class="p-2 border bg-white" colspan="7"><small class="text-muted">Description :</small><br/><small>{{ une_archive.contenu }}</small></td>
+                </tr>
+
+            {% else %}
+
+                <tr><td class="p-2" colspan="7"></td></tr>
+
+                <tr><td class="text-center" colspan="7">Désolé ! Il n'y a pas encore d'Archive !</td></tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
+{% endblock %}

@@ -15,18 +15,12 @@
         <table class="w-100">
 
             <tr class="bg-dark text-light">
-                <th class="p-2 text-center">ID</th>
-                <th class="p-2 text-center">Est PJ?</th>
-                <th class="p-2 text-center">Icone</th>
-                <th class="p-2 text-center">Illustration</th>
-                <th class="p-2 text-center">Nom</th>
-                <th class="p-2 text-center">Prenom</th>
-                <th class="p-2 text-center">Titres</th>
-                <th class="p-2 text-center">Clan</th>
-                <th class="p-2 text-center">Classe</th>
-                <th class="p-2 text-center">Ecole</th>
-                <th class="p-2 text-center">Joueur</th>
-                <th class="p-2 text-center">Description</th>
+                <th class="p-2 text-center">Icone / Illustration</th>
+                <th class="p-2 text-center">Prenom / Nom</th>
+                <th class="p-2 text-center">Clan / Classe</th>
+                <th class="p-2 text-center">ID / École</th>
+                <th class="p-2 text-center">Joueur / PJ_PNJ</th>
+                <th class="p-2 text-center">Titres / Description</th>
                 <th class="p-2"></th>
                 <th class="p-2"></th>
                 <th class="p-2"></th>
@@ -34,47 +28,50 @@
 
             {% for un_personnage in personnages %}
 
-                <tr>
-                    <td class="p-2" colspan="15"></td>
+                <tr><td class="p-2" colspan="10"></td></tr>
+                <tr><td class="p-2" colspan="10"></td></tr>
+                <tr><td class="p-2" colspan="10"></td></tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 bg-light text-center"><img class="img-64" src="{{ asset(un_personnage.icone) }}" alt="Icône d'un personnage" /></td>
+                    <td class="p-2 border text-center"><strong>{{ un_personnage.prenom }}</strong></td>
+                    <td class="p-2 border text-center">{{ un_personnage.clan.nom }}</td>
+                    <td class="p-2 border text-center">{{ un_personnage.id }}</td>
+                    <td class="p-2 border text-center">
+                        {% if un_personnage.joueur %}
+                            <strong>{{ un_personnage.joueur.pseudo }}</strong>
+                        {% else %}
+                            <small class="text-muted">n/a</small>
+                        {% endif %}
+                    </td>
+                    <td class="p-2 border text-center">{{ un_personnage.titres }}</td>
+                    <td class="p-2 border text-center"><a href="{{ path('personnage_profil', { id: un_personnage.id }) }}"><i class="fas fa-eye"></i></a></td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_personnage_edit', {id: un_personnage.id} ) }}"><i class="fas fa-edit"></i></a></td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_personnage_delete', {'id': un_personnage.id}) }}?csrf={{ csrf_token('delete' ~ un_personnage.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce personnage : {{ un_personnage.nom }} ?');"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
 
                 <tr class="bg-white">
-                    <td class="p-2 border text-center">{{ un_personnage.id }}</td>
+                    <td class="p-2 bg-light text-center"><img class="img-64" src="{{ asset(un_personnage.illustration) }}" alt="Illustration d'un personnage" /></td>
+                    <td class="p-2 border text-center">{{ un_personnage.nom }}</td>
+                    <td class="p-2 border text-center">{{ un_personnage.classe.nom }}</td>
+                    <td class="p-2 border text-center">{{ un_personnage.ecole.nom }}</td>
                     <td class="p-2 border text-center">
-                        {% if un_personnage.estPj == false %}
-                            <span>Non</span>
+                        {% if un_personnage.estPj %}
+                            <strong class="text-success">PJ</strong>
                         {% else %}
-                            <span>Oui</span>
+                            <small class="text-muted">PNJ</small>
                         {% endif %}
                     </td>
-                    <td class="p-2 border text-center"><img class="img-128" src="{{ asset(un_personnage.icone) }}" alt="Icône Avatar d'un personnage" /></td>
-                    <td class="p-2 border text-center"><img class="img-128" src="{{ asset(un_personnage.illustration) }}" alt="Illustration d'un personnage" /></td>
-                    <td class="p-2 border text-center"><strong>{{ un_personnage.nom }}</strong></td>
-                    <td class="p-2 border text-center"><strong>{{ un_personnage.prenom }}</strong></td>
-                    <td class="p-2 border text-center"><strong>{{ un_personnage.titres }}</strong></td>
-                    <td class="p-2 border text-center"><strong>{{ un_personnage.clan.nom }}</strong></td>
-                    <td class="p-2 border text-center"><strong>{{ un_personnage.classe.nom }}</strong></td>
-                    <td class="p-2 border text-center"><strong>{{ un_personnage.ecole.nom }}</strong></td>
-                    <td class="p-2 border text-center"><strong>{{ un_personnage.joueur.pseudo }}</strong></td>
-                    <td class="p-2 border text-center">
-                        <a href="{# {{ path('personnage_profil', { id: un_personnage.id }) }} #}"><i class="fas fa-eye"></i></a>
-                    </td>
-                    <td class="p-2 border text-center">
-                        <a href="{{ path('admin_personnage_edit', {id: un_personnage.id} ) }}"><i class="fas fa-edit"></i></a>
-                    </td>
-                    <td class="p-2 border text-center">
-                        <a href="{{ path('admin_personnage_delete', {'id': un_personnage.id}) }}?csrf={{ csrf_token('delete' ~ un_personnage.id) }}"
-                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce personnage : {{ un_personnage.nom }} ?');"><i class="fas fa-trash-alt"></i></a>
-                    </td>
+                    <td class="p-2 border" colspan="4"><small class="text-muted">{{ un_personnage.description }}</small></td>
                 </tr>
 
             {% else %}
 
                 <tr>
-                    <td class="p-2" colspan="15"></td>
+                    <td class="p-2" colspan="10"></td>
                 </tr>
                 <tr>
-                    <td class="text-center" colspan="15">Désolé ! Il n'y a pas encore de Personnage !</td>
+                    <td class="text-center" colspan="10">Désolé ! Il n'y a pas encore de personnage !</td>
                 </tr>
 
             {% endfor %}

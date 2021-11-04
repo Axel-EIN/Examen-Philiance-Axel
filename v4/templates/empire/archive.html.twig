@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Archive {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <main class="container-fluid bg-light">
+        <section class="container pb-5">
+
+            <nav class="pt-3">
+                <span class="text-muted">
+                    <a href="{{ path('aventure') }}"><i class="fas fa-home"></i></a>
+                    > <a href="{{ path('empire') }}"><strong>Empire</strong></a>
+                    > <a href="{{ path('empire', {'_fragment': 'archives'} ) }}"><strong>Archives</strong></a>
+                    > <strong>{{ archive.titre }}</strong>
+                </span>
+            </nav>
+
+            <h1 class="pt-5"><strong>{{ archive.titre }}</strong></h1>
+            <hr>
+
+            <article class="row">
+
+                <div class="col-12 text-center">
+                    <img class="img-fluid" src="{{ asset(archive.image) }}" alt="Image de l'Archive" />
+                </div>
+                
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">{{ archive.contenu }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Auteur&nbsp;:</strong>
+                                    {% if archive.auteur is not empty %}
+                                        {{ archive.auteur.nom }} <strong>{{ archive.auteur.prenom }}</strong>
+                                    {% else %}
+                                        n/a
+                                    {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </article>
+
+        </section>
+    </main>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}

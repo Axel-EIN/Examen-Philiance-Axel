@@ -34,8 +34,8 @@
                 <tr class="bg-white">
                     <td class="p-2 border text-center">{{ un_utilisateur.id }}</td>
                     <td class="p-2 border text-center"><strong>{{ un_utilisateur.pseudo }}</strong></td>
-                    <td class="p-2 border text-center"><strong>{{ un_utilisateur.email }}</strong></td>
-                    <td class="p-2 border text-center">{{ un_utilisateur.isVerified == 1 ? '<strong class="text-success">vérifié</strong>' : 'non' }}</td>
+                    <td class="p-2 border text-center">{{ un_utilisateur.email }}</td>
+                    <td class="p-2 border text-center">{{ un_utilisateur.isVerified == 1 ? '<strong class="text-success">vérifié</strong>' : '<small class="text-muted">non</small>' }}</td>
                     <td class="p-2 border text-center">{{ un_utilisateur.roles ? un_utilisateur.roles|join(', ') : '' }}</td>
                     <td class="p-2 border text-center">
                         {% if un_utilisateur.avatar %}

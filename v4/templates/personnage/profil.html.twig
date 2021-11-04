@@ -29,17 +29,23 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <div class="d-flex justify-content-between">
-                                <span>Clan&nbsp;:<br/><strong style="color:<?= $personnage_clan->couleur ?>;">{{ personnage.clan.nom }}</strong>
-                                <br/><img style="width: 64px;" src="{{ asset(personnage.clan.mon) }}" alt="Image du Mon du Clan" /></span>
-                                <span>Classe&nbsp;:<br/><strong>{{ personnage.classe.nom }}</strong></span>
-                                <span>Ecole&nbsp;:<br/><strong>{{ personnage.ecole.nom }}</strong></span>
-                                <span>Rang&nbsp;:<br/><strong class="display-4">{# <?= $rang; ?> #}</strong></span>
-                                <span>XP&nbsp;:<br/><strong class="display-4">{# <?= $total_xp; ?> #}</strong></span>
-                            </div>
+                                <strong>Clan :&nbsp;</strong>
+                                <img class="img-48" src="{{ asset(personnage.clan.mon) }}" alt="Mon du Clan du Personnage" />
+                                <strong><a href="{{ path('empire_clan', {id: personnage.clan.id} ) }}">{{ personnage.clan.nom }}</a></strong>
                         </li>
-                        <li class="list-group-item">Technique Rang 1 : <strong>{{ personnage.ecole.tech1Nom }}</strong><br/><small>{{ personnage.ecole.tech1Desc }}</small></li>
-                        <li class="list-group-item">Joueur: <strong>{{ personnage.joueur.pseudo }}</strong></li>
+                        <li class="list-group-item">
+                                <strong>École :&nbsp;</strong>
+                                <img class="img-48" src="{{ asset(personnage.classe.icone) }}" alt="Icône de la Classe du Personnage" />
+                                <strong><a href="{{ path('regles_ecole', {id: personnage.ecole.id} ) }}">{{ personnage.ecole.nom }}</a></strong>
+                        </li>
+                        <li class="list-group-item"><strong>XP :</strong> </li>
+                        <li class="list-group-item"><strong>Rang :</strong> </li>
+                        <li class="list-group-item"><strong>Joueur :</strong>
+                            {% if personnage.joueur is not empty %}
+                                {{ personnage.joueur.pseudo }}</li>
+                            {% else %}
+                                <small class="text-muted">Personnage Non-Joueur</small>
+                            {% endif %}
                     </ul>
                 </div>
                 <div class="col-12">

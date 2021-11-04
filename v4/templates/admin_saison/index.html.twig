@@ -26,7 +26,7 @@
                     <td class="p-2" colspan="5"></td>
                 </tr>
                 <tr class="bg-white">
-                    <td class="p-2 border text-center" rowspan="3">
+                    <td class="p-2 bg-light text-center" rowspan="3">
                         <img class="img-640" src="{{ asset(une_saison.image) }}" alt="Image d'une Saison" />
                     </td>
                     <td class="p-2 border text-center" colspan="3" rowspan="2"><strong>{{ une_saison.titre }}</strong></td>
@@ -40,9 +40,9 @@
                     </td>
                 </tr>
                 <tr class="bg-white">
-                    <td class="p-2 border text-center">N° :<br/><strong>{{ une_saison.numero }}</strong></td>
-                    <td class="p-2 border text-center">ID :<br/>{{ une_saison.id }}</td>
-                    <td class="p-2 border text-center">Couleur :<br/>{{ une_saison.couleur }}</td>
+                    <td class="p-2 border text-center"><small class="text-muted">N° :</small><br/><strong>{{ une_saison.numero }}</strong></td>
+                    <td class="p-2 border text-center"><small class="text-muted">ID :</small><br/>{{ une_saison.id }}</td>
+                    <td class="p-2 border text-center"><small class="text-muted">Couleur :</small><br/>{{ une_saison.couleur }}</td>
                     <td class="p-2 border text-center">
                         <a href="{{ path('admin_saison_delete', {'id': une_saison.id}) }}?csrf={{ csrf_token('delete' ~ une_saison.id) }}"
                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer la saison : {{ une_saison.titre }} ?');"><i class="fas fa-trash-alt"></i></a>
@@ -55,7 +55,7 @@
                     <td class="p-2" colspan="5"></td>
                 </tr>
                 <tr>
-                    <td colspan="5">Désolé ! Il n'y a pas encore de Saison !</td>
+                    <td colspan="5">Désolé ! Il n'y a pas encore de saison !</td>
                 </tr>
 
             {% endfor %}

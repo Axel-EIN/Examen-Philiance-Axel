@@ -42,7 +42,7 @@ class AdminClasseController extends AbstractController
             $nouvelleIcone = $form->get('icone')->getData();
 
             if (!empty($nouvelleIcone)) {
-                $nouvelleIconeNomFichier = $uploadeur->upload($nouvelleIcone, 'classe-' . strtolower($classe->getNom()) . '-icon', 'classes');
+                $nouvelleIconeNomFichier = $uploadeur->upload($nouvelleIcone, 'classe-' . $classe->getNom() . '-icon', 'classes');
                 $nouveauCheminRelatif = 'assets/img/classes/' . $nouvelleIconeNomFichier;
                 $classe->setIcone($nouveauCheminRelatif);
             } else { $classe->setIcone('assets/img/placeholders/na_class.png'); }

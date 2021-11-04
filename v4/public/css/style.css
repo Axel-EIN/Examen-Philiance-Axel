@@ -161,6 +161,12 @@ nav .active { font-weight: bold; }
         margin: 0;
         text-shadow: 4px 4px 2rem black; }
 
+.stylise-couleur {
+        font-family: "Shogun";
+}
+
+.plus-petit { font-size: 2rem; }
+
 .petit { font-size: 3rem; }
 
 .grand { font-size: 9rem; }
@@ -326,7 +332,7 @@ nav .active { font-weight: bold; }
         border-color: rgba(255, 255, 255, 0.2) !important;
         margin-bottom: 0;}
 
-/* -------------------------------  */
+/* -------------------------------- */
 /* FOOTERS                          */
 /* -------------------------------- */
 
@@ -355,11 +361,11 @@ nav .active { font-weight: bold; }
 /* PERSONNAGE                       */
 /* -------------------------------- */
 
-.badge {
+.badge-coin {
         position: absolute;
         top: -12px;
         left: -12px;
-        z-index: 1;
+        z-index: 100;
         width: 48px;
 }
 
@@ -375,8 +381,13 @@ nav .active { font-weight: bold; }
 /* BACK OFFICE                      */
 /* -------------------------------- */
 
-.coin-droit { position: absolute; right:24px; }
-.img-64 { min-width: 48px; max-width: 64px; }
+.coin-droit { position: absolute; right:24px; top:0px; }
+.img-24 { min-width: 12px; max-width: 24px; }
+.img-32 { min-width: 16px; max-width: 32px; }
+.img-36 { min-width: 18px; max-width: 36px; }
+.img-48 { min-width: 24px; max-width: 48px; }
+.img-64 { min-width: 32px; max-width: 64px; }
+.img-96 { min-width: 48px; max-width: 96px; }
 .img-128 { min-width: 64px; max-width: 128px; }
 .img-160 { min-width: 80px; max-width: 160px; }
 .img-240 { min-width: 120px; max-width: 240px; }
@@ -385,3 +396,4 @@ nav .active { font-weight: bold; }
 .img-480 { min-width: 240px; max-width: 480px; }
 .img-540 { min-width: 320px; max-width: 540px; }
 .img-640 { min-width: 320px; max-width: 640px; }
+.bg-image-bottom { background-position: bottom; }

@@ -45,7 +45,8 @@ class AdminPersonnageType extends AbstractType
             ->add('joueur', EntityType::class, [
                 'class' => Utilisateur::class,
                 'choice_label' => 'pseudo',
-                'choice_attr' => ['Admin' => ['disabled'=>'']]
+                'placeholder' => 'PNJ / Aucun Joueur-Défini',
+                'required' => false,
                 ])
         ;
     }

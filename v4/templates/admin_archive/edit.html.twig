@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Modifier une Archive {{ parent() }}{% endblock %}
+
+{% block h1 %}Modifier une Archive{% endblock %}
+
+{% block child %}
+    {{ include('admin_archive/_form.html.twig', {'button_label': 'Éditer'}) }}
+{% endblock %}

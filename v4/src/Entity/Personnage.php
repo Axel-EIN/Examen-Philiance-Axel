@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonnageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -72,6 +74,16 @@ class Personnage
      * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="personnages")
      */
     private $joueur;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Archive::class, mappedBy="auteur")
+     */
+    private $archives;
+
+    public function __construct()
+    {
+        $this->archives = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -206,6 +218,36 @@ class Personnage
     public function setJoueur(?Utilisateur $joueur): self
     {
         $this->joueur = $joueur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Archive[]
+     */
+    public function getArchives(): Collection
+    {
+        return $this->archives;
+    }
+
+    public function addArchive(Archive $archive): self
+    {
+        if (!$this->archives->contains($archive)) {
+            $this->archives[] = $archive;
+            $archive->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArchive(Archive $archive): self
+    {
+        if ($this->archives->removeElement($archive)) {
+            // set the owning side to null (unless already changed)
+            if ($archive->getAuteur() === $this) {
+                $archive->setAuteur(null);
+            }
+        }
 
         return $this;
     }

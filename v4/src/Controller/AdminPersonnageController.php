@@ -46,8 +46,8 @@ class AdminPersonnageController extends AbstractController
             // // Gestion de l'image d'icône portrait
             if (!empty($newIcon)) {
                 $newIconName = $uploadeur->upload($newIcon, 'personnage-'
-                                            . strtolower($personnage->getNom())
-                                            . '-' . strtolower($personnage->getPrenom())
+                                            . $personnage->getNom()
+                                            . '-' . $personnage->getPrenom()
                                             . '-icone', 'personnages');
                 $newIconePath = 'assets/img/personnages/' . $newIconName;
                 $personnage->setIcone($newIconePath);
@@ -57,8 +57,8 @@ class AdminPersonnageController extends AbstractController
             
             if (!empty($newIllu)) {
                 $newIlluName = $uploadeur->upload($newIllu, 'personnage-'
-                                            . strtolower($personnage->getNom())
-                                            . '-' . strtolower($personnage->getPrenom())
+                                            . $personnage->getNom()
+                                            . '-' . $personnage->getPrenom()
                                             . '-illustration', 'personnages');
                 $newIlluPath = 'assets/img/personnages/' . $newIlluName;
                 $personnage->setIllustration($newIlluPath);
@@ -98,8 +98,8 @@ class AdminPersonnageController extends AbstractController
                 $ancienIconeNomFichier = basename($personnage->getIcone());
 
                 $nouvelleIconeNomFichier = $uploadeur->upload($nouvelleIcone, 'personnage-'
-                                            . strtolower($personnage->getNom())
-                                            . '-' . strtolower($personnage->getPrenom())
+                                            . $personnage->getNom()
+                                            . '-' . $personnage->getPrenom()
                                             . '-icone', 'personnages');
                 $nouveauChemingRelatif = 'assets/img/personnages/' . $nouvelleIconeNomFichier;
                 $personnage->setIcone($nouveauChemingRelatif);
@@ -115,8 +115,8 @@ class AdminPersonnageController extends AbstractController
                 $ancienIllustrationNomFichier = basename($personnage->getIllustration());
 
                 $nouvelleIllustrationNomFichier = $uploadeur->upload($nouvelleIllustration, 'personnage-'
-                                                    . strtolower($personnage->getNom())
-                                                    . '-' . strtolower($personnage->getPrenom())
+                                                    . $personnage->getNom()
+                                                    . '-' . $personnage->getPrenom()
                                                     . '-illustration', 'personnages');
                 $nouveauChemingRelatif = 'assets/img/personnages/' . $nouvelleIllustrationNomFichier;
                 $personnage->setIllustration($nouveauChemingRelatif);

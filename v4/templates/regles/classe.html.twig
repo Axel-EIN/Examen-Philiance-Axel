@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Description d'une Classe {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <main class="container-fluid bg-light">
+        <div class="container">
+
+            <nav class="pt-3">
+                <span class="text-muted">
+                    <a href="{{ path('aventure') }}">
+                        <i class="fas fa-home"></i></a>
+                        > <a href="{{ path('regles') }}"><strong>Règles</strong></a>
+                        > <a href="{{ path('regles', {'_fragment': 'classes'} ) }}"><strong>Classes</strong></a>
+                        > <strong>{{ classe.nom }}</strong>
+                </span>
+            </nav>
+
+
+            <h1 class="pt-5">La Classe <strong>{{ classe.nom }}</strong></h1>
+            <hr>
+
+            <div class="row">
+
+                <div class="col-4 text-center">
+                    <img class="img-fluid" src="{{ asset(classe.icone) }}" alt="Icône de la Classe" />
+                </div>
+
+                <div class="col-8">
+                    <div class="card card-body h-100">
+                        <p class="card-text"><strong>Description :</strong></p>
+                        <p class="card-text">{{ classe.description }}</p>
+                    </div>
+                </div>
+
+                {# LES ECOLES DE BUSHI #}
+                <section class="col-6 my-3">
+                    <div class="card card-body h-100">
+                        <h2 class="card-title py-3">Ecoles de <strong>{{ classe.nom }}</strong> :</h2>
+                        <div class="card-text ml-3">
+                            {% for une_ecole in classe.ecoles %}
+                                <div class="ml-1 mb-2 row align-items-center">
+                                    <a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}">
+                                        <img class="img-128" src="{{ asset(une_ecole.image) }}" alt="Image d'une école" />
+                                    </a>
+                                    <div class="ml-3">
+                                        Nom : <strong><a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}" >{{ une_ecole.nom }}</a></strong><br/>
+                                        Clan : <img class="img-48" src="{{ asset(une_ecole.clan.mon) }}" alt="Mon d'un clan" />
+                                    </div>
+                                </div>
+                            {% else %}
+                                <span class="text-muted">Désolé ! Il n'y a pas encore d'école disponible pour cette classe !</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="col-6 my-3">
+                    <div class="card card-body h-100">
+                        <h2 class="card-title py-3">Personnages <strong>{{ classe.nom }}</strong> :</h2>
+                        <div class="card-text ml-3 row">
+                            {% for un_personnage in classe.personnages %}
+                                <div class="p-1">
+                                    <a href="{{ path('personnage_profil', {id: un_personnage.id} ) }}">
+                                        <img class="img-128" src="{{ asset(un_personnage.icone) }}" alt="Icône du personnage" />
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span class="text-muted">Désolé ! Il n'y a pas encore de personnages disponible pour cette classe !</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </main>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}

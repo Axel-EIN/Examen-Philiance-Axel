@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lieu {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <main class="container-fluid bg-light">
+        <section class="container">
+
+            <nav class="pt-3">
+                <span class="text-muted">
+                    <a href="{{ path('aventure') }}"><i class="fas fa-home"></i></a>
+                    > <a href="{{ path('empire') }}"><strong>Empire</strong></a>
+                    > <a href="{{ path('empire', {'_fragment': 'lieux'} ) }}"><strong>Lieux</strong></a>
+                    > <strong>{{ lieu.nom }}</strong>
+                </span>
+            </nav>
+
+            <h1 class="pt-5">Lieu <strong>{{ lieu.nom }}</strong></h1>
+            <hr>
+
+            <article class="row">
+
+                <div class="col-12 text-center">
+                    <img class="img-fluid" src="{{ asset(lieu.image) }}" alt="Image du Lieu" />
+                </div>
+                
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">{{ lieu.description }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Clan&nbsp;:</strong>
+                                    {% if lieu.clan is not empty %}
+                                        <strong>{{ lieu.clan.nom }}</strong>
+                                    {% else %}
+                                        n/a
+                                    {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-12 my-5">
+                    <h2>Localisation</h2>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            Zoom :
+                            <img class="img-fluid" src="{{ asset(lieu.carte) }}" alt="Carte du Lieu" />
+                        </div>
+                        <div class="col-6">
+                            Coordonnées Rokugan : <strong>{{ lieu.coordinates }}</strong>
+                            <img class="img-fluid" src="{{ asset('assets/img/placeholders/1280x720.png') }}" alt="Localisation sur Rokugan du Lieu" />
+                        </div>
+                    </div>
+                </div>
+
+
+            </article>
+
+        </section>
+    </main>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}

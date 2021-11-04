@@ -19,6 +19,14 @@
                         or app.request.get('_route') == 'admin_clan_create'
                         or app.request.get('_route') == 'admin_clan_edit' %}active{% endif %}" href="{{ path('admin_clan') }}">Clans</a>
 
+    <a class="nav-link {% if app.request.get('_route') == 'admin_archive'
+                        or app.request.get('_route') == 'admin_archive_create'
+                        or app.request.get('_route') == 'admin_archive_edit' %}active{% endif %}" href="{{ path('admin_archive') }}">Archives</a>
+
+    <a class="nav-link {% if app.request.get('_route') == 'admin_lieu'
+                        or app.request.get('_route') == 'admin_lieu_create'
+                        or app.request.get('_route') == 'admin_lieu_edit' %}active{% endif %}" href="{{ path('admin_lieu') }}">Lieux</a>
+
     <a class="nav-link {% if app.request.get('_route') == 'admin_classe'
                         or app.request.get('_route') == 'admin_classe_create'
                         or app.request.get('_route') == 'admin_classe_edit' %}active{% endif %}" href="{{ path('admin_classe') }}">Classes</a>

@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AdminClasseType extends AbstractType
@@ -15,7 +16,14 @@ class AdminClasseType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class)
-            ->add('icone', FileType::class, array('mapped' => false, 'data_class' => null, 'required' => false))
+            ->add('icone', FileType::class,
+                [
+                    'mapped' => false,
+                    'data_class' => null,
+                    'required' => false
+                ]
+            )
+            ->add('description', TextareaType::class)
         ;
     }
 

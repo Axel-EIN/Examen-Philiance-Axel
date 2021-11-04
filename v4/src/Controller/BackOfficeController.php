@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Repository\ArchiveRepository;
 use App\Repository\ChapitreRepository;
 use App\Repository\ClanRepository;
 use App\Repository\ClasseRepository;
 use App\Repository\EcoleRepository;
 use App\Repository\EpisodeRepository;
+use App\Repository\LieuRepository;
 use App\Repository\PersonnageRepository;
 use App\Repository\SaisonRepository;
 use App\Repository\SceneRepository;
@@ -22,11 +24,17 @@ class BackOfficeController extends AbstractController
      * @Route("/back-office", name="back_office")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function afficherBackOffice(SaisonRepository $saisonRepository, ChapitreRepository $chapitreRepository,
-                                       EpisodeRepository $episodeRepository, SceneRepository $sceneRepository,
-                                       UtilisateurRepository $utilisateurRepository, ClanRepository $clanRepository,
-                                       ClasseRepository $classeRepository, EcoleRepository $ecoleRepository,
-                                       PersonnageRepository $personnageRepository): Response
+    public function afficherBackOffice(SaisonRepository $saisonRepository,
+                                       ChapitreRepository $chapitreRepository,
+                                       EpisodeRepository $episodeRepository,
+                                       SceneRepository $sceneRepository,
+                                       UtilisateurRepository $utilisateurRepository,
+                                       ClanRepository $clanRepository,
+                                       ClasseRepository $classeRepository,
+                                       EcoleRepository $ecoleRepository,
+                                       PersonnageRepository $personnageRepository,
+                                       ArchiveRepository $archiveRepository,
+                                       LieuRepository $lieuRepository): Response
     {
 
         $nbrSaisons = $saisonRepository->countSaisons();
@@ -41,8 +49,14 @@ class BackOfficeController extends AbstractController
         $nbrScenes = $sceneRepository->countScenes();
         $dernierScene = $sceneRepository->findOneBy(array(),array('id' => 'DESC'));
 
+        $nbrArchives = $archiveRepository->countArchives();
+        $derniereArchive = $archiveRepository->findOneBy(array(),array('id' => 'DESC'));
+
         $nbrClans = $clanRepository->countClans();
         $dernierClan = $clanRepository->findOneBy(array(),array('id' => 'DESC'));
+
+        $nbrLieux = $lieuRepository->countLieux();
+        $dernierLieu = $lieuRepository->findOneBy(array(),array('id' => 'DESC'));
 
         $nbrClasses = $classeRepository->countClasses();
         $dernierClasse = $classeRepository->findOneBy(array(),array('id' => 'DESC'));
@@ -70,8 +84,12 @@ class BackOfficeController extends AbstractController
             'nbrScenes' => $nbrScenes,
             'dernierScene' => $dernierScene,
             'nbrClans' => $nbrClans,
+            'nbrArchives' => $nbrArchives,
+            'derniereArchive' => $derniereArchive,
             'dernierClan' => $dernierClan,
             'nbrClasses' => $nbrClasses,
+            'dernierLieu' => $dernierLieu,
+            'nbrLieux' => $nbrLieux,
             'dernierClasse' => $dernierClasse,
             'nbrEcoles' => $nbrEcoles,
             'dernierEcole' => $dernierEcole,

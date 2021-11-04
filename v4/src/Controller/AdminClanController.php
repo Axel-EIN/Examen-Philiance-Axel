@@ -20,6 +20,9 @@ class AdminClanController extends AbstractController
      * @Route("/admin/clan", name="admin_clan")
      */
     public function afficherAdminClans(ClanRepository $clanRepository): Response {
+
+
+
         $clans = $clanRepository->findBy(array(), array('est_majeur' => 'DESC'));
         return $this->render('admin_clan/index.html.twig', [
             'controller_name' => 'AdminClanController',
@@ -33,6 +36,14 @@ class AdminClanController extends AbstractController
      */
     public function ajouterClan(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
+        // // Première manière de faire : DENYACCESS redirige vers page erreur 500 automatiquement
+        // $this->denyAccessUnlessGranted('ROLE_ADMIN'); // Test si Admin sinon affiche 500
+        // $this->denyAccessUnlessGranted('ROLE_JOUEUR'); // Puis test si Joueur sinon affiche 500
+
+        // // Deuxième manière de faire : ISGRANTED renvoi true, false donc on peut faire de la logique comme on veut
+        // if( !$this->isGranted('ROLE_ADMIN') || !$this->isGranted('ROLE_JOUEUR') ) // Ici on test si l'un ou l'autre renvoi faux on redirige vers une autre page de notre choix
+        //     return $this->redirectToRoute('admin_clan');
+
         $clan = new Clan;
         $form = $this->createForm(AdminClanType::class, $clan);
         $form->handleRequest($request);
@@ -42,7 +53,7 @@ class AdminClanController extends AbstractController
             $nouveauMon = $form->get('mon')->getData();
 
             if (!empty($nouveauMon)) {
-                $nouveauMonNomFichier = $uploadeur->upload($nouveauMon, 'clan-' . strtolower($clan->getNom()) . '-mon', 'clans');
+                $nouveauMonNomFichier = $uploadeur->upload($nouveauMon, 'clan-' . $clan->getNom() . '-mon', 'clans');
                 $nouveauCheminRelatif = 'assets/img/clans/' . $nouveauMonNomFichier;
                 $clan->setMon($nouveauCheminRelatif);
             } else { $clan->setMon('assets/img/placeholders/na_mon.png'); }
@@ -58,7 +69,7 @@ class AdminClanController extends AbstractController
                 'type' => 'Créer',
                 'form' => $form->createView()
             ]);
-        }
+        } 
     }
 
     /**

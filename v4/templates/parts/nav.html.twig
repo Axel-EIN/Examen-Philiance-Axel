@@ -21,10 +21,25 @@
                 <div class="d-flex justify-content-between align-items-center w-100">
 
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link lien-gris {% if app.request.get('_route') == 'aventure_saison' or app.request.get('_route') == 'aventure_episode' %}active{% endif %}" href="{{ path('aventure') }}">AVENTURE</a></li>
-                        <li class="nav-item"><a class="nav-link lien-gris {% if app.request.get('_route') == 'personnages' %}active{% endif %}" href="{{ path('personnages') }}">PERSONNAGES</a></li>
-                        <li class="nav-item"><a class="nav-link lien-gris {% if app.request.get('_route') == 'empire' %}active{% endif %}" href="{{ path('empire')}}">EMPIRE</a></li>
-                        <li class="nav-item"><a class="nav-link lien-gris {% if app.request.get('_route') == 'regles' %}active{% endif %}" href="">REGLES</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link lien-gris {% if app.request.get('_route') == 'aventure_saison'
+                                                            or app.request.get('_route') == 'aventure_episode' %} active{% endif %}"
+                               href="{{ path('aventure') }}">AVENTURE</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link lien-gris {% if app.request.get('_route') == 'personnages'
+                                                            or app.request.get('_route') == 'personnage_profil' %}active{% endif %}"
+                               href="{{ path('personnages') }}">PERSONNAGES</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link lien-gris {% if app.request.get('_route') == 'empire'
+                                                            or app.request.get('_route') == 'empire_clan'
+                                                            or app.request.get('_route') == 'empire_lieu'
+                                                            or app.request.get('_route') == 'empire_archive' %}active{% endif %}"
+                               href="{{ path('empire')}}">EMPIRE</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link lien-gris {% if app.request.get('_route') == 'regles'
+                                                            or app.request.get('_route') == 'regles_classe'
+                                                            or app.request.get('_route') == 'regles_ecole' %}active{% endif %}"
+                               href="{{ path('regles')}}">REGLES</a></li>
                     </ul>
                     {% if app.user %}
                         <div class="connecte">

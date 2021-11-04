@@ -1,0 +1,73 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Administrer les Lieux {{ parent() }}{% endblock %}
+
+{% block h1 %}Administrer les Lieux{% endblock %}
+
+{% block child %}
+
+    <section id="lieux">
+
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_lieu_create') }}" class="btn btn-primary">
+                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Ajouter un nouveau lieu
+            </a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2 text-center">Image / Carte</th>
+                <th class="p-2 text-center">ID</th>
+                <th class="p-2 text-center">Nom</th>
+                <th class="p-2 text-center">Clan</th>
+                <th class="p-2 text-center">Coordonnées</th>
+                <th class="p-2 text-center"></th>
+                <th class="p-2 text-center"></th>
+                <th class="p-2 text-center"></th>
+            </tr>
+
+            {% for un_lieu in lieux %}
+
+                <tr><td class="p-2" colspan="8"></td></tr>
+                <tr><td class="p-2" colspan="8"></td></tr>
+                <tr><td class="p-2" colspan="8"></td></tr>
+
+                <tr class="bg-white">
+
+                    <td class="p-2 bg-light text-center"><img class="img-320" src="{{ asset(un_lieu.image) }}" alt="Image du Lieu" /></td>
+                    <td class="p-2 border text-center">{{ un_lieu.id }}</td>
+                    <td class="p-2 border text-center"><strong>{{ un_lieu.nom }}</strong></td>
+                    <td class="p-2 border text-center">
+                        {% if un_lieu.clan is not empty %}
+                            {{ un_lieu.clan.nom }}
+                        {% else %}
+                            <small class="text-muted">n/a</small>
+                        {% endif %}
+                    </td>
+                    <td class="p-2 border text-center">{{ un_lieu.coordinates }}</td>
+                    <td class="p-2 border text-center"><a href="{{ path('empire_lieu', { id: un_lieu.id }) }}"><i class="fas fa-eye"></i></a></td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_lieu_edit', {id: un_lieu.id} ) }}"><i class="fas fa-edit"></i></a></td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_lieu_delete', {'id': un_lieu.id}) }}?csrf={{ csrf_token('delete' ~ un_lieu.id) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce lieu : {{ un_lieu.nom }} ?');"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td class="p-2 text-center"><img class="img-320" src="{{ asset(un_lieu.carte) }}" alt="Carte du Lieu" /></td>
+                    <td class="p-2 border bg-white" colspan="7"><small class="text-muted">Description :</small><br/><small>{{ un_lieu.description }}</small></td>
+                </tr>
+
+            {% else %}
+
+                <tr><td class="p-2" colspan="8"></td></tr>
+
+                <tr><td class="text-center" colspan="8">Désolé ! Il n'y a pas encore de lieu !</td></tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
+{% endblock %}

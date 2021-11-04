@@ -25,7 +25,7 @@
                     <td class="p-2" colspan="6"></td>
                 </tr>
                 <tr class="bg-white">
-                    <td class="p-2 border text-center" rowspan="3">
+                    <td class="p-2 bg-light text-center" rowspan="3">
                         <img class="img-480" src="{{ asset(un_episode.image) }}" alt="Image d'un Épisode" />
                     </td>
                     <td class="p-2 border text-center" colspan="4"><strong>{{ un_episode.titre }}</strong></td>
@@ -40,10 +40,10 @@
                     </td>
                 </tr>
                 <tr class="bg-white">
-                    <td class="p-2 border text-center">N° :<br/><strong>{{ un_episode.numero }}</strong></td>
-                    <td class="p-2 border text-center">ID :<br/>{{ un_episode.id }}</td>
-                    <td class="p-2 border text-center">Chapitre Parent :<br/><strong>{{ un_episode.chapitreParent.titre }}</strong></td>
-                    <td class="p-2 border text-center">Saison Parent :<br/><strong>{{ un_episode.chapitreParent.saisonParent.numero }}</strong></td>
+                    <td class="p-2 border text-center"><small class="text-muted">N° :</small><br/><strong>{{ un_episode.numero }}</strong></td>
+                    <td class="p-2 border text-center"><small class="text-muted">ID :</small><br/>{{ un_episode.id }}</td>
+                    <td class="p-2 border text-center"><small class="text-muted">Chapitre Parent :</small><br/><strong>{{ un_episode.chapitreParent.titre }}</strong></td>
+                    <td class="p-2 border text-center"><small class="text-muted">Saison Parent :</small><br/><strong>{{ un_episode.chapitreParent.saisonParent.numero }}</strong></td>
                     <td class="p-2 border text-center">
                         <a href="{{ path('admin_episode_delete', {'id': un_episode.id}) }}?csrf={{ csrf_token('delete' ~ un_episode.id) }}"
                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette épisode : {{ un_episode.titre }} ?');"><i class="fas fa-trash-alt"></i></a>

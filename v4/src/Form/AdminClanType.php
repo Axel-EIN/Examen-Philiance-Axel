@@ -27,7 +27,9 @@ class AdminClanType extends AbstractType
             ->add('mon', FileType::class, array('mapped' => false, 'data_class' => null, 'required' => false))
             ->add('chef', EntityType::class, [
                 'class' => Personnage::class,
-                'choice_label' => 'prenom'
+                'choice_label' => 'prenom',
+                'placeholder' => 'Non défini',
+                'required' => false
             ])
         ;
 

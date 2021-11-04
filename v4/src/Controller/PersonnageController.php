@@ -14,8 +14,8 @@ class PersonnageController extends AbstractController
      * @Route("/personnages", name="personnages")
      */
     public function afficherPersonnages(PersonnageRepository $personnageRepository): Response {
-        $pjs = $personnageRepository->findBy(array("est_pj" => "1"),array('est_pj' => 'ASC'));
-        $pnjs = $personnageRepository->findBy(array("est_pj" => "0"),array('est_pj' => 'ASC'));
+        $pjs = $personnageRepository->findBy(array("est_pj" => "1"),array('clan' => 'ASC'));
+        $pnjs = $personnageRepository->findBy(array("est_pj" => "0"),array('clan' => 'ASC'));
 
         return $this->render('personnage/index.html.twig', [
             'pjs' => $pjs,
@@ -24,7 +24,7 @@ class PersonnageController extends AbstractController
     }
 
     /**
-     * @Route("/personnages/profil/{id}", name="personnages_profil")
+     * @Route("/personnages/profil/{id}", name="personnage_profil")
      */
     public function afficherPersonnageProfil(Personnage $personnage): Response {
         return $this->render('personnage/profil.html.twig', [
