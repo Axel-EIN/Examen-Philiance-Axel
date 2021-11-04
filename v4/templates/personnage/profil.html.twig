@@ -6,6 +6,21 @@
 
     <main class="container-fluid bg-light">
         <section class="container">
+
+            <nav class="pt-3">
+                <span class="text-muted">
+                    <a href="{{ path('aventure') }}">
+                        <i class="fas fa-home"></i></a>
+                        > <a href="{{ path('personnages') }}"><strong>Personnages</strong></a>
+                        {% if personnage.estPj == 1 %}
+                            > <a href="{{ path('personnages', {'_fragment': 'pjs'} ) }}"><strong>PJs</strong></a>
+                        {% else %}
+                            > <a href="{{ path('personnages', {'_fragment': 'pnjs'} ) }}"><strong>PNJs</strong></a>
+                        {% endif %}
+                        > <strong>{{ personnage.nom }} {{ personnage.prenom }}</strong>
+                </span>
+            </nav>
+
             <h1 class="pt-3 mb-3">
                 {{ personnage.nom }} <strong>{{ personnage.prenom }}</strong>
                 {# <?php if(utilisateur_connecte() && $_SESSION['id'] == $personnage_trouve->utilisateur_id): ?>
