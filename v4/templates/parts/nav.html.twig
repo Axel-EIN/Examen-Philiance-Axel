@@ -42,11 +42,20 @@
                                href="{{ path('regles')}}">REGLES</a></li>
                     </ul>
                     {% if app.user %}
+                    <div class="row align-items-center">
                         <div class="connecte">
                             <strong>{{ app.user.pseudo }}</strong><br/>
                             <a class="lien-gris" href=""><i class="fas fa-torii-gate couleur-primaire"></i>&nbsp;&nbsp;MON COMPTE</a><br/>
                             <small><a class="lien-gris" href="{{ path('app_logout') }}">Se Déconnecter</a></small>
                         </div>
+                        <div class="ml-3 bg-secondary rounded border border-secondary">
+                            {% if app.user.avatar is not empty %}
+                                <img class="img-96 rounded" src="{{ asset(app.user.avatar) }}" alt="Avatar de l'utilisateur" title="Avatar de l'utilisateur" />
+                            {% else %}
+                                <img class="img-96 rounded" src="https://i.pravatar.cc/300" alt="Avatar de l'utilisateur" title="Avatar de l'utilisateur" />
+                            {% endif %}
+                        </div>
+                    </div>
                     {% else %}
                         <div>
                             {# <a href="{{ path('app_login') }}" class="btn btn-primary nav-item" >Se Connecter</a> #}
