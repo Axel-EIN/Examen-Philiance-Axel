@@ -361,6 +361,11 @@ nav .active { font-weight: bold; }
 /* PERSONNAGE                       */
 /* -------------------------------- */
 
+#personnages {
+        background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('../assets/img/rubriques/personnages.jpg');
+        background-position: center;
+}
+
 .badge-coin {
         position: absolute;
         top: -12px;
