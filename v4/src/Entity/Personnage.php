@@ -80,6 +80,11 @@ class Personnage
      */
     private $archives;
 
+    /**
+     * @ORM\OneToOne(targetEntity=FichePersonnage::class, mappedBy="personnage", cascade={"persist", "remove"})
+     */
+    private $fichePersonnage;
+
     public function __construct()
     {
         $this->archives = new ArrayCollection();
@@ -248,6 +253,23 @@ class Personnage
                 $archive->setAuteur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFichePersonnage(): ?FichePersonnage
+    {
+        return $this->fichePersonnage;
+    }
+
+    public function setFichePersonnage(FichePersonnage $fichePersonnage): self
+    {
+        // set the owning side of the relation if necessary
+        if ($fichePersonnage->getPersonnage() !== $this) {
+            $fichePersonnage->setPersonnage($this);
+        }
+
+        $this->fichePersonnage = $fichePersonnage;
 
         return $this;
     }

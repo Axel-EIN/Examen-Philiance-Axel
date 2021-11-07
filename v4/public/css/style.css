@@ -87,6 +87,9 @@ nav .active { font-weight: bold; }
 .ombre-txt { text-shadow: 4px 4px 2rem black; }
 
 .ombre-img { box-shadow: 2px 2px 4px black; }
+
+.rounded-16 { border-radius: 1rem; }
+.rounded-8 { border-radius: 0.5rem; }
                      
 
 /* -------------------------------  */

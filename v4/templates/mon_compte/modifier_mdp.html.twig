@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre mot de passe {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid bg-light">
+        <main class="container">
+            <h1 class="pt-5">Modifier votre mot de passe</h1>
+            <hr/>
+            <div class="offset-2 col-8">
+                {{ form(form) }}
+            </div>
+        </main>
+    </div>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}

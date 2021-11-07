@@ -45,14 +45,16 @@
                     <div class="row align-items-center">
                         <div class="connecte">
                             <strong>{{ app.user.pseudo }}</strong><br/>
-                            <a class="lien-gris" href=""><i class="fas fa-torii-gate couleur-primaire"></i>&nbsp;&nbsp;MON COMPTE</a><br/>
+                            <a class="lien-gris {% if app.request.get('_route') == 'mon_compte'
+                                                            or app.request.get('_route') == 'mon_compte_mdp' %}active{% endif %}"
+                               href="{{ path('mon_compte') }}"><i class="fas fa-torii-gate couleur-primaire"></i>&nbsp;&nbsp;MON COMPTE</a><br/>
                             <small><a class="lien-gris" href="{{ path('app_logout') }}">Se Déconnecter</a></small>
                         </div>
-                        <div class="ml-3 bg-secondary rounded border border-secondary">
+                        <div class="ml-3 bg-secondary rounded-8 border border-secondary">
                             {% if app.user.avatar is not empty %}
-                                <img class="img-96 rounded" src="{{ asset(app.user.avatar) }}" alt="Avatar de l'utilisateur" title="Avatar de l'utilisateur" />
+                                <img class="img-96 rounded-8" src="{{ asset(app.user.avatar) }}" alt="Avatar de l'utilisateur" title="Avatar de l'utilisateur" />
                             {% else %}
-                                <img class="img-96 rounded" src="https://i.pravatar.cc/300" alt="Avatar de l'utilisateur" title="Avatar de l'utilisateur" />
+                                <img class="img-96 rounded-8" src="https://i.pravatar.cc/300" alt="Avatar de l'utilisateur" title="Avatar de l'utilisateur" />
                             {% endif %}
                         </div>
                     </div>

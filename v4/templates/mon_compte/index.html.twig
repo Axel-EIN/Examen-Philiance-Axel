@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid bg-light">
+        <main class="container">
+            <h1 class="pt-5">Bienvenue sur votre espace de compte, <strong>{{app.user.pseudo}}</strong></h1>
+            <hr/>
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <div class="row mx-3">
+                <section id="info_perso" class="col-6">
+                    <h2 class="mb-4">Informations Personnelles</h2>
+
+                    <div class="ml-3">
+                        Votre Pseudo :<br/>
+                        <div class="ml-3">
+                            <strong>{{app.user.pseudo}}</strong>
+                            {# &nbsp;&nbsp;<a href="#"><i class="fas fa-edit"></i> Modifier</a> #}
+                        </div><br/>
+
+                        Votre E-mail :<br/>
+                        <div class="ml-3">
+                            <strong>{{app.user.email}}</strong>
+                            {# &nbsp;&nbsp;<a href="#"><i class="fas fa-edit"></i> Modifier</a> #}
+                        </div><br/>
+
+                        Votre Mot de passe :<br/>
+                        <div class="ml-3">
+                            <strong>******</strong>
+                            &nbsp;&nbsp;<a href="{{ path('mon_compte_mdp') }}"><i class="fas fa-edit"></i> Modifier</a>
+                        </div><br/>
+
+                        Votre statut de compte :<br/>
+                        <div class="ml-3">
+                            {% if app.user.isVerified == 1 %}
+                                <strong class="ml-3">Vérifié</strong>
+                            {% else %}
+                                <strong class="ml-3">Non-vérifié</strong>
+                            {% endif %}
+                        </div><br/>
+
+                        Vos rôles :<br/>
+                        <div class="ml-3">
+                            {% for un_role in app.user.roles %}
+                                <strong class="ml-3">{{un_role}}</strong>,
+                            {% else %}
+                                Il n'y a pas de rôle
+                            {% endfor %}  
+                        </div><br/>
+                    </div>
+                </section>
+
+                <section id="mes_persos" class="col-6">
+                    <h2 class="mb-4">Mes Personnages ( {{ app.user.personnages|length }} )</h2>
+
+                    <div class="row ml-3">
+                        {% for un_personnage in app.user.personnages %}
+                            <article class="col-6 mb-3">
+                                <div class="card text-center">
+                                    <a href="{{ path('personnage_profil', {id: un_personnage.id} ) }}">
+                                        <img class="card-img-top survol" src="{{un_personnage.icone}}" alt="Image du personnage">
+                                    </a>
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{un_personnage.nom}} <strong>{{un_personnage.prenom}}</strong></h4>
+                                        <p class="card-text text-center">
+                                            <a href="">
+                                                <i class="fas fa-user-secret"></i>&nbsp;&nbsp;Fiche Privée
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        {% else %}
+                            Désolé ! Il n'y a pas encore de personnages !
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}
