@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre avatar {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid bg-light">
+        <main class="container">
+            <h1 class="pt-5">Modifier votre avatar</h1>
+            <hr/>
+            <div class="offset-2 col-8">
+                {% if app.user.avatar %}
+                    <img src="{{ asset(app.user.avatar) }}" alt="Avatar de l'utilisateur" class="img-fluid" />
+                {% else %}
+                    <p class="text-center text-muted"><small>Pas d'avatar paramétré</small></p>
+                {% endif %}
+                {{ form(form) }}
+            </div>
+        </main>
+    </div>
+
+{{ include('/parts/modal.html.twig') }}
+
+{% endblock %}

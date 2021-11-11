@@ -67,6 +67,16 @@
                                 Il n'y a pas de rôle
                             {% endfor %}  
                         </div><br/>
+
+                        Votre avatar :<br/>
+                        <div class="ml-3">
+                            {% if app.user.avatar %}
+                                <img class="img-128" src="{{ asset(app.user.avatar) }}" alt="Avatar de l'utilisateur" />
+                            {% else %}
+                                <img class="img-128" src="https://i.pravatar.cc/300" alt="Avatar de l'utilisateur" />
+                            {% endif %}
+                            &nbsp;&nbsp;<a href="{{ path('mon_compte_avatar') }}"><i class="fas fa-edit"></i>&nbsp;Modifier</a>
+                        </div><br/>
                     </div>
                 </section>
 
@@ -83,7 +93,7 @@
                                     <div class="card-body">
                                         <h4 class="card-title">{{un_personnage.nom}} <strong>{{un_personnage.prenom}}</strong></h4>
                                         <p class="card-text text-center">
-                                            <a href="">
+                                            <a href="{{ path('mon_compte_fiche', {id: un_personnage.fichePersonnage.id}) }}">
                                                 <i class="fas fa-user-secret"></i>&nbsp;&nbsp;Fiche Privée
                                             </a>
                                         </p>

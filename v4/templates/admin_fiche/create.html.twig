@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Ajouter une Fiche Personnage {{ parent() }}{% endblock %}
+
+{% block h1 %}Ajouter une Fiche Personnage{% endblock %}
+
+{% block child %}
+    {{ include('admin_fiche/_form.html.twig', {'button_label': 'Créer'}) }}
+{% endblock %}

@@ -110,7 +110,8 @@ class AdminUtilisateurController extends AbstractController
 
                 $ancienneAvatarCheminComplet = $this->getParameter('image_directory') . '/avatars/' . $ancienAvatarNomFichier;
                 $filesystem = new Filesystem();
-                $filesystem->remove($ancienneAvatarCheminComplet);
+                if ($ancienneAvatarCheminComplet != $this->getParameter('image_directory') . '/avatars/')
+                    $filesystem->remove($ancienneAvatarCheminComplet);
 
             }
 

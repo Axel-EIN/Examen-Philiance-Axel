@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\FichePersonnage;
 use App\Repository\ArchiveRepository;
 use App\Repository\ChapitreRepository;
 use App\Repository\ClanRepository;
 use App\Repository\ClasseRepository;
 use App\Repository\EcoleRepository;
 use App\Repository\EpisodeRepository;
+use App\Repository\FichePersonnageRepository;
 use App\Repository\LieuRepository;
 use App\Repository\PersonnageRepository;
 use App\Repository\SaisonRepository;
@@ -34,7 +36,9 @@ class BackOfficeController extends AbstractController
                                        EcoleRepository $ecoleRepository,
                                        PersonnageRepository $personnageRepository,
                                        ArchiveRepository $archiveRepository,
-                                       LieuRepository $lieuRepository): Response
+                                       LieuRepository $lieuRepository,
+                                       FichePersonnageRepository $fichePersonnageRepository
+                                       ): Response
     {
 
         $nbrSaisons = $saisonRepository->countSaisons();
@@ -73,6 +77,9 @@ class BackOfficeController extends AbstractController
         $nbrUtilisateurs = $utilisateurRepository->countUtilisateurs();
         $dernierUtilisateur = $utilisateurRepository->findOneBy(array(),array('id' => 'DESC'));
 
+        $nbrFiches = $fichePersonnageRepository->countFiches();
+        $derniereFiche = $fichePersonnageRepository->findOneBy(array(),array('id' => 'DESC'));
+
         return $this->render('back_office/index.html.twig', [
             'controller_name' => 'BackOfficeController',
             'nbrSaisons' => $nbrSaisons,
@@ -99,6 +106,8 @@ class BackOfficeController extends AbstractController
             'dernierPNJ' => $dernierPNJ,
             'nbrUtilisateurs' => $nbrUtilisateurs,
             'dernierUtilisateur' => $dernierUtilisateur,
+            'nbrFiches' => $nbrFiches,
+            'derniereFiche' => $derniereFiche,
         ]);
     }
 }

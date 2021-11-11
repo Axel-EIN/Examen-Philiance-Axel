@@ -1,0 +1,70 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Administrer les Fiches de Personnages {{ parent() }}{% endblock %}
+
+{% block h1 %}Administrer les Fiches de Personnages{% endblock %}
+
+{% block child %}
+
+    <section id="fiches_personnages">
+
+        <div class="ml-auto text-right my-3">
+            <a href="{{ path('admin_fiche_create') }}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Ajouter une nouvelle fiche personnage</a>
+        </div>
+
+        <table class="w-100">
+
+            <tr class="bg-dark text-light">
+                <th class="p-2 text-center">Personnage</th>
+                <th class="p-2 text-center">XP de création</th>
+                <th class="p-2 text-center">Constitution / VOlonté</th>
+                <th class="p-2 text-center">Reflexes / Intuition</th>
+                <th class="p-2 text-center">Agilité / Intélligence</th>
+                <th class="p-2 text-center">Force / Perception</th>
+                <th class="p-2 text-center">Vide</th>
+                <th class="p-2 text-center"></th>
+            </tr>
+
+            {% for une_fiche in fiches %}
+
+                <tr><td class="p-2" colspan="16"></td></tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 text-center" rowspan="3">{{ une_fiche.personnage.nom }} <strong>{{ une_fiche.personnage.prenom }}</strong></td>
+                    <td class="p-2 border text-center" rowspan="2"><strong>{{ une_fiche.creationExp }}</strong></td>
+                    <td class="p-2 border text-center">{{ une_fiche.constitution }}</td>
+                    <td class="p-2 border text-center">{{ une_fiche.reflexes }}</td>
+                    <td class="p-2 border text-center">{{ une_fiche.agilite }}</td>
+                    <td class="p-2 border text-center">{{ une_fiche.forceStat }}</td>
+                    <td class="p-2 border text-center" rowspan="2">{{ une_fiche.vide }}</td>
+                    <td class="p-2 border text-center"><a href="{{ path('mon_compte_fiche', { id: une_fiche.id }) }}"><i class="fas fa-eye"></i></a></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center">{{ une_fiche.volonte }}</td>
+                    <td class="p-2 border text-center">{{ une_fiche.intuition }}</td>
+                    <td class="p-2 border text-center">{{ une_fiche.intelligence }}</td>
+                    <td class="p-2 border text-center">{{ une_fiche.perception }}</td>
+                    <td class="p-2 border text-center"><a href="{{ path('admin_fiche_edit', {id: une_fiche.id} ) }}"><i class="fas fa-edit"></i></a></td>
+                </tr>
+
+                <tr class="bg-white">
+                    <td class="p-2 border text-center" colspan="3">{{ une_fiche.avantages }}</td>
+                    <td class="p-2 border text-center" colspan="3">{{ une_fiche.desavantages }}</td>
+                    <td class="p-2 border text-center">
+                        <a href="{{ path('admin_fiche_delete', {'id': une_fiche.id}) }}?csrf={{ csrf_token('delete' ~ une_fiche.id) }}"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer la fiche du personnage : {{ une_fiche.personnage.nom }} {{ une_fiche.personnage.prenom }} ?');"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+
+            {% else %}
+
+                <tr><td class="p-2" colspan="16"></td></tr>
+
+                <tr><td class="text-center" colspan="16">Désolé ! Il n'y a pas encore de fiche !</td></tr>
+
+            {% endfor %}
+
+        </table>
+    </section>
+{% endblock %}

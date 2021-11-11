@@ -46,7 +46,8 @@
                         <div class="connecte">
                             <strong>{{ app.user.pseudo }}</strong><br/>
                             <a class="lien-gris {% if app.request.get('_route') == 'mon_compte'
-                                                            or app.request.get('_route') == 'mon_compte_mdp' %}active{% endif %}"
+                                                            or app.request.get('_route') == 'mon_compte_mdp'
+                                                            or app.request.get('_route') == 'mon_compte_avatar' %}active{% endif %}"
                                href="{{ path('mon_compte') }}"><i class="fas fa-torii-gate couleur-primaire"></i>&nbsp;&nbsp;MON COMPTE</a><br/>
                             <small><a class="lien-gris" href="{{ path('app_logout') }}">Se Déconnecter</a></small>
                         </div>

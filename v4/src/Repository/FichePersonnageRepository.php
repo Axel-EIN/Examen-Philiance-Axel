@@ -19,6 +19,13 @@ class FichePersonnageRepository extends ServiceEntityRepository
         parent::__construct($registry, FichePersonnage::class);
     }
 
+    public function countFiches() {
+        return $this->createQueryBuilder('f')
+            ->select('count(f.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return FichePersonnage[] Returns an array of FichePersonnage objects
     //  */

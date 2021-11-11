@@ -39,6 +39,10 @@
                           or app.request.get('_route') == 'admin_personnage_create'
                           or app.request.get('_route') == 'admin_personnage_edit' %}active{% endif %}" href="{{ path('admin_personnage') }}">Personnages</a>
 
+    <a class="nav-link {% if app.request.get('_route') == 'admin_fiche'
+                          or app.request.get('_route') == 'admin_fiche_create'
+                          or app.request.get('_route') == 'admin_fiche_edit' %}active{% endif %}" href="{{ path('admin_fiche') }}">Fiches</a>
+
     <a class="nav-link {% if app.request.get('_route') == 'admin_utilisateur'
                           or app.request.get('_route') == 'admin_utilisateur_create'
                           or app.request.get('_route') == 'admin_utilisateur_edit' %}active{% endif %}" href="{{ path('admin_utilisateur') }}">Utilisateurs</a>

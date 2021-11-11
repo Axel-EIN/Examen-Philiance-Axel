@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Service\Uploader;
 use App\Form\MonCompteMdpType;
+use App\Entity\FichePersonnage;
+use App\Form\MonCompteAvatarType;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,40 +54,60 @@ class MonCompteController extends AbstractController
         ]);
     }
 
-    // public function editerClan(Request $request, Clan $clan, Uploader $uploadeur): Response {
+    /**
+     * @Route("/mon_compte/avatar/edit", name="mon_compte_avatar")
+     */
+    public function modifierAvatar(Request $request, Uploader $uploadeur): Response
+    {
+        $utilisateur = $this->getUser();
+        $form = $this->createForm(MonCompteAvatarType::class, $utilisateur);
 
-        
-    //     $form->handleRequest($request);
+        $form->handleRequest($request);
 
-    //     if($form->isSubmitted() && $form->isValid()) {
+        if($form->isSubmitted() && $form->isValid()){
 
-    //         $nouveauMon = $form->get('mon')->getData();
+            $nouveauAvatar = $form->get('avatar')->getData();
 
-    //         if (!empty($nouveauMon)) {
+            if (!empty($nouveauAvatar)) {
 
-    //             $ancienMonNomFichier = basename($clan->getMon());
+                $ancienAvatarNomFichier = basename($utilisateur->getAvatar());
 
-    //             $nouveauMonNomFichier = $uploadeur->upload($nouveauMon, 'clan-' . $clan->getNom() . '-mon', 'clans');
-    //             $nouveauChemingRelatif = 'assets/img/clans/' . $nouveauMonNomFichier;
-    //             $clan->setMon($nouveauChemingRelatif);
+                $nouveauAvatarNomFichier = $uploadeur->upload($nouveauAvatar, 'avatar-' . $utilisateur->getPseudo(), 'avatars');
+                $nouveauChemingRelatif = 'assets/img/avatars/' . $nouveauAvatarNomFichier;
+                $utilisateur->setAvatar($nouveauChemingRelatif);
 
-    //             $ancienMonCheminComplet = $this->getParameter('image_directory') . '/clans/' . $ancienMonNomFichier;
-    //             $filesystem = new Filesystem();
-    //             $filesystem->remove($ancienMonCheminComplet);
+                $ancienneAvatarCheminComplet = $this->getParameter('image_directory') . '/avatars/' . $ancienAvatarNomFichier;
+                $filesystem = new Filesystem();
+                if ($ancienneAvatarCheminComplet != $this->getParameter('image_directory') . '/avatars/')
+                    $filesystem->remove($ancienneAvatarCheminComplet);
 
-    //         }
+            }
 
-    //         $this->getDoctrine()->getManager()->flush();
-    //         $this->addFlash('success', 'Le clan a bien été modifié !');
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($utilisateur);
+            $em->flush();
 
-    //         return $this->redirectToRoute('admin_clan', [], Response::HTTP_SEE_OTHER);
-    //     }
+            $this->addFlash('success', 'Votre avatar a bien été modifié !');
+            return $this->redirectToRoute('mon_compte');
+        }
 
-    //     return $this->renderForm('admin_clan/edit.html.twig', [
-    //         'clan' => $clan,
-    //         'form' => $form,
-    //         'type' => 'Modifier',
-    //     ]);
-        
-    // }
+        return $this->render('mon_compte/modifier_avatar.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/mon_compte/fiche/{id}", name="mon_compte_fiche")
+     */
+    public function afficherMonCompteFichePersonnage(FichePersonnage $fiche): Response
+    {
+        $utilisateur = $this->getUser();
+
+        if ($fiche->getPersonnage()->getJoueur()->getId() != $utilisateur->getId())
+            return $this->redirectToRoute('mon_compte');
+
+        return $this->render('mon_compte/fiche_personnage.html.twig', [
+            'fiche' => $fiche,
+        ]);
+    }
 }

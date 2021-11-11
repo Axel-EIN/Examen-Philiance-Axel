@@ -1,0 +1,9 @@
+{% extends 'back_office/index.html.twig' %}
+
+{% block title %}Modifier une Fiche Personnage {{ parent() }}{% endblock %}
+
+{% block h1 %}Modifier une Fiche Personnage{% endblock %}
+
+{% block child %}
+    {{ include('admin_fiche/_form.html.twig', {'button_label': 'Éditer'}) }}
+{% endblock %}
