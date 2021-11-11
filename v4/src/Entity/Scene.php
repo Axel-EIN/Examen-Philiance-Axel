@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SceneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +49,16 @@ class Scene
      * @ORM\JoinColumn(nullable=false)
      */
     private $episodeParent;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="scene", orphanRemoval=true)
+     */
+    private $participations;
+
+    public function __construct()
+    {
+        $this->participations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +133,36 @@ class Scene
     public function setEpisodeParent(?Episode $episodeParent): self
     {
         $this->episodeParent = $episodeParent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participation[]
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Participation $participation): self
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations[] = $participation;
+            $participation->setScene($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Participation $participation): self
+    {
+        if ($this->participations->removeElement($participation)) {
+            // set the owning side to null (unless already changed)
+            if ($participation->getScene() === $this) {
+                $participation->setScene(null);
+            }
+        }
 
         return $this;
     }

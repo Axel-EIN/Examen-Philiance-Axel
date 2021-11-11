@@ -85,9 +85,15 @@ class Personnage
      */
     private $fichePersonnage;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="personnage", orphanRemoval=true)
+     */
+    private $yes;
+
     public function __construct()
     {
         $this->archives = new ArrayCollection();
+        $this->yes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -270,6 +276,36 @@ class Personnage
         }
 
         $this->fichePersonnage = $fichePersonnage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participation[]
+     */
+    public function getYes(): Collection
+    {
+        return $this->yes;
+    }
+
+    public function addYe(Participation $ye): self
+    {
+        if (!$this->yes->contains($ye)) {
+            $this->yes[] = $ye;
+            $ye->setPersonnage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeYe(Participation $ye): self
+    {
+        if ($this->yes->removeElement($ye)) {
+            // set the owning side to null (unless already changed)
+            if ($ye->getPersonnage() === $this) {
+                $ye->setPersonnage(null);
+            }
+        }
 
         return $this;
     }
