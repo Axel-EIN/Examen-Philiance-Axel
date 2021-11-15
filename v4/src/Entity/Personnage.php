@@ -88,7 +88,7 @@ class Personnage
     /**
      * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="personnage", orphanRemoval=true)
      */
-    private $personnages;
+    private $participations;
 
     public function __construct()
     {

@@ -23,13 +23,15 @@
 
             <h1 class="pt-3 mb-3">
                 {{ personnage.nom }} <strong>{{ personnage.prenom }}</strong>
-                {# <?php if(utilisateur_connecte() && $_SESSION['id'] == $personnage_trouve->utilisateur_id): ?>
-                    <span class="float-right">
-                        <a href="<?= route('fiche-personnage&id=' . $personnage_trouve->id); ?>">
-                            <i class="fas fa-user-secret"></i> Voir Fiche Privée
-                        </a>
-                    </span>
-                <?php endif; ?> #}
+                {% if app.user is not empty %}
+                    {% if personnage.joueur.id == app.user.id and personnage.fichePersonnage is not empty %}
+                        <span class="float-right">
+                            <a href="{{path('mon_compte_fiche',{id: personnage.fichePersonnage.id})}}">
+                                <i class="fas fa-user-secret"></i> Voir Fiche Privée
+                            </a>
+                        </span>
+                    {% endif %}
+                {% endif %}
             </h1>
 
             <article class="row">
@@ -67,21 +69,19 @@
                     <div class="card my-3 ml-2 card-body">
                         <h2 class="card-title">Historique</h2>
                         <div class="card-text ml-3">
-                            {# <?php foreach($participations_du_personnage as $une_participation): ?>
-                                <?php $une_scene_trouvee = scene_trouve_par_id($une_participation->scene_id); ?>
-                                <?php $episode_parent = episode_trouve_par_id($une_scene_trouvee->id_episode); ?>
-                                <?php if($une_participation->est_mort == 0): ?>
+                            {% for une_participation in personnage.participations %}
+                                {% if une_participation.estMort == 0 %}
                                     a
-                                    <?php if($une_participation->exp_gagne == 0): ?>
+                                    {% if une_participation.xpGagne == 0 %}
                                         participé 
-                                    <?php else: ?>
-                                        gagné <strong><?= $une_participation->exp_gagne; ?>xp</strong> 
-                                    <?php endif; ?>
-                                        dans la scène <a href="<?= route('episode&id=' . $episode_parent->id . '#scn' . $une_scene_trouvee->numero); ?>" ><strong><?= $une_scene_trouvee->titre; ?></strong></a> de l'episode <strong><?= $episode_parent->titre; ?></strong><br/>
-                                <?php else: ?>
-                                    <?= $personnage_trouve->prenom; ?> <strong style="color: red">est mort</strong> dans la scène <a href="<?= route('episode&id=' . $episode_parent->id . '#scn' . $une_scene_trouvee->numero); ?>" ><strong><?= $une_scene_trouvee->titre; ?></strong></a> de l'episode <strong><?= $episode_parent->titre; ?></strong><br/>
-                                <?php endif; ?>
-                            <?php endforeach; ?> #}
+                                    {% else %}
+                                        gagné <strong>{{une_participation.xpGagne}}xp</strong> 
+                                    {% endif %}
+                                        dans la scène <a href="{{path('aventure_episode', {id: une_participation.scene.episodeParent.id, '_fragment': 'scn' ~  une_participation.scene.numero  })}}" ><strong>{{une_participation.scene.titre}}</strong></a> de l'episode <strong>{{une_participation.scene.episodeParent.titre}}</strong><br/>
+                                {% else %}
+                                    <strong style="color: red">est mort</strong> dans la scène <a href="{{path('aventure_episode', {id: une_participation.scene.episodeParent.id, '_fragment': 'scn' ~  une_participation.scene.numero  })}}" ><strong>{{une_participation.scene.titre}}</strong></a> de l'episode <strong>{{une_participation.scene.episodeParent.titre}}</strong><br/>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
