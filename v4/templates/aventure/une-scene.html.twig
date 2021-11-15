@@ -4,56 +4,54 @@
         <img src="{{ asset(une_scene.image) }}" class="card-img-top img-fluid" alt="Image d'une scène">
     </div>
 
-    {# <div class="text-right" style="position: absolute; top: 1rem; right: 1rem;">
+    <div class="text-right" style="position: absolute; top: 1rem; right: 1rem;">
         <div class="d-flex flex-column">   
-            <?php $participations_pnjs = recuperer_participations_pnjs_scene($scene->id); ?>
-            <?php foreach($participations_pnjs as $une_participation_pnj): ?>
-                <div class="mb-2" style="display: inline-block; position: relative;">
-                    <a href="<?= route('profil-personnage&id=' . $une_participation_pnj->personnage_id); ?>" >
-                        <?php if($une_participation_pnj->est_mort == 1): ?>
-                            <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
-                        <?php endif; ?>
-                        <img class="ombre-img perso-icone<?php if($une_participation_pnj->est_mort != 0): ?> mort
-                                                <?php else: ?> survol<?php endif; ?>"
-                                src="<?= url_img(recuperer_un_personnage($une_participation_pnj->personnage_id)->icone); ?>"
-                                alt="Icone du Personnage" />
-                    </a>
-                </div>
-            <?php endforeach; ?>
+            {% for une_participation in une_scene.participations %}
+                {% if une_participation.estPj == 0 %}
+                    <div class="mb-2" style="display: inline-block; position: relative;">
+                        <a href="{{path('personnage_profil',{id: une_participation.personnage.id})}}" >
+                            {% if une_participation.estMort == 1 %}
+                                <img src="{{asset('assets/img/icons/mort.png')}}" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
+                            {% endif %}
+                            <img class="ombre-img perso-icone {% if une_participation.estMort == 1 %}mort{% else %}survol{% endif %}"
+                                src="{{asset(une_participation.personnage.icone)}}" alt="Icone du Personnage" />
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
-    </div> #}
+    </div>
 
     <div class="card-body corps-scene ancre-relatif">
 
             <!-- LEGENDE OVERLAY -->
-            <div class="scene-heure w-100">
+            <div class="scene-heure" style="width: 91%;">
                 <h5 class="card-title">{{ une_scene.temps }}</h5>
                 <h3 class="card-title">{{ une_scene.titre }}</h3>
-                {# <div class="text-right ligne-icones">
-                    <?php $participations_pjs = recuperer_participations_pjs_scene($scene->id); ?>
-                    <?php foreach($participations_pjs as $une_participation): ?>
-                        <div style="display: inline-block; position: relative;">
-                            <?php if($une_participation->exp_gagne != 0 && $une_participation->est_mort != 1 ): ?>
-                                <strong class="xp">+<?= $une_participation->exp_gagne; ?>XP</strong>
-                            <?php endif; ?><br/>
-                            <a href="<?= route('profil-personnage&id=' . $une_participation->personnage_id); ?>" >
-                                <?php if($une_participation->est_mort == 1): ?>
-                                    <img src="<?= url_img('icons/mort.png'); ?>" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
-                                <?php endif; ?>
-                                <img class="perso-icone<?php if($une_participation->est_mort != 0): ?> mort
-                                                       <?php elseif($une_participation->exp_gagne == 0): ?> disabled
-                                                       <?php else: ?> survol<?php endif; ?>"
-                                     src="<?= url_img(recuperer_un_personnage($une_participation->personnage_id)->icone); ?>"
-                                     alt="Icone du Personnage" />
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                </div> #}
+                <div class="text-right ligne-icones">
+                    {% for une_participation in une_scene.participations %}
+                        {% if une_participation.estPj == 1 %}
+                            <div style="display: inline-block; position: relative;">
+                                {% if une_participation.xpGagne != 0 and une_participation.estMort != 1 %}
+                                    <strong class="xp">+{{une_participation.xpGagne}}XP</strong>
+                                {% endif %}
+                                <br/>
+                                <a href="{{path('personnage_profil',{id:une_participation.personnage.id})}}" >
+                                    {% if une_participation.estMort == 1 %}
+                                        <img src="{{asset('assets/img/icons/mort.png')}}" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
+                                    {% endif %}
+                                    <img class="perso-icone {% if une_participation.estMort == 1 %}mort{% elseif une_participation.xpGagne == 0 %}disabled{% else %}survol{% endif %}"
+                                         src="{{asset(une_participation.personnage.icone)}}" alt="Icone du Personnage" />
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
 
         <!-- TEXTE -->
         {# <?php $scene->texte = lier_personnages($scene->texte); ?> #}
-        <p class="card-text texte-scene">{{ une_scene.texte|raw|nl2br }}</p>
+        <p class="card-text texte-scene text-justify">{{ une_scene.texte|raw|nl2br }}</p>
         {# Je ne sais pas pourquoi mais il faut mettre le RAW avant #}
 
     </div>

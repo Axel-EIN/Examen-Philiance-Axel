@@ -88,12 +88,12 @@ class Personnage
     /**
      * @ORM\OneToMany(targetEntity=Participation::class, mappedBy="personnage", orphanRemoval=true)
      */
-    private $yes;
+    private $personnages;
 
     public function __construct()
     {
         $this->archives = new ArrayCollection();
-        $this->yes = new ArrayCollection();
+        $this->personnages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -283,27 +283,27 @@ class Personnage
     /**
      * @return Collection|Participation[]
      */
-    public function getYes(): Collection
+    public function getParticipations(): Collection
     {
-        return $this->yes;
+        return $this->participations;
     }
 
-    public function addYe(Participation $ye): self
+    public function addParticipation(Participation $une_participation): self
     {
-        if (!$this->yes->contains($ye)) {
-            $this->yes[] = $ye;
-            $ye->setPersonnage($this);
+        if (!$this->participations->contains($une_participation)) {
+            $this->participations[] = $une_participation;
+            $une_participation->setPersonnage($this);
         }
 
         return $this;
     }
 
-    public function removeYe(Participation $ye): self
+    public function removeParticipation(Participation $une_participation): self
     {
-        if ($this->yes->removeElement($ye)) {
+        if ($this->participations->removeElement($une_participation)) {
             // set the owning side to null (unless already changed)
-            if ($ye->getPersonnage() === $this) {
-                $ye->setPersonnage(null);
+            if ($une_participation->getPersonnage() === $this) {
+                $une_participation->setPersonnage(null);
             }
         }
 

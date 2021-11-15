@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Scene;
-use App\Entity\Episode;
 use App\Service\Uploader;
 use App\Form\AdminSceneType;
+use App\Entity\Participation;
+use App\Repository\ParticipationRepository;
 use App\Repository\SceneRepository;
+use App\Repository\PersonnageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +37,14 @@ class AdminSceneController extends AbstractController
      * @Route("/admin/scene/create", name="admin_scene_create")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function creerScene(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
+    public function creerScene(
+                                Request $request,
+                                EntityManagerInterface $em,
+                                Uploader $uploadeur,
+                                PersonnageRepository $personnageRepository) {
+
+        $tout_pjs = $personnageRepository->findBy(array('est_pj' => true));
+        $tout_pnjs = $personnageRepository->findBy(array('est_pj' => false));
 
         $scene = new Scene;
         $form = $this->createForm(AdminSceneType::class, $scene);
@@ -43,6 +52,7 @@ class AdminSceneController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Gestion de l'IMAGE
             $nouvelleImage = $form->get('image')->getData();
 
             if (!empty($nouvelleImage)) {
@@ -54,6 +64,81 @@ class AdminSceneController extends AbstractController
                 $scene->setImage($nouveauCheminRelatif);
             } else { $scene->setImage('assets/img/placeholders/1280x720.png'); }
 
+            // Gestion des PARTICIPATIONS
+            if(!empty($request->get('participants'))) {
+                $participants_pjs = $request->get('participants');
+                $participants_pjs_xp = $request->get('participants_xp');
+                if(!empty($request->get('participants_mort')))
+                    $participants_pjs_mort = $request->get('participants_mort');
+                else
+                    $participants_pjs_mort = [];
+            } else {
+                $participants_pjs = [];
+                $participants_pjs_xp = [];
+                $participants_pjs_mort = [];
+            }
+
+            if(!empty($request->get('participants_pnjs'))) {
+                $participants_pnjs = $request->get('participants_pnjs');
+                if(!empty($request->get('participants_pnjs_mort')))
+                    $participants_pnjs_mort = $request->get('participants_pnjs_mort');
+                else
+                    $participants_pnjs_mort = [];
+            } else {
+                $participants_pnjs = [];
+                $participants_pnjs_mort = [];
+            }
+
+            // REGROUPEMENT DES DONNEES POST PJS (ID, XP, MORT) & PNJS (ID, MORT)
+            $participants_a_ajoutes = [];
+            $compteur = 0;
+            
+            if(!empty($participants_pjs)) {
+                foreach($participants_pjs as $key => $un_participant_pj) {
+                    $participants_a_ajoutes[$compteur]['id'] = $participants_pjs[$key];
+                    $participants_a_ajoutes[$compteur]['xp'] = $participants_pjs_xp[$key];
+                    if (!empty($participants_pjs_mort[$key]))
+                        $participants_a_ajoutes[$compteur]['mort'] = 1;
+                    else
+                        $participants_a_ajoutes[$compteur]['mort'] = 0;
+                    $participants_a_ajoutes[$compteur]['estPj'] = 1;
+                    $compteur++;
+                }
+            }
+            
+            if(!empty($participants_pnjs)) {
+                foreach($participants_pnjs as $cle => $un_participant_pnj) {
+                    $participants_a_ajoutes[$compteur]['id'] = $participants_pnjs[$cle];
+                    $participants_a_ajoutes[$compteur]['xp'] = 0;
+                    if (!empty($participants_pnjs_mort[$cle]))
+                        $participants_a_ajoutes[$compteur]['mort'] = 1;
+                    else
+                        $participants_a_ajoutes[$compteur]['mort'] = 0;
+                    $participants_a_ajoutes[$compteur]['estPj'] = 0;
+                    $compteur++;
+                }
+            }
+
+            // AJOUT
+            if (!empty($participants_a_ajoutes)) {
+                foreach ($participants_a_ajoutes as $cle => $un_participant_a_ajoute) {
+                    // Ajoute un participant à une scène et renvoi le dernier ID inséré dans la table ou false
+                    if ( !empty($personnageRepository->find($participants_a_ajoutes[$cle]['id'])) ) {
+                        $personnage = $personnageRepository->find($participants_a_ajoutes[$cle]['id']);
+                        $nouvelle_participation = new Participation;
+                        $nouvelle_participation->setScene($scene);
+                        $nouvelle_participation->setPersonnage($personnage);
+                        $nouvelle_participation->setXpGagne($participants_a_ajoutes[$cle]['xp']);
+                        $nouvelle_participation->setEstMort($participants_a_ajoutes[$cle]['mort']);
+                        $nouvelle_participation->setEstPj($participants_a_ajoutes[$cle]['estPj']);
+                        $em->persist($nouvelle_participation);
+                        $this->addFlash('success', 'Le personnage ' . $personnage->getPrenom() . ' a bien été ajouté en participant !');
+                    } else {
+                        $this->addFlash('danger', 'Le personnage n\'a pu être ajouté en participant !');
+                    }
+                }
+            }
+
             $em->persist($scene);
             $em->flush();
 
@@ -63,7 +148,9 @@ class AdminSceneController extends AbstractController
         } else {
             return $this->render('admin_scene/create.html.twig', [
                 'type' => 'Créer',
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'tout_pjs' => $tout_pjs,
+                'tout_pnjs' => $tout_pnjs,
             ]);
         }
     }
@@ -72,14 +159,25 @@ class AdminSceneController extends AbstractController
      * @Route("/admin/scene/{id}/edit", name="admin_scene_edit")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function editerScene(Request $request, Scene $scene, Uploader $uploadeur): Response {
+    public function editerScene(
+                                Request $request,
+                                Scene $scene,
+                                Uploader $uploadeur,
+                                PersonnageRepository $personnageRepository,
+                                ParticipationRepository $participationRepository): Response {
+
+        $tout_pjs = $personnageRepository->findBy(array('est_pj' => true));
+        $tout_pnjs = $personnageRepository->findBy(array('est_pj' => false));
+
+        $participations_pjs = $participationRepository->findBy(array('scene' => $scene, 'estPj' => true));
+        $participations_pnjs = $participationRepository->findBy(array('scene' => $scene, 'estPj' => false));
 
         $form = $this->createForm(AdminSceneType::class, $scene);
-        
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
 
+            // Gestion de l'IMAGE
             $nouvelleImage = $form->get('image')->getData();
 
             if (!empty($nouvelleImage)) {
@@ -97,7 +195,112 @@ class AdminSceneController extends AbstractController
                 $ancienneImageCheminComplet = $this->getParameter('image_directory') . '/scenes/' . $AncienneImageNomFichier;
                 $filesystem = new Filesystem();
                 $filesystem->remove($ancienneImageCheminComplet);
+            }
 
+            // Gestion des PARTICIPATIONS
+            if(!empty($request->get('participants'))) {
+                $participants_pjs = $request->get('participants');
+                $participants_pjs_xp = $request->get('participants_xp');
+                if(!empty($request->get('participants_mort')))
+                    $participants_pjs_mort = $request->get('participants_mort');
+                else
+                    $participants_pjs_mort = [];
+            } else {
+                $participants_pjs = [];
+                $participants_pjs_xp = [];
+                $participants_pjs_mort = [];
+            }
+
+            if(!empty($request->get('participants_pnjs'))) {
+                $participants_pnjs = $request->get('participants_pnjs');
+                if(!empty($request->get('participants_pnjs_mort')))
+                    $participants_pnjs_mort = $request->get('participants_pnjs_mort');
+                else
+                    $participants_pnjs_mort = [];
+            } else {
+                $participants_pnjs = [];
+                $participants_pnjs_mort = [];
+            }
+
+            // REGROUPEMENT DES DONNEES POST PJS (ID, XP, MORT) & PNJS (ID, MORT)
+            $participants_modifies = [];
+            $compteur = 0;
+            
+            if(!empty($participants_pjs)) {
+                foreach($participants_pjs as $key => $un_participant_pj) {
+                    $participants_modifies[$compteur]['id'] = $participants_pjs[$key];
+                    $participants_modifies[$compteur]['xp'] = $participants_pjs_xp[$key];
+                    if (!empty($participants_pjs_mort[$key]))
+                        $participants_modifies[$compteur]['mort'] = 1;
+                    else
+                        $participants_modifies[$compteur]['mort'] = 0;
+                    $participants_modifies[$compteur]['estPj'] = 1;
+                    $compteur++;
+                }
+            }
+            
+            if(!empty($participants_pnjs)) {
+                foreach($participants_pnjs as $cle => $un_participant_pnj) {
+                    $participants_modifies[$compteur]['id'] = $participants_pnjs[$cle];
+                    $participants_modifies[$compteur]['xp'] = 0;
+                    if (!empty($participants_pnjs_mort[$cle]))
+                        $participants_modifies[$compteur]['mort'] = 1;
+                    else
+                        $participants_modifies[$compteur]['mort'] = 0;
+                    $participants_modifies[$compteur]['estPj'] = 0;
+                    $compteur++;
+                }
+            }
+
+            $toutes_participations = array_merge($participations_pjs, $participations_pnjs);
+
+            // SUPPRESSION & MODDIFICATION
+            foreach ($toutes_participations as $une_participation) {
+                $trouvee = false;
+
+                foreach ($participants_modifies as $un_participant_modifie) {
+                    if ($une_participation->getPersonnage()->getId() == $un_participant_modifie['id']) {
+                        $trouvee = true;
+                        break;
+                    }
+                }
+
+                if ($trouvee == true) {
+                    if ($une_participation->getXpGagne() != $un_participant_modifie['xp'] || $une_participation->getEstMort() != $un_participant_modifie['mort'] ) {
+                        $une_participation->setXpGagne($un_participant_modifie['xp']);
+                        $une_participation->setEstMort($un_participant_modifie['mort']);
+                        $this->addFlash('warning', 'Le personnage ' . $une_participation->getPersonnage()->getPrenom() . ' a bien été modifié des participant !');
+                    }
+                }
+
+                if ($trouvee == false) {
+                    $this->addFlash('danger', 'Le personnage ' . $une_participation->getPersonnage()->getPrenom() . ' a bien été retiré des participants !');
+                    $this->getDoctrine()->getManager()->remove($une_participation);
+                }
+            }
+
+            // AJOUT
+            foreach ($participants_modifies as $un_participant_modifie) {
+                $trouvee = false;
+
+                foreach($toutes_participations as $une_participation) {
+                    if($un_participant_modifie['id'] == $une_participation->getPersonnage()->getId()) {
+                        $trouvee = true;
+                        break;
+                    }
+                }
+
+                if($trouvee == false) {
+                    $personnage = $personnageRepository->find($un_participant_modifie['id']);
+                    $nouvelle_participation = new Participation;
+                    $nouvelle_participation->setScene($scene);
+                    $nouvelle_participation->setPersonnage($personnage);
+                    $nouvelle_participation->setXpGagne($un_participant_modifie['xp']);
+                    $nouvelle_participation->setEstMort($un_participant_modifie['mort']);
+                    $nouvelle_participation->setEstPj($un_participant_modifie['estPj']);
+                    $this->getDoctrine()->getManager()->persist($nouvelle_participation);
+                    $this->addFlash('success', 'Le personnage ' . $nouvelle_participation->getPersonnage()->getPrenom() . ' a bien été ajouté en participant !');
+                }
             }
 
             $this->getDoctrine()->getManager()->flush();
@@ -110,6 +313,10 @@ class AdminSceneController extends AbstractController
             'scene' => $scene,
             'form' => $form,
             'type' => 'Modifier',
+            'tout_pjs' => $tout_pjs,
+            'tout_pnjs' => $tout_pnjs,
+            'participations_pjs' => $participations_pjs,
+            'participations_pnjs' => $participations_pnjs,
         ]); 
     }
 

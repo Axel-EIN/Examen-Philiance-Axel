@@ -39,6 +39,11 @@ class Participation
      */
     private $personnage;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $estPj;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +93,18 @@ class Participation
     public function setPersonnage(?Personnage $personnage): self
     {
         $this->personnage = $personnage;
+
+        return $this;
+    }
+
+    public function getEstPj(): ?bool
+    {
+        return $this->estPj;
+    }
+
+    public function setEstPj(bool $estPj): self
+    {
+        $this->estPj = $estPj;
 
         return $this;
     }
