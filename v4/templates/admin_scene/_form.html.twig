@@ -3,7 +3,7 @@
         {{ form_row(form.numero) }}
         {{ form_row(form.titre) }}
         {{ form_row(form.temps) }}
-        {{ form_row(form.texte) }}
+        {{ form_widget(form.texte,{ 'attr': {'rows': '15'} }) }}
         {{ form_row(form.episodeParent) }}
         {% if type != 'Créer' %}
             <img class="img-fluid" src="{{ asset(scene.image) }}" />

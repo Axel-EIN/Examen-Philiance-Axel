@@ -83,17 +83,17 @@
 
                             {% endfor %}
 
-                            {# <h2 class="text-center">Classement de l'Episode</h2>
+                            <h2 class="text-center">Classement de l'Episode</h2>
                             <div class="d-flex justify-content-center">
                                 <ol class="text-center">
-                                    <?php foreach($participations_episodes as $une_participation_episode): ?>
+                                    {% for un_personnage in episode_personnages %}
                                         <li>
-                                            <?= recuperer_un_personnage($une_participation_episode->personnage_id)->prenom; ?>
-                                            &nbsp;<strong><?= $une_participation_episode->exp_gagne; ?>xp</strong>
+                                            {{un_personnage.prenom}}
+                                            &nbsp;<strong>{{un_personnage.xp}}xp</strong>
                                         </li>
-                                    <?php endforeach; ?>
+                                    {% endfor %}
                                 </ol>
-                            </div> #}
+                            </div>
 
                             <div class="d-flex justify-content-between p-3">
                                 <span style="width: 96px">

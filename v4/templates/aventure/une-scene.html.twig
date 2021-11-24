@@ -50,11 +50,28 @@
             </div>
 
         <!-- TEXTE -->
-        {# <?php $scene->texte = lier_personnages($scene->texte); ?> #}
         <p class="card-text texte-scene text-justify">{{ une_scene.texte|raw|nl2br }}</p>
-        {# Je ne sais pas pourquoi mais il faut mettre le RAW avant #}
+        {# Il faut mettre le RAW avant pour avoir les balises html et autre caractères spéciaux non échappés #}
 
     </div>
+
+    <!-- ADMIN - MODIFIER | SUPRIMER -->
+    {% if is_granted("ROLE_ADMIN") %}
+        <div class="d-flex justify-content-center">
+            <div class="col-2 text-center">
+                <a href="{{ path('admin_scene_edit', {id:une_scene.id} ) }}"><i class="fas fa-edit"></i>&nbsp;&nbsp;Modifier</a>
+            </div>
+            <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="col-2 text-center">
+                <a  href="{{ path('admin_scene_delete', {id: une_scene.id} ) }}?csrf={{ csrf_token('delete' ~ une_scene.id) }}"
+                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer la scène : {{une_scene.titre}} ?')">
+                        <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Supprimer
+                </a>
+            </div>
+        </div>
+    {% endif %}
 
     <!-- SEPARATEUR -->
     <div class="d-flex justify-content-center">

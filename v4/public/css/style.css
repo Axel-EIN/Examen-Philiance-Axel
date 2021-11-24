@@ -90,6 +90,8 @@ nav .active { font-weight: bold; }
 
 .rounded-16 { border-radius: 1rem; }
 .rounded-8 { border-radius: 0.5rem; }
+
+img.disabled { filter:grayscale(); }
                      
 
 /* -------------------------------  */
@@ -416,3 +418,5 @@ nav .active { font-weight: bold; }
 .perso-icone { width: 64px; border-radius: 5px; }
 .mort { filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8); };
 .mort-icone { width: 72px; position: absolute; top: -6px; left: -2px; z-index: 1; }
+a.perso-img img { width: 24px; }
+a.perso-img { display: inline-block; }

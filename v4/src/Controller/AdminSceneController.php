@@ -119,7 +119,7 @@ class AdminSceneController extends AbstractController
                 }
             }
 
-            // AJOUT
+            // AJOUT DES PARTICIPANTS
             if (!empty($participants_a_ajoutes)) {
                 foreach ($participants_a_ajoutes as $cle => $un_participant_a_ajoute) {
                     // Ajoute un participant à une scène et renvoi le dernier ID inséré dans la table ou false
@@ -138,6 +138,25 @@ class AdminSceneController extends AbstractController
                     }
                 }
             }
+
+            // TAG DES PERSONNAGES
+            $tableau = [];
+            $texte = $scene->getTexte();
+            preg_match_all('#\[(.*)\]#Ui', $texte, $tableau); // Capture tout les mots entre [ ]
+            $tableau_de_regexp = array_fill(0, count($tableau[1]), '#\[(.*)\]#Ui'); // On crée un tableau de regexp au nbr de matchs
+            $tableau_remplacement = [];
+            foreach ($tableau[1] as $key => $un_match) {
+                $personnage_trouve = $personnageRepository->findOneBy(array('prenom' => $un_match));
+                if ($personnage_trouve != null) {
+                    $tableau_remplacement[] =
+                        '<a class="perso-img" href="../../personnages/profil/' . $personnage_trouve->getId() . '">'
+                                    . '<img src="../../' . $personnage_trouve->getIcone()
+                                    . '" alt="Icône du personnage" /> ' . $personnage_trouve->getPrenom() . '</a>';
+                } else
+                    $tableau_remplacement[] = $un_match;
+            }
+
+            $scene->setTexte(preg_replace($tableau_de_regexp, $tableau_remplacement, $texte, 1));
 
             $em->persist($scene);
             $em->flush();
@@ -171,6 +190,22 @@ class AdminSceneController extends AbstractController
 
         $participations_pjs = $participationRepository->findBy(array('scene' => $scene, 'estPj' => true));
         $participations_pnjs = $participationRepository->findBy(array('scene' => $scene, 'estPj' => false));
+
+        // UNTAG PERSONNAGES
+        $tableau = [];
+        $texte = $scene->getTexte();
+        preg_match_all('#<a .*><img .*/> (.*)<\/a>#Ui', $texte, $tableau); // Capture tout les prenoms entre les balises a img
+        $tableau_de_regexp = array_fill(0, count($tableau[1]), '#<a .*><img .*/> (.*)<\/a>#Ui'); // On crée un tableau de regexp au nbr de matchs
+        $tableau_remplacement = [];
+        foreach ($tableau[1] as $key => $un_match) {
+            $personnage_trouve = $personnageRepository->findOneBy(array('prenom' => $un_match));
+            if ($personnage_trouve != null) {
+                $tableau_remplacement[] = '[' . $personnage_trouve->getPrenom() . ']';
+            } else
+                $tableau_remplacement[] = $un_match;
+        }
+
+        $scene->setTexte(preg_replace($tableau_de_regexp, $tableau_remplacement, $texte, 1));
 
         $form = $this->createForm(AdminSceneType::class, $scene);
         $form->handleRequest($request);
@@ -303,6 +338,25 @@ class AdminSceneController extends AbstractController
                 }
             }
 
+            // TAG DES PERSONNAGES
+            $tableau = [];
+            $texte = $scene->getTexte();
+            preg_match_all('#\[(.*)\]#Ui', $texte, $tableau); // Capture tout les mots entre [ ]
+            $tableau_de_regexp = array_fill(0, count($tableau[1]), '#\[(.*)\]#Ui'); // On crée un tableau de regexp au nbr de matchs
+            $tableau_remplacement = [];
+            foreach ($tableau[1] as $key => $un_match) {
+                $personnage_trouve = $personnageRepository->findOneBy(array('prenom' => $un_match));
+                if ($personnage_trouve != null) {
+                    $tableau_remplacement[] =
+                        '<a class="perso-img" href="../../personnages/profil/' . $personnage_trouve->getId() . '">'
+                                    . '<img src="../../' . $personnage_trouve->getIcone()
+                                    . '" alt="Icône du personnage" /> ' . $personnage_trouve->getPrenom() . '</a>';
+                } else
+                    $tableau_remplacement[] = $un_match;
+            }
+
+            $scene->setTexte(preg_replace($tableau_de_regexp, $tableau_remplacement, $texte, 1));
+
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'La scène a bien été modifiée !');
 
@@ -326,23 +380,19 @@ class AdminSceneController extends AbstractController
      */
     public function supprimerScene(Request $request, Scene $scene): Response {
         if ($this->isCsrfTokenValid('delete' . $scene->getId(), $request->query->get('csrf'))) {
-
             $entityManager = $this->getDoctrine()->getManager();
-
             $nomImageASupprimer = basename($scene->getImage());
-            $cheminImageASupprimer = $this->getParameter('image_directory') . '/scenes/' . $nomImageASupprimer;
-
-            if (file_exists($cheminImageASupprimer)) {
-                $filesystem = new Filesystem();
-                $filesystem->remove($cheminImageASupprimer);
+            if ($nomImageASupprimer != '1280x720.png') {
+                $cheminImageASupprimer = $this->getParameter('image_directory') . '/scenes/' . $nomImageASupprimer;
+                if (file_exists($cheminImageASupprimer)) {
+                    $filesystem = new Filesystem();
+                    $filesystem->remove($cheminImageASupprimer);
+                }
             }
-
             $entityManager->remove($scene);
             $entityManager->flush();
-
             $this->addFlash('success', 'La scène a bien été supprimée !');
         }
-
         return $this->redirectToRoute('admin_scene', [], Response::HTTP_SEE_OTHER);
     }
 }
