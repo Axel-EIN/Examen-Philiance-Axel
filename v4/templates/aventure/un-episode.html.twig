@@ -14,7 +14,7 @@
                 <div class="text-left">
                     <a class="btn btn-primary btn-lg" href="{{ path('aventure_saison', {numero: episode.chapitreParent.saisonParent.numero, '_fragment': 'tete-lecture-ch' ~ episode.chapitreParent.numero } ) }}">Retour</a>
                 </div>
-                <h2 class="stylise grand">{{ episode.chapitreParent.titre }}</h2>
+                <h2 class="stylise grand">{{ episode.chapitreParent.titre|stylise|raw }}</h2>
                 <p class="citation">{{ episode.chapitreParent.citation|nl2br }}</p>
 
         </header>
@@ -24,7 +24,7 @@
             <section class="d-flex pt-3 justify-content-center align-items-center">
 
                 {# EPISODE PRECEDENT #}           
-                <div class="d-flex flex-column justify-content-center vignette">
+                <div class="d-flex flex-column justify-content-center vignette mr-3">
                     {% if episode_precedent is not empty %} 
                         <div class="fond-masque">
                             <a href="{{ path('aventure_episode', { id : episode_precedent.id, '_fragment': 'tete-lecture' } ) }}">
@@ -35,7 +35,6 @@
                     {% endif %}
                 </div>
 
-                <div class="px-3 fleche">{{ source('icons/chevron-left-solid.svg') }}</div>
 
                 {# EPISODE COURANT #}
                 <div class="d-flex flex-column justify-content-center vignette-principale">
@@ -45,11 +44,10 @@
                     </div>
                 </div>
 
-                <div class="px-3 fleche">{{ source('icons/chevron-right-solid.svg') }}</div>
 
                 {# EPISODE SUIVANT #}
-                <div class="d-flex flex-column justify-content-center vignette">
-                {% if episode_suivant is not empty %} 
+                <div class="d-flex flex-column justify-content-center vignette ml-3">
+                {% if episode_suivant is not empty %}
                     <div class="fond-masque">
                         <a href="{{ path('aventure_episode', { id : episode_suivant.id, '_fragment': 'tete-lecture' } ) }}">
                             <span class="display-4 numero-episode-courant">{{ episode_suivant.numero }}</span>
@@ -91,11 +89,15 @@
                                             {{un_personnage.prenom}}
                                             &nbsp;<strong>{{un_personnage.xp}}xp</strong>
                                         </li>
+                                    {% else %}
+                                        <li>
+                                            Désolé ! Il n'y a pas encore de participants à classer !
+                                        </li>
                                     {% endfor %}
                                 </ol>
                             </div>
 
-                            <div class="d-flex justify-content-between p-lg-3">
+                            <div class="d-flex justify-content-between p-lg-3 m-1">
                                 <span style="width: 96px">
                                     {% if episode_precedent is not empty %}
                                         <a href="{{ path('aventure_episode', {id: episode_precedent.id}) }}" class="btn btn-primary">Précédent</a>

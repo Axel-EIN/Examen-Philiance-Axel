@@ -24,7 +24,7 @@
             <h1 class="pt-3 mb-3">
                 {{ personnage.nom }} <strong>{{ personnage.prenom }}</strong>
                 {% if app.user is not empty %}
-                    {% if personnage.joueur.id == app.user.id and personnage.fichePersonnage is not empty %}
+                    {% if personnage.joueur is not empty and personnage.joueur.id == app.user.id and personnage.fichePersonnage is not empty %}
                         <span class="float-right">
                             <a href="{{path('mon_compte_fiche',{id: personnage.fichePersonnage.id})}}">
                                 <i class="fas fa-user-secret"></i> Voir Fiche Privée

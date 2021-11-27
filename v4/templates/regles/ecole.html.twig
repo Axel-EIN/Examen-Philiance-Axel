@@ -135,7 +135,7 @@
                         <h2 class="card-title py-3">Personnages de l'école <strong>{{ ecole.nom }}</strong> :</h2>
                         <div class="card-text ml-lg-3 row text-center">
                             {% for un_personnage in ecole.personnages %}
-                                <div class="p-lg-1 col-12 col-lg-10">
+                                <div class="p-1">
                                     <a href="{{ path('personnage_profil', {id: un_personnage.id} ) }}">
                                         <img class="img-128" src="{{ asset(un_personnage.icone) }}" alt="Icône du personnage" />
                                     </a>

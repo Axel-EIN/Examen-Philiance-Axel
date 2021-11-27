@@ -59,13 +59,17 @@
                 {% for une_ecole in ecoles %}
 
                     <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 text-center">
-                        <img class="badge-coin bg-white" style="border-radius: 2rem;" src="{{ asset(une_ecole.classe.icone) }}" alt="Icône de la Classe de l'École" />
-                        <img class="coin-droit img-36 bg-white" style="top: 2.5rem; left:-4px; border: solid white; border-radius: 2rem;" src="{{ asset(une_ecole.clan.mon) }}" alt="Mon du Clan de l'École" />
-                        <a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}"><img class="img-160" src="{{ asset(une_ecole.image) }}" alt="Image de l'école" /></a>
-                        <br/>
-                        <h5 class="text-center my-3">
-                            <strong><a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}">{{ une_ecole.nom }}</a></strong>
-                        </h5>
+                        <div class="inline-block ">
+                            <a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}">
+                                <img class="img-fluid ancre-relatif" src="{{ asset(une_ecole.image) }}" alt="Image de l'école" />
+                            </a>
+                            <img class="badge-coin bg-white" style="border-radius: 2rem;" src="{{ asset(une_ecole.classe.icone) }}" alt="Icône de la Classe de l'École" />
+                            <img class="coin-droit img-36 bg-white" style="top: 2.5rem; left:-4px; border: solid white; border-radius: 2rem;" src="{{ asset(une_ecole.clan.mon) }}" alt="Mon du Clan de l'École" />
+                            <br/>
+                            <h5 class="text-center my-3">
+                                <strong><a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}">{{ une_ecole.nom }}</a></strong>
+                            </h5>
+                        </div>
                     </article>
 
                 {% else %}

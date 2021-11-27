@@ -33,16 +33,9 @@ html, body { font-size: 16px; }
 /* -------------------------------- */
 
 .lien-blanc { color: #fff; }
-
-.lien-blanc:hover { color: #aaa;
-                    text-decoration: underline; }
-
+.lien-blanc:hover { color: #aaa; text-decoration: underline; }
 .lien-gris { color: rgba(255,255,255, 0.75) !important; }
-
-.lien-gris:hover {
-        color: rgba(255,255,255,0.9) !important;
-        text-decoration: none !important; }
-
+.lien-gris:hover { color: rgba(255,255,255,0.9) !important; text-decoration: none !important; }
 .lien-gris.active { color: rgba(255,255,255, 1) !important; }
 
 
@@ -75,44 +68,6 @@ nav .active { font-weight: bold; }
 @font-face { font-family: "Hirosh"; src: url("../assets/fonts/hirosh.otf"); }
 @font-face { font-family: "Present"; src: url("../assets/fonts/present-it-black.otf"); }
 
-
-/* -------------------------------  */
-/* EFFECTS                          */
-/* -------------------------------- */
-
-.survol:hover { filter: brightness(1.3);
-                transition: .5s; }
-
-.fond-masque { background-color: black; }
-
-.fond-masque img { mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1));
-                   -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1)); }
-
-.fond-masque-fonce { background-color: black; }
-.fond-masque-fonce img { 
-        mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1));
-        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1));
-}
-
-.card-img-overlay { top: unset; padding: 0.5rem; }
-.card-img-overlay h4 { margin-bottom: 0; }
-
-.ancre-relatif { position:relative; }
-
-.translucide { filter: opacity(0.50); }
-
-.translucide:hover { filter: opacity(1);
-                     transition-duration: 0.5s; }
-
-.ombre-txt { text-shadow: 4px 4px 2rem black; }
-
-.ombre-img { box-shadow: 2px 2px 4px black; }
-
-.rounded-16 { border-radius: 1rem; }
-.rounded-8 { border-radius: 0.5rem; }
-
-img.disabled { filter:grayscale(); }
-                     
 
 /* -------------------------------  */
 /* BUTTONS                          */
@@ -232,13 +187,18 @@ img.disabled { filter:grayscale(); }
 @media (max-width: 576px) { .citation { font-size: 1rem; } }
 @media (max-width: 480px) { .citation { font-size: 1rem; } }
 
-.chapitre-fond, .episode-fond{
+.chapitre-fond, .episode-fond {
         min-height: 60vh;
         background-size: 100% auto;
         background-repeat: no-repeat;
         background-position: top;
         /* background-color: var(--b); voir doc sur le variable CSS */ 
 }
+
+@media (max-width: 1200px) { .chapitre-fond, .episode-fond { background-size: 150% auto; } }
+@media (max-width: 992px) { .chapitre-fond, .episode-fond { background-size: 200% auto; } }
+@media (max-width: 576px) { .chapitre-fond, .episode-fond { background-size: 250% auto; } }
+@media (max-width: 480px) { .chapitre-fond, .episode-fond { background-size: 300% auto; } }
 
 @media (max-width: 1200px) { .display-4 { font-size: 3.5rem; } }
 @media (max-width: 992px) { .display-4 { font-size: 3rem; } }
@@ -256,10 +216,119 @@ img.disabled { filter:grayscale(); }
 @media (max-width: 480px) { .display-1 { font-size: 3rem; } }
 
 
+/* -----------------------------------  */
+/* ALERTES                              */
+/* ------------------------------------ */
+
+.volatile {
+        position: absolute;
+        left: 50%; top: 0px;
+        transform: translate(-50%, -50%); }
+
+.persistante {
+        font-size: 1rem;
+        display: inline-block;
+        color: rgba(255, 255, 255, .4);
+        background-color: rgba(0, 0, 0, .4) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+        margin-bottom: 0;}
+
+/* -------------------------------- */
+/* FOOTERS                          */
+/* -------------------------------- */
+
+#pied-de-page1 {
+        min-height: 24vh;
+        background-color: #28323C;
+        color:#b4b4b4; }
+
+#pied-de-page2 {
+        min-height: 8vh;
+        background-color: #1E242A;
+        color: #aaa; }
+
+.footer-link { color:#a0a0a0; }
+
+.footer-link:hover { color:#fff; text-decoration: underline; }
+
+#pied-de-page1 ul, #pied-de-page2 ul {
+        list-style:outside none none;
+        padding: 0; }
+
+#reseaux-sociaux { font-size: 2rem; }
+
 
 /* -------------------------------  */
-/* LISTE CHAPITRES                  */
+/* IMAGES                           */
 /* -------------------------------- */
+
+.img-24 { min-width: 12px; max-width: 24px; }
+.img-32 { min-width: 16px; max-width: 32px; }
+.img-36 { min-width: 18px; max-width: 36px; }
+.img-48 { min-width: 24px; max-width: 48px; }
+.img-64 { min-width: 32px; max-width: 64px; }
+.img-96 { min-width: 48px; max-width: 96px; }
+.img-128 { min-width: 64px; max-width: 128px; }
+.img-160 { min-width: 80px; max-width: 160px; }
+.img-240 { min-width: 120px; max-width: 240px; }
+.img-320 { min-width: 160px; max-width: 320px; }
+.img-360 { min-width: 180px; max-width: 360px; }
+.img-480 { min-width: 240px; max-width: 480px; }
+.img-540 { min-width: 320px; max-width: 540px; }
+.img-640 { min-width: 320px; max-width: 640px; }
+
+
+/* -------------------------------  */
+/* EFFECTS                          */
+/* -------------------------------- */
+
+.survol:hover { filter: brightness(1.3);
+        transition: .5s; }
+
+.fond-masque { background-color: black; }
+
+.fond-masque img { mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1));
+           -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.2),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1)); }
+
+.fond-masque-fonce { background-color: black; }
+.fond-masque-fonce img { 
+mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1));
+-webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.25),rgba(0,0,0,0.50),rgba(0,0,0,1),rgba(0,0,0,1));
+}
+
+.card-img-overlay { top: unset; padding: 0.5rem; }
+.card-img-overlay h4 { margin-bottom: 0; }
+
+.ancre-relatif { position:relative; }
+
+.translucide { filter: opacity(0.50); }
+
+.translucide:hover { filter: opacity(1);
+             transition-duration: 0.5s; }
+
+.ombre-txt { text-shadow: 4px 4px 2rem black; }
+
+.ombre-img { box-shadow: 2px 2px 4px black; }
+
+.rounded-16 { border-radius: 1rem; }
+.rounded-8 { border-radius: 0.5rem; }
+
+img.disabled { filter:grayscale(); }
+
+
+
+/** PAGES **/
+/** ______________________________________________________________________ **/
+
+/* -------------------------------  */
+/* GENERAL PAGES                    */
+/* -------------------------------- */
+
+.page-min { min-height: 60vh; }
+
+/* ----------------------------------  */
+/* PAGE : AVENTURE > LISTE CHAPITRES   */
+/* ----------------------------------- */
 
 .chapitre-separateur {
         display: block;
@@ -268,9 +337,9 @@ img.disabled { filter:grayscale(); }
         background-color: rgb(40, 0, 0); }
 
 
-/* -------------------------------  */
-/* LISTE EPISODES                   */
-/* -------------------------------- */
+/* -----------------------------------  */
+/* PAGE : AVENTURE > LISTE EPISODES     */
+/* ------------------------------------ */
 
 .episode-card {
         padding-right: 8px;
@@ -311,7 +380,7 @@ img.disabled { filter:grayscale(); }
 
 
 /* -----------------------------------  */
-/* VOIR UN EPISODE                      */
+/* PAGE : EPISODEE                      */
 /* ------------------------------------ */
 
 .vignette { width: 180px; }
@@ -326,7 +395,7 @@ img.disabled { filter:grayscale(); }
 .vignette img { border-radius: 15px; }
 
 .vignette-principale {
-        width: 420px;
+        width: 480px;
         border: thick double;
         border-radius: 20px;
 }
@@ -391,56 +460,32 @@ img.disabled { filter:grayscale(); }
 .texte-scene a { font-weight: bold; }
 
 .division { width: 30%; }
-
 .division-motif { width: 36px; height: auto; }
-
 .division hr { background-color: #ffbbbb; height: 1px; width: 100%; }
 
 
 /* -----------------------------------  */
-/* ALERTES                              */
+/* PAGE : AVENTURE > EPISODE > SCENES   */
 /* ------------------------------------ */
 
-.volatile {
-        position: absolute;
-        left: 50%; top: 0px;
-        transform: translate(-50%, -50%); }
+.ligne-icones { position: relative; top: -36px; }
+.ligne-pnjs { position: relative; top: -36px; }
+@media (max-width: 576px) { .ligne-pnjs { visibility: collapse; } }
+@media (max-width: 480px) { .ligne-pnjs { visibility: collapse; } }
 
-.persistante {
-        font-size: 1rem;
-        display: inline-block;
-        color: rgba(255, 255, 255, .4);
-        background-color: rgba(0, 0, 0, .4) !important;
-        border-color: rgba(255, 255, 255, 0.2) !important;
-        margin-bottom: 0;}
+@media (max-width: 576px) { .ligne-pjs { visibility: collapse; } }
+@media (max-width: 480px) { .ligne-pjs { visibility: collapse; } }
 
-/* -------------------------------- */
-/* FOOTERS                          */
-/* -------------------------------- */
-
-#pied-de-page1 {
-        min-height: 24vh;
-        background-color: #28323C;
-        color:#b4b4b4; }
-
-#pied-de-page2 {
-        min-height: 8vh;
-        background-color: #1E242A;
-        color: #aaa; }
-
-.footer-link { color:#a0a0a0; }
-
-.footer-link:hover { color:#fff; text-decoration: underline; }
-
-#pied-de-page1 ul, #pied-de-page2 ul {
-        list-style:outside none none;
-        padding: 0; }
-
-#reseaux-sociaux { font-size: 2rem; }
+.xp { color: rgb(0, 100, 0); text-shadow: 1px 1px 0 #0f0, -1px -1px 0 #0f0, 1px -1px 0 #0f0, -1px 1px 0 #0f0; }
+.perso-icone { width: 64px; border-radius: 5px; }
+.mort { filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8); };
+.mort-icone { width: 72px; position: absolute; top: -6px; left: -2px; z-index: 1; }
+a.perso-img img { width: 24px; }
+a.perso-img { display: inline-block; }
 
 
 /* -------------------------------  */
-/* PERSONNAGE                       */
+/* PAGE : PERSONNAGE                */
 /* -------------------------------- */
 
 #personnages {
@@ -458,49 +503,7 @@ img.disabled { filter:grayscale(); }
 
 
 /* -------------------------------  */
-/* GENERAL PAGES                    */
+/* PAGE : ADMIN BACK OFFICE         */
 /* -------------------------------- */
 
-.page-min { min-height: 60vh; }
-
-
-/* -------------------------------  */
-/* BACK OFFICE                      */
-/* -------------------------------- */
-
-.coin-droit { position: absolute; right:24px; top:0px; }
-.img-24 { min-width: 12px; max-width: 24px; }
-.img-32 { min-width: 16px; max-width: 32px; }
-.img-36 { min-width: 18px; max-width: 36px; }
-.img-48 { min-width: 24px; max-width: 48px; }
-.img-64 { min-width: 32px; max-width: 64px; }
-.img-96 { min-width: 48px; max-width: 96px; }
-.img-128 { min-width: 64px; max-width: 128px; }
-.img-160 { min-width: 80px; max-width: 160px; }
-.img-240 { min-width: 120px; max-width: 240px; }
-.img-320 { min-width: 160px; max-width: 320px; }
-.img-360 { min-width: 180px; max-width: 360px; }
-.img-480 { min-width: 240px; max-width: 480px; }
-.img-540 { min-width: 320px; max-width: 540px; }
-.img-640 { min-width: 320px; max-width: 640px; }
-.bg-image-bottom { background-position: bottom; }
-
-
-/* -------------------------------  */
-/* SCENES                           */
-/* -------------------------------- */
-
-.ligne-icones { position: relative; top: -36px; }
-.ligne-pnjs { position: relative; top: -36px; }
-@media (max-width: 576px) { .ligne-pnjs { visibility: collapse; } }
-@media (max-width: 480px) { .ligne-pnjs { visibility: collapse; } }
-
-@media (max-width: 576px) { .ligne-pjs { visibility: collapse; } }
-@media (max-width: 480px) { .ligne-pjs { visibility: collapse; } }
-
-.xp { color: rgb(0, 100, 0); text-shadow: 1px 1px 0 #0f0, -1px -1px 0 #0f0, 1px -1px 0 #0f0, -1px 1px 0 #0f0; }
-.perso-icone { width: 64px; border-radius: 5px; }
-.mort { filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8); };
-.mort-icone { width: 72px; position: absolute; top: -6px; left: -2px; z-index: 1; }
-a.perso-img img { width: 24px; }
-a.perso-img { display: inline-block; }
+.coin-droit { position: absolute; right:15px; top:0px; border-radius: 0px;}
