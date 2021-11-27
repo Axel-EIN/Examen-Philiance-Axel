@@ -54,6 +54,7 @@ class AventureController extends AbstractController
                 }
             }
         }
+
         $episode_personnages_id = array_unique($episode_personnages_id);
         $compteur = 0;
         $episode_personnages = [];
@@ -68,12 +69,10 @@ class AventureController extends AbstractController
             $compteur++;
         }
 
-        // function compare($a, $b) {
-        //     return strcmp($a['xp'], $b['xp']);
-        // }
-
-        // usort($episode_personnages, "compare");
-        // $episode_personnages = array_reverse($episode_personnages);
+        usort($episode_personnages, function ($a, $b) {
+            return strcmp($a['xp'], $b['xp']);
+        } );
+        $episode_personnages = array_reverse($episode_personnages);
 
         return $this->render('aventure/un-episode.html.twig', [
             'episode' => $episode,
