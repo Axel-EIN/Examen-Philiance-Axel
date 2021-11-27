@@ -21,11 +21,11 @@
             <hr/>
             <article class="row">
 
-                <div class="col-4 text-center">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 text-center">
                     <img class="img-fluid" src="{{ asset(clan.mon) }}" alt="Mon du Clan" />
                 </div>
                 
-                <div class="col-8">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
                     <div class="card">
                         <div class="card-body">
                             <p class="card-text"><strong>Description :</strong></p>
@@ -65,7 +65,7 @@
                         <div class="card-text ml-3">
                             {% for une_ecole in clan.ecoles %}
                                 <div class="mb-2 row align-items-center ancre-relatif">
-                                    <div class="col-4">
+                                    <div class="col-12 col-lg-4">
                                         <a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}">
                                             <img class="img-fluid" src="{{ asset(une_ecole.image) }}" alt="Image d'une école" />
                                         </a>

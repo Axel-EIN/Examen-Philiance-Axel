@@ -22,11 +22,11 @@
 
             <div class="row">
 
-                <div class="col-4 text-center">
+                <div class="col-12 col-lg-4 text-center">
                     <img class="img-fluid" src="{{ asset(classe.icone) }}" alt="Icône de la Classe" />
                 </div>
 
-                <div class="col-8">
+                <div class="col-12 col-lg-8">
                     <div class="card card-body h-100">
                         <p class="card-text"><strong>Description :</strong></p>
                         <p class="card-text">{{ classe.description }}</p>
@@ -34,16 +34,18 @@
                 </div>
 
                 {# LES ECOLES DE BUSHI #}
-                <section class="col-6 my-3">
+                <section class="col-12 col-lg-6 my-3 text-center">
                     <div class="card card-body h-100">
                         <h2 class="card-title py-3">Ecoles de <strong>{{ classe.nom }}</strong> :</h2>
-                        <div class="card-text ml-3">
+                        <div class="card-text ml-lg-3 row text-center justify-content-center align-items-center">
                             {% for une_ecole in classe.ecoles %}
-                                <div class="ml-1 mb-2 row align-items-center">
-                                    <a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}">
-                                        <img class="img-128" src="{{ asset(une_ecole.image) }}" alt="Image d'une école" />
-                                    </a>
-                                    <div class="ml-3">
+                                <div class="ml-lg-1 mb-2 row align-items-center col-12">
+                                    <div class="col-6">
+                                        <a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}">
+                                            <img class="img-128" src="{{ asset(une_ecole.image) }}" alt="Image d'une école" />
+                                        </a>
+                                    </div>
+                                    <div class="col-6 ml-lg-3">
                                         Nom : <strong><a href="{{ path('regles_ecole', {id: une_ecole.id} ) }}" >{{ une_ecole.nom }}</a></strong><br/>
                                         Clan : <img class="img-48" src="{{ asset(une_ecole.clan.mon) }}" alt="Mon d'un clan" />
                                     </div>
@@ -55,10 +57,10 @@
                     </div>
                 </section>
 
-                <section class="col-6 my-3">
+                <section class="col-12 col-lg-6 my-3 text-center">
                     <div class="card card-body h-100">
                         <h2 class="card-title py-3">Personnages <strong>{{ classe.nom }}</strong> :</h2>
-                        <div class="card-text ml-3 row">
+                        <div class="card-text ml-lg-3 row text-center justify-content-center align-items-center">
                             {% for un_personnage in classe.personnages %}
                                 <div class="p-1">
                                     <a href="{{ path('personnage_profil', {id: un_personnage.id} ) }}">

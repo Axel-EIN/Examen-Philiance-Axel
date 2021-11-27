@@ -35,10 +35,10 @@
             </h1>
 
             <article class="row">
-                <div class="col-6">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                     <img class="img-fluid" src="{{ asset(personnage.illustration) }}" />
                 </div>
-                <div class="card col-6">
+                <div class="card col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                     <div class="card-body">
                         <h4 class="card-title">{{ personnage.titres }}</h4>
                         <p class="card-text"><strong>Description :</strong></p>
@@ -65,10 +65,10 @@
                             {% endif %}
                     </ul>
                 </div>
-                <div class="col-12">
-                    <div class="card my-3 ml-2 card-body">
+                <div class="col-12 px-0">
+                    <div class="card my-3 ml-lg-2 card-body">
                         <h2 class="card-title">Historique</h2>
-                        <div class="card-text ml-3">
+                        <div class="card-text ml-lg-3">
                             {% for une_participation in personnage.participations %}
                                 {% if une_participation.estMort == 0 %}
                                     a

@@ -42,7 +42,7 @@
                                href="{{ path('regles')}}">REGLES</a></li>
                     </ul>
                     {% if app.user %}
-                    <div class="row align-items-center">
+                    <div class="row align-items-center justify-content-end">
                         <div class="connecte">
                             <strong>{{ app.user.pseudo }}</strong><br/>
                             <a class="lien-gris {% if app.request.get('_route') == 'mon_compte'

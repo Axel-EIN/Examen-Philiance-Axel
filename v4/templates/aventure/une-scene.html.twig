@@ -4,7 +4,7 @@
         <img src="{{ asset(une_scene.image) }}" class="card-img-top img-fluid" alt="Image d'une scène">
     </div>
 
-    <div class="text-right" style="position: absolute; top: 1rem; right: 1rem;">
+    <div class="text-right ligne-pnjs" style="position: absolute; top: 1rem; right: 1rem;">
         <div class="d-flex flex-column">   
             {% for une_participation in une_scene.participations %}
                 {% if une_participation.estPj == 0 %}
@@ -28,7 +28,7 @@
             <div class="scene-heure" style="width: 91%;">
                 <h5 class="card-title">{{ une_scene.temps }}</h5>
                 <h3 class="card-title">{{ une_scene.titre }}</h3>
-                <div class="text-right ligne-icones">
+                <div class="text-right ligne-icones ligne-pjs">
                     {% for une_participation in une_scene.participations %}
                         {% if une_participation.estPj == 1 %}
                             <div style="display: inline-block; position: relative;">

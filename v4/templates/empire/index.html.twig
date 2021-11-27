@@ -29,7 +29,7 @@
                 <br/>
                 <div class="row">
                     {% for une_archive in archives %}
-                        <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
+                        <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 text-center">
                             <a href="{{ path('empire_archive', {id: une_archive.id} ) }}">
                                 <img class="img-160" src="{{ asset(une_archive.image) }}" alt="Image de l'Archive" />
                             </a>
@@ -51,7 +51,7 @@
                 <div class="row">
                     {% for un_clan in clans %}
 
-                        <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
+                        <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 text-center">
                             <a href="{{ path('empire_clan', {id: un_clan.id} ) }}"><img class="img-160" src="{{ asset(un_clan.mon) }}" alt="Mon du clan" /></a>
                             <br/>
                             <h3 class="text-center my-3"><strong><a href="{{ path('empire_clan', {id: un_clan.id} ) }}">{{ un_clan.nom }}</a></strong></h3>
@@ -67,7 +67,7 @@
                 <br/>
                 <div class="row">
                     {% for un_lieu in lieux %}
-                        <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 ">
+                        <article class="col-xl-2 col-lg-3 col-md-4 col-sm-6 py-3 text-center">
                             <a href="{{ path('empire_lieu', {id: un_lieu.id} ) }}">
                                 <img class="img-160" src="{{ asset(un_lieu.image) }}" alt="Image du Lieu" />
                             </a>
@@ -82,7 +82,7 @@
                 </div>
             </section>
 
-        </div>>
+        </div>
     </main>
 
 {{ include('/parts/modal.html.twig') }}

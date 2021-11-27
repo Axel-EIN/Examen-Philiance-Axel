@@ -1,11 +1,31 @@
 /* -------------------------------  */
+/* BASE TEXT                        */
+/* -------------------------------- */
+
+html, body { font-size: 16px; }
+@media (max-width: 1200px) { html, body { font-size: 16px; } }
+@media (max-width: 992px) { html, body { font-size: 15px; } }
+@media (max-width: 576px) { html, body { font-size: 14px; } }
+@media (max-width: 480px) { html, body { font-size: 13px; } }
+
+/* -------------------------------  */
 /* BASE COLORS                      */
 /* -------------------------------- */
 
-.couleur-primaire {color: #EA2027; }
+.couleur-primaire { color: #EA2027; }
 .ombre-primaire { color: #b6252f; }
 .lumiere-primaire { color: #ff4147; }
 .fond-primaire { background-color: #EA2027; }
+
+
+/* -------------------------------  */
+/* CONTAINER                        */
+/* -------------------------------- */
+
+@media (max-width: 1200px) { .container { padding-left: 1rem; padding-right: 1rem; } }
+@media (max-width: 992px) { .container { padding-left: 1rem; padding-right: 1rem; } }
+@media (max-width: 576px) { .container { padding-left: 0.5rem; padding-right: 0.5rem; } }
+@media (max-width: 480px) { .container { padding-left: 0.5rem; padding-right: 0.5rem; } }
 
 
 /* -------------------------------  */
@@ -148,10 +168,20 @@ img.disabled { filter:grayscale(); }
         color:#fff;
         margin: 0; }
 
+@media (max-width: 1200px) { .pre-titre-saison { font-size: 3rem; } }
+@media (max-width: 992px) { .pre-titre-saison { font-size: 3rem; } }
+@media (max-width: 576px) { .pre-titre-saison { font-size: 2rem; } }
+@media (max-width: 480px) { .pre-titre-saison { font-size: 2rem; }}
+
 .pre-titre-chapitre {
         font-size: 2.5rem;
         color: #fff;
         margin: 0; }
+
+@media (max-width: 1200px) { .pre-titre-chapitre { font-size: 2.5rem; } }
+@media (max-width: 992px) { .pre-titre-chapitre { font-size: 2.5rem; } }
+@media (max-width: 576px) { .pre-titre-chapitre { font-size: 1.5rem; } }
+@media (max-width: 480px) { .pre-titre-chapitre { font-size: 1.5rem; } }
 
 .en-tete hr, .sous-en-tete hr, .en-tete-episode hr {
         background-color: #fff;
@@ -172,15 +202,35 @@ img.disabled { filter:grayscale(); }
 
 .plus-petit { font-size: 2rem; }
 
+@media (max-width: 1200px) { .plus-petit { font-size: 2rem; } }
+@media (max-width: 992px) { .plus-petit { font-size: 1.75rem; } }
+@media (max-width: 576px) { .plus-petit { font-size: 1.5rem; } }
+@media (max-width: 480px) { .plus-petit { font-size: 1.25rem; } }
+
 .petit { font-size: 3rem; }
 
+@media (max-width: 1200px) { .petit { font-size: 3rem; } }
+@media (max-width: 992px) { .petit { font-size: 2.5rem; } }
+@media (max-width: 576px) { .petit { font-size: 2rem; } }
+@media (max-width: 480px) { .petit { font-size: 1.75rem; } }
+
 .grand { font-size: 9rem; }
+
+@media (max-width: 1200px) { .grand { font-size: 9rem; } }
+@media (max-width: 992px) { .grand { font-size: 8rem; } }
+@media (max-width: 576px) { .grand { font-size: 6rem; } }
+@media (max-width: 480px) { .grand { font-size: 4.5rem; } }
 
 .citation {
         font-size: 1.25rem;
         font-style: italic;
         margin-bottom: 1rem;
         text-shadow: 2px 2px 6px black, 0px 0px 2rem black; }
+
+@media (max-width: 1200px) { .citation { font-size: 1.25rem; } }
+@media (max-width: 992px) { .citation { font-size: 1.25rem; } }
+@media (max-width: 576px) { .citation { font-size: 1rem; } }
+@media (max-width: 480px) { .citation { font-size: 1rem; } }
 
 .chapitre-fond, .episode-fond{
         min-height: 60vh;
@@ -189,6 +239,21 @@ img.disabled { filter:grayscale(); }
         background-position: top;
         /* background-color: var(--b); voir doc sur le variable CSS */ 
 }
+
+@media (max-width: 1200px) { .display-4 { font-size: 3.5rem; } }
+@media (max-width: 992px) { .display-4 { font-size: 3rem; } }
+@media (max-width: 576px) { .display-4 { font-size: 2.5rem; } }
+@media (max-width: 480px) { .display-4 { font-size: 2rem; } }
+
+@media (max-width: 1200px) { .display-3 { font-size: 4.5rem; } }
+@media (max-width: 992px) { .display-3 { font-size: 4rem; } }
+@media (max-width: 576px) { .display-3 { font-size: 3.5rem; } }
+@media (max-width: 480px) { .display-3 { font-size: 3rem; } }
+
+@media (max-width: 1200px) { .display-1 { font-size: 6rem; } }
+@media (max-width: 992px) { .display-1 { font-size: 5rem; } }
+@media (max-width: 576px) { .display-1 { font-size: 4rem; } }
+@media (max-width: 480px) { .display-1 { font-size: 3rem; } }
 
 
 
@@ -250,6 +315,8 @@ img.disabled { filter:grayscale(); }
 /* ------------------------------------ */
 
 .vignette { width: 180px; }
+@media (max-width: 576px) { .vignette { visibility: collapse; } }
+@media (max-width: 480px) { .vignette { visibility: collapse; } }
 
 .vignette .fond-masque, .vignette-principale .fond-masque {
         position: relative;
@@ -294,6 +361,11 @@ img.disabled { filter:grayscale(); }
         z-index: 1;
 }
 
+/* @media (max-width: 1200px) { .longue-card-episode { padding-left: unset; padding-right: unset; } }
+@media (max-width: 992px) { .longue-card-episode { padding-left: unset; padding-right: unset; } } */
+@media (max-width: 576px) { .longue-card-episode { padding-left: unset; padding-right: unset; } }
+@media (max-width: 480px) { .longue-card-episode { padding-left: unset; padding-right: unset; } }
+
 .bloc-card-episode {
         min-height: 500px;
 }
@@ -310,6 +382,11 @@ img.disabled { filter:grayscale(); }
         padding-right: 4rem;
         padding-top: 3rem;
         padding-bottom: 1rem; }
+
+@media (max-width: 1200px) { .corps-scene { padding-left: 4rem; padding-right: 4rem; padding-top: 3rem; padding-bottom: 1rem; } }
+@media (max-width: 992px) { .corps-scene { padding-left: 4rem; padding-right: 4rem; padding-top: 3rem; padding-bottom: 1rem; } }
+@media (max-width: 576px) { .corps-scene { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; padding-bottom: 0.5rem; } }
+@media (max-width: 480px) { .corps-scene { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; padding-bottom: 0.5rem; } }
 
 .texte-scene a { font-weight: bold; }
 
@@ -342,12 +419,12 @@ img.disabled { filter:grayscale(); }
 /* -------------------------------- */
 
 #pied-de-page1 {
-        height: 24vh;
+        min-height: 24vh;
         background-color: #28323C;
         color:#b4b4b4; }
 
 #pied-de-page2 {
-        height: 8vh;
+        min-height: 8vh;
         background-color: #1E242A;
         color: #aaa; }
 
@@ -414,6 +491,13 @@ img.disabled { filter:grayscale(); }
 /* -------------------------------- */
 
 .ligne-icones { position: relative; top: -36px; }
+.ligne-pnjs { position: relative; top: -36px; }
+@media (max-width: 576px) { .ligne-pnjs { visibility: collapse; } }
+@media (max-width: 480px) { .ligne-pnjs { visibility: collapse; } }
+
+@media (max-width: 576px) { .ligne-pjs { visibility: collapse; } }
+@media (max-width: 480px) { .ligne-pjs { visibility: collapse; } }
+
 .xp { color: rgb(0, 100, 0); text-shadow: 1px 1px 0 #0f0, -1px -1px 0 #0f0, 1px -1px 0 #0f0, -1px 1px 0 #0f0; }
 .perso-icone { width: 64px; border-radius: 5px; }
 .mort { filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8); };

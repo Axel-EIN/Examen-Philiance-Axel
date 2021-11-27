@@ -27,8 +27,8 @@
                 </div>
             {% endfor %}
 
-            <div class="row mx-3">
-                <section id="info_perso" class="col-6">
+            <div class="row mx-lg-3">
+                <section id="info_perso" class="col-lg-6 col-12">
                     <h2 class="mb-4">Informations Personnelles</h2>
 
                     <div class="ml-3">
@@ -80,10 +80,10 @@
                     </div>
                 </section>
 
-                <section id="mes_persos" class="col-6">
+                <section id="mes_persos" class="col-lg-6 col-12">
                     <h2 class="mb-4">Mes Personnages ( {{ app.user.personnages|length }} )</h2>
 
-                    <div class="row ml-3">
+                    <div class="row ml-lg-3">
                         {% for un_personnage in app.user.personnages %}
                             <article class="col-6 mb-3">
                                 <div class="card text-center">
