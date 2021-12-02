@@ -92,11 +92,15 @@
                                     </a>
                                     <div class="card-body">
                                         <h4 class="card-title">{{un_personnage.nom}} <strong>{{un_personnage.prenom}}</strong></h4>
-                                        <p class="card-text text-center">
-                                            <a href="{{ path('mon_compte_fiche', {id: un_personnage.fichePersonnage.id}) }}">
-                                                <i class="fas fa-user-secret"></i>&nbsp;&nbsp;Fiche Privée
-                                            </a>
-                                        </p>
+                                        {% if un_personnage.fichePersonnage is not empty %}
+                                            <p class="card-text text-center">
+                                                <a href="{{ path('mon_compte_fiche', {id: un_personnage.fichePersonnage.id}) }}">
+                                                    <i class="fas fa-user-secret"></i>&nbsp;&nbsp;Fiche Privée
+                                                </a>
+                                            </p>
+                                        {% else %}
+                                            Il n'y a pas encore de fiche privée pour ce personnage
+                                        {% endif %}
                                     </div>
                                 </div>
                             </article>
