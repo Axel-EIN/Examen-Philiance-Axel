@@ -60,11 +60,10 @@
                         </div>
                     </div>
                     {% else %}
-                        <div>
-                            {# <a href="{{ path('app_login') }}" class="btn btn-primary nav-item" >Se Connecter</a> #}
-                            {# <a class="lien-gris" href="{{ path('app_register') }}"><i class="fas fa-torii-gate couleur-primaire"></i>&nbsp;&nbsp;MON COMPTE</a><br/>
-                                <small><a class="lien-gris" href="{{ path('app_logout') }}">Se Déconnecter</a></small> #}
-                            <button type="button" class="btn btn-primary nav-item" data-toggle="modal" data-target="#connexion">Se Connecter</button>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-primary nav-item" data-toggle="modal" data-target="#connexion">Se Connecter</button><br/>
+                            <small class="text-muted">Pas encore de compte?</small><br/>
+                            <a class="lien-gris" href="{{ path('app_register') }}"><i class="fas fa-user-plus couleur-primaire"></i>&nbsp;&nbsp;Enregistrez-vous!</a>
                         </div>
                     {% endif %}
 
