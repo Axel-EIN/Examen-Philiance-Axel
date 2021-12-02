@@ -22,7 +22,6 @@ class AdminPersonnageController extends AbstractController
     public function afficherAdminPersonnages(PersonnageRepository $personnageRepository): Response
     {
         $personnages = $personnageRepository->findBy(array(), array('clan' => 'ASC'));
-        // dd($personnages);
         return $this->render('admin_personnage/index.html.twig', [
             'personnages' => $personnages
         ]);
