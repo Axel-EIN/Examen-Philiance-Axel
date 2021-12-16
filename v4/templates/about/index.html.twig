@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}A propos {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <main class="container-fluid bg-light">
+        <section class="container">
+
+            <nav class="pt-3">
+                <span class="text-muted">
+                    <a href="{{ path('aventure') }}">
+                        <i class="fas fa-home"></i></a>
+                        > <strong>Mentions Légales</strong>
+                        > <a href="{{ path('cgu') }}"><strong>A propos</strong></a>
+                </span>
+            </nav>
+
+            <h1 class="pt-3 mb-3">
+                <strong>A propos</strong>
+            </h1>
+
+            <p class="ml-4">L'entreprise individuelle <strong>AXL-DESIGN</strong>, soucieuse des droits des individus, notamment au regard des traitements automatisés et dans une volonté de transparence avec ses clients, a mis en place une politique reprenant l’ensemble de ces traitements, des finalités poursuivies par ces derniers ainsi que des moyens d’actions à la disposition des individus afin qu’ils puissent au mieux exercer leurs droits.</p>
+
+            <p class="ml-4">Pour toute information complémentaire sur la protection des données personnelles, nous vous invitons à consulter le site : <a href="https://www.cnil.fr/">https://www.cnil.fr/</a></p>
+
+            <h2>Propriété</h2>
+            <p class="ml-4">Le nom du site est <strong>AXL-JDR</strong>, c'est un <strong>gestionnaire de Campagne de Jeu de Rôle</strong>.</p>
+            <p class="ml-4">Il a été conçu et réalisé par <strong>Axel Önçu-Turan</strong> en dérivant la marque AXL-DESIGN. Tout les droits sont réservées à ce propriétaire.</p>
+            
+            <h2>Contexte</h2>
+            <p class="ml-4">Les données enregistrées et disponible sur ce site sont fictives.</p>
+            <p class="ml-4">Ce site a été réalisé dans le courant de l'année 2021 dans le cadre de l'examen de la <strong>formation 2021 Développeur Web et Web Mobile de Philiance</strong>.</p>
+
+        </section>
+    </main>
+
+{% endblock %}
