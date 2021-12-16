@@ -1,77 +1,56 @@
 {% if is_granted('ROLE_ADMIN') %}
     <div class="container-fluid bg-secondary text-right">
-        <a href="{{ path('back_office') }}" class="lien-blanc"><i class="fas fa-tools"></i>&nbsp;&nbsp;Panneau d'Administration</a>
+        <a href="{{ path('back_office') }}" class="lien-blanc">
+            <i class="fas fa-tools"></i>&nbsp;&nbsp;Panneau d'Administration
+        </a>
     </div>
  {% endif %}
 
 <div id="barre-navigation" class="container-fluid bg-dark">
-
     <div class="container">
-
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-primary">
-        
-            <div id="logo"><a class="navbar-brand" href="{{ path('aventure') }}"><img src="{{ asset('assets/img/logo-axl.png') }}" alt="Logo AXL" class="img-fluid" /></a></div>
-
-            <button class="navbar-toggler btn-primary" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
+            <div id="logo">
+                <a class="navbar-brand" href="{{ path('aventure') }}">
+                    <img src="{{ asset('assets/img/logo-axl.png') }}" alt="Logo AXL" class="img-fluid" />
+                </a>
+            </div>
+            <button class="navbar-toggler btn-primary" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="d-flex justify-content-between align-items-center w-100">
-
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link lien-gris {% if app.request.get('_route') == 'aventure_saison'
-                                                            or app.request.get('_route') == 'aventure_episode' %} active{% endif %}"
-                               href="{{ path('aventure') }}">AVENTURE</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link lien-gris {% if app.request.get('_route') == 'personnages'
-                                                            or app.request.get('_route') == 'personnage_profil' %}active{% endif %}"
-                               href="{{ path('personnages') }}">PERSONNAGES</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link lien-gris {% if app.request.get('_route') == 'empire'
-                                                            or app.request.get('_route') == 'empire_clan'
-                                                            or app.request.get('_route') == 'empire_lieu'
-                                                            or app.request.get('_route') == 'empire_archive' %}active{% endif %}"
-                               href="{{ path('empire')}}">EMPIRE</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link lien-gris {% if app.request.get('_route') == 'regles'
-                                                            or app.request.get('_route') == 'regles_classe'
-                                                            or app.request.get('_route') == 'regles_ecole' %}active{% endif %}"
-                               href="{{ path('regles')}}">REGLES</a></li>
+                        <li class="nav-item"><a class="nav-link lien-gris {% if app.request.get('_route') == 'aventure_saison' or app.request.get('_route') == 'aventure_episode' %} active{% endif %}" href="{{ path('aventure') }}">AVENTURE</a></li>
+                        <li class="nav-item"><a class="nav-link lien-gris {% if app.request.get('_route') == 'personnages' or app.request.get('_route') == 'personnage_profil' %}active{% endif %}" href="{{ path('personnages') }}">PERSONNAGES</a></li>
+                        <li class="nav-item"><a class="nav-link lien-gris {% if app.request.get('_route') == 'empire' or app.request.get('_route') == 'empire_clan' or app.request.get('_route') == 'empire_lieu' or app.request.get('_route') == 'empire_archive' %}active{% endif %}" href="{{ path('empire')}}">EMPIRE</a></li>
+                        <li class="nav-item"><a class="nav-link lien-gris {% if app.request.get('_route') == 'regles' or app.request.get('_route') == 'regles_classe' or app.request.get('_route') == 'regles_ecole' %}active{% endif %}" href="{{ path('regles')}}">REGLES</a></li>
                     </ul>
-                    {% if app.user %}
+{% if app.user %}
                     <div class="row align-items-center justify-content-end">
                         <div class="connecte">
                             <strong>{{ app.user.pseudo }}</strong><br/>
-                            <a class="lien-gris {% if app.request.get('_route') == 'mon_compte'
-                                                            or app.request.get('_route') == 'mon_compte_mdp'
-                                                            or app.request.get('_route') == 'mon_compte_avatar' %}active{% endif %}"
-                               href="{{ path('mon_compte') }}"><i class="fas fa-torii-gate couleur-primaire"></i>&nbsp;&nbsp;MON COMPTE</a><br/>
-                            <small><a class="lien-gris" href="{{ path('app_logout') }}">Se Déconnecter</a></small>
+                            <a class="lien-gris {% if app.request.get('_route') == 'mon_compte' or app.request.get('_route') == 'mon_compte_mdp' or app.request.get('_route') == 'mon_compte_avatar' %}active{% endif %}" href="{{ path('mon_compte') }}"><i class="fas fa-torii-gate couleur-primaire"></i>&nbsp;&nbsp;MON COMPTE</a><br/>
+                            <small>
+                                <a class="lien-gris" href="{{ path('app_logout') }}">Se Déconnecter</a>
+                            </small>
                         </div>
                         <div class="ml-3 bg-secondary rounded-8 border border-secondary">
-                            {% if app.user.avatar is not empty %}
+{% if app.user.avatar is not empty %}
                                 <img class="img-96 rounded-8" src="{{ asset(app.user.avatar) }}" alt="Avatar de l'utilisateur" title="Avatar de l'utilisateur" />
-                            {% else %}
+{% else %}
                                 <img class="img-96 rounded-8" src="https://i.pravatar.cc/300" alt="Avatar de l'utilisateur" title="Avatar de l'utilisateur" />
-                            {% endif %}
+{% endif %}
                         </div>
                     </div>
-                    {% else %}
-                        <div class="text-right">
-                            <button type="button" class="btn btn-primary nav-item" data-toggle="modal" data-target="#connexion">Se Connecter</button><br/>
-                            <small class="text-muted">Pas encore de compte?</small><br/>
-                            <a class="lien-gris" href="{{ path('app_register') }}"><i class="fas fa-user-plus couleur-primaire"></i>&nbsp;&nbsp;Enregistrez-vous!</a>
-                        </div>
-                    {% endif %}
-
+{% else %}
+                    <div class="text-right">
+                        <button type="button" class="btn btn-primary nav-item" data-toggle="modal" data-target="#connexion">Se Connecter</button><br/>
+                        <small class="text-muted">Pas encore de compte?</small><br/>
+                        <a class="lien-gris" href="{{ path('app_register') }}"><i class="fas fa-user-plus couleur-primaire"></i>&nbsp;&nbsp;Enregistrez-vous!</a>
+                    </div>
+{% endif %}
                 </div>
             </div>
-            
         </nav>
-        
     </div>
-
 </div>
