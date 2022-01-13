@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contactez-Nous {{ parent() }}{% endblock %}
+
+{% block body %}
+
+<main class="container-fluid bg-light">
+    <section class="container">
+
+        <nav class="pt-3">
+            <span class="text-muted">
+                <a href="{{ path('aventure') }}">
+                    <i class="fas fa-home"></i></a>
+                    > <strong>Contactez-Nous</strong>
+            </span>
+        </nav>
+
+        <h1 class="pt-3 mb-3">
+            <strong>Contactez-l'Administrateur</strong>
+        </h1>
+
+        <p>Vous pouvez également nous contacter via le formulaire suivant.</p>
+
+        {% if notif is not empty %}
+            <div class="alert alert-success" role="alert">
+                {{ notif }}
+            </div>
+        {% endif %}
+
+        {{ form(formulaire) }}
+
+    </section>
+</main>
+
+{% endblock %}
