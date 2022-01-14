@@ -5,8 +5,8 @@ namespace App\Form;
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,7 +27,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'Vous devez accepter les les Conditions Générales d\'Utilisation.',
+                        'message' => 'Vous devez accepter les Conditions Générales d\'Utilisation.',
                     ]),
                 ],
             ])
@@ -37,18 +37,18 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
                 'required' => true,
                 'first_options'  => [
-                    'label' => 'Mot de passe',
-                    'attr' => ['autocomplete' => 'new-password'],
+                    'label' => 'Mot de passe (8 caractères minimum)',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                        'placeholder' => 'Au moins un chiffre, une lettre minuscule et majuscule'
+                    ],
                     'constraints' => [
                         new NotBlank([
                             'message' => 'Veuillez entrer un mot de passe',
                         ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères.',
-                            'max' => 4096,
-                        ]),
-                    ]
+                        new Regex('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,32}$/'),
+                    ],
+                    'invalid_message' => 'Mot de passe invalide.',
                 ],
                 'second_options' => ['label' => 'Confirmation du mot de passe'],
             ])
