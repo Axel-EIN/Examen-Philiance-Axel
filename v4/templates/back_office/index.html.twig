@@ -9,22 +9,7 @@
         <h1 class="text-center">{% block h1 %}Bienvenue dans le Panneau d'Administration !{% endblock %}</h1>
 
         {{ include('back_office/admin-nav.html.twig') }}
-
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% for message in app.flashes('warning') %}
-            <div class="alert alert-warning">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% for message in app.flashes('danger') %}
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
-        {% endfor %}
+        {{ include('parts/messages-flashes.html.twig') }}
 
         {% block child %}
 
