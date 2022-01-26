@@ -37,10 +37,10 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
                 'required' => true,
                 'first_options'  => [
+                    'help' => 'Au moins un chiffre, une lettre minuscule et majuscule',
                     'label' => 'Mot de passe (8 caractères minimum)',
                     'attr' => [
                         'autocomplete' => 'new-password',
-                        'placeholder' => 'Au moins un chiffre, une lettre minuscule et majuscule'
                     ],
                     'constraints' => [
                         new NotBlank([
