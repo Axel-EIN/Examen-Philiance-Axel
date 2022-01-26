@@ -106,7 +106,7 @@ class LoginController extends AbstractController
             $mailer->send($message);
 
             // On crée le message flash de confirmation
-            $this->addFlash('message', 'E-mail de réinitialisation du mot de passe envoyé !');
+            $this->addFlash('success', 'E-mail de réinitialisation du mot de passe a été envoyé !');
 
             // On redirige vers la page de login
             return $this->redirectToRoute('app_login');
