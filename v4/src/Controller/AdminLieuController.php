@@ -28,7 +28,7 @@ class AdminLieuController extends AbstractController
 
     /**
      * @Route("/admin/lieu/create", name="admin_lieu_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function ajouterLieu(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
@@ -69,7 +69,7 @@ class AdminLieuController extends AbstractController
 
     /**
      * @Route("/admin/lieu/{id}/edit", name="admin_lieu_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerLieu(Request $request, Lieu $lieu, Uploader $uploadeur): Response {
 
@@ -122,7 +122,7 @@ class AdminLieuController extends AbstractController
 
     /**
      * @Route("/admin/lieu/{id}/delete", name="admin_lieu_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerLieu(Request $request, Lieu $lieu): Response {
 

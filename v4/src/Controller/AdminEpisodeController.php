@@ -18,7 +18,7 @@ class AdminEpisodeController extends AbstractController
 {
     /**
      * @Route("/admin/episode", name="admin_episode")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function afficherAdminEpisodes(EpisodeRepository $episodeRepository): Response
     {
@@ -31,7 +31,7 @@ class AdminEpisodeController extends AbstractController
 
     /**
      * @Route("/admin/episode/create", name="admin_episode_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function creerEpisode(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
@@ -67,7 +67,7 @@ class AdminEpisodeController extends AbstractController
 
      /**
      * @Route("/admin/episode/{id}/edit", name="admin_episode_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerEpisode(Request $request, Episode $episode, Uploader $uploadeur): Response {
 
@@ -111,7 +111,7 @@ class AdminEpisodeController extends AbstractController
 
     /**
      * @Route("/admin/episode/{id}/delete", name="admin_episode_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerEpisode(Request $request, Episode $episode): Response {
         if ($this->isCsrfTokenValid('delete' . $episode->getId(), $request->query->get('csrf'))) {

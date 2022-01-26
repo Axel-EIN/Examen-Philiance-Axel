@@ -26,7 +26,7 @@ class AdminFicheController extends AbstractController
 
     /**
      * @Route("/admin/fiche/create", name="admin_fiche_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function ajouterFiche(Request $request, EntityManagerInterface $em) {
 
@@ -52,7 +52,7 @@ class AdminFicheController extends AbstractController
 
     /**
      * @Route("/admin/fiche/{id}/edit", name="admin_fiche_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerFiche(Request $request, FichePersonnage $fiche): Response {
 
@@ -77,7 +77,7 @@ class AdminFicheController extends AbstractController
 
     /**
      * @Route("/admin/fiche/{id}/delete", name="admin_fiche_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerClan(Request $request, FichePersonnage $fiche): Response {
 

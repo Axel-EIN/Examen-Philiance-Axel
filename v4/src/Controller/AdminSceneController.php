@@ -21,7 +21,7 @@ class AdminSceneController extends AbstractController
 {
     /**
      * @Route("/admin/scene", name="admin_scene")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function afficherAdminScenes(SceneRepository $sceneRepository): Response
     {
@@ -35,7 +35,7 @@ class AdminSceneController extends AbstractController
 
     /**
      * @Route("/admin/scene/create", name="admin_scene_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function creerScene(
                                 Request $request,
@@ -176,7 +176,7 @@ class AdminSceneController extends AbstractController
 
     /**
      * @Route("/admin/scene/{id}/edit", name="admin_scene_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerScene(
                                 Request $request,
@@ -376,7 +376,7 @@ class AdminSceneController extends AbstractController
 
     /**
      * @Route("/admin/scene/{id}/delete", name="admin_scene_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerScene(Request $request, Scene $scene): Response {
         if ($this->isCsrfTokenValid('delete' . $scene->getId(), $request->query->get('csrf'))) {

@@ -1,4 +1,5 @@
 <nav class="nav justify-content-center">
+{% if is_granted("ROLE_MJ") %}
     <a class="nav-link {% if app.request.get('_route') == 'admin_scene'
                           or app.request.get('_route') == 'admin_scene_create'
                           or app.request.get('_route') == 'admin_scene_edit' %}active{% endif %}" href="{{ path('admin_scene') }}">Scènes</a>
@@ -42,8 +43,10 @@
     <a class="nav-link {% if app.request.get('_route') == 'admin_fiche'
                           or app.request.get('_route') == 'admin_fiche_create'
                           or app.request.get('_route') == 'admin_fiche_edit' %}active{% endif %}" href="{{ path('admin_fiche') }}">Fiches</a>
-
+{% endif %}
+{% if is_granted("ROLE_ADMIN") %}
     <a class="nav-link {% if app.request.get('_route') == 'admin_utilisateur'
                           or app.request.get('_route') == 'admin_utilisateur_create'
                           or app.request.get('_route') == 'admin_utilisateur_edit' %}active{% endif %}" href="{{ path('admin_utilisateur') }}">Utilisateurs</a>
+{% endif %}
 </nav>

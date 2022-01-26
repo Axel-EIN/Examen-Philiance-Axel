@@ -29,7 +29,7 @@ class AdminPersonnageController extends AbstractController
 
     /**
      * @Route("/admin/personnage/create", name="admin_personnage_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function ajouterPersonnage(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
@@ -79,7 +79,7 @@ class AdminPersonnageController extends AbstractController
 
     /**
      * @Route("/admin/personnage/{id}/edit", name="admin_personnage_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerPersonnage(Request $request, Personnage $personnage, Uploader $uploadeur): Response {
 
@@ -142,7 +142,7 @@ class AdminPersonnageController extends AbstractController
 
     /**
      * @Route("/admin/personnage/{id}/delete", name="admin_personnage_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerPersonnage(Request $request, Personnage $personnage): Response {
 

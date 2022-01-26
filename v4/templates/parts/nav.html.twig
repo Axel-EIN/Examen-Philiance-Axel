@@ -1,10 +1,16 @@
 {% if is_granted('ROLE_ADMIN') %}
-    <div class="container-fluid bg-secondary text-right">
+    <div class="container-fluid bg-primary text-right">
         <a href="{{ path('back_office') }}" class="lien-blanc">
             <i class="fas fa-tools"></i>&nbsp;&nbsp;Panneau d'Administration
         </a>
     </div>
- {% endif %}
+{% elseif is_granted('ROLE_MJ') %}
+    <div class="container-fluid bg-danger text-right">
+        <a href="{{ path('back_office') }}" class="lien-blanc">
+            <i class="fas fa-scroll"></i>&nbsp;&nbsp;Panneau du Maître du Jeu
+        </a>
+    </div>
+{% endif %}
 
 <div id="barre-navigation" class="container-fluid bg-dark">
     <div class="container">

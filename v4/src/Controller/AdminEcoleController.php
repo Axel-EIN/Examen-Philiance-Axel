@@ -31,7 +31,7 @@ class AdminEcoleController extends AbstractController
 
      /**
      * @Route("/admin/ecole/create", name="admin_ecole_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function ajouterEcole(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
@@ -67,7 +67,7 @@ class AdminEcoleController extends AbstractController
 
     /**
      * @Route("/admin/ecole/{id}/edit", name="admin_ecole_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerEcole(Request $request, Ecole $ecole, Uploader $uploadeur): Response {
 
@@ -111,7 +111,7 @@ class AdminEcoleController extends AbstractController
 
     /**
      * @Route("/admin/ecole/{id}/delete", name="admin_ecole_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerEcole(Request $request, Ecole $ecole): Response {
 

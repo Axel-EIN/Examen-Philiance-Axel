@@ -32,16 +32,16 @@ class AdminClanController extends AbstractController
 
     /**
      * @Route("/admin/clan/create", name="admin_clan_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function ajouterClan(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
         // // Première manière de faire : DENYACCESS redirige vers page erreur 500 automatiquement
-        // $this->denyAccessUnlessGranted('ROLE_ADMIN'); // Test si Admin sinon affiche 500
+        // $this->denyAccessUnlessGranted('ROLE_MJ'); // Test si Admin sinon affiche 500
         // $this->denyAccessUnlessGranted('ROLE_JOUEUR'); // Puis test si Joueur sinon affiche 500
 
         // // Deuxième manière de faire : ISGRANTED renvoi true, false donc on peut faire de la logique comme on veut
-        // if( !$this->isGranted('ROLE_ADMIN') || !$this->isGranted('ROLE_JOUEUR') ) // Ici on test si l'un ou l'autre renvoi faux on redirige vers une autre page de notre choix
+        // if( !$this->isGranted('ROLE_MJ') || !$this->isGranted('ROLE_JOUEUR') ) // Ici on test si l'un ou l'autre renvoi faux on redirige vers une autre page de notre choix
         //     return $this->redirectToRoute('admin_clan');
 
         $clan = new Clan;
@@ -74,7 +74,7 @@ class AdminClanController extends AbstractController
 
     /**
      * @Route("/admin/clan/{id}/edit", name="admin_clan_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerClan(Request $request, Clan $clan, Uploader $uploadeur): Response {
 
@@ -116,7 +116,7 @@ class AdminClanController extends AbstractController
 
     /**
      * @Route("/admin/clan/{id}/delete", name="admin_clan_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerClan(Request $request, Clan $clan): Response {
 

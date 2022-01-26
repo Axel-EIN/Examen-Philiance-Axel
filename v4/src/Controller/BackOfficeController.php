@@ -24,7 +24,6 @@ class BackOfficeController extends AbstractController
 {
     /**
      * @Route("/back-office", name="back_office")
-     * @IsGranted("ROLE_ADMIN")
      */
     public function afficherBackOffice(SaisonRepository $saisonRepository,
                                        ChapitreRepository $chapitreRepository,
@@ -40,6 +39,9 @@ class BackOfficeController extends AbstractController
                                        FichePersonnageRepository $fichePersonnageRepository
                                        ): Response
     {
+
+        if( !$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MJ') ) // Si pas Admin ou pas MJ alors redirection
+            throw new \Exception('Permission denied!');
 
         $nbrSaisons = $saisonRepository->countSaisons();
         $dernierSaison = $saisonRepository->findOneBy(array(),array('id' => 'DESC'));
@@ -74,11 +76,11 @@ class BackOfficeController extends AbstractController
         $nbrPNJs = $personnageRepository->countPNJs();
         $dernierPNJ = $personnageRepository->findOneBy(array("est_pj" => "0"),array('id' => 'DESC'));
 
-        $nbrUtilisateurs = $utilisateurRepository->countUtilisateurs();
-        $dernierUtilisateur = $utilisateurRepository->findOneBy(array(),array('id' => 'DESC'));
-
         $nbrFiches = $fichePersonnageRepository->countFiches();
         $derniereFiche = $fichePersonnageRepository->findOneBy(array(),array('id' => 'DESC'));
+
+        $nbrUtilisateurs = $utilisateurRepository->countUtilisateurs();
+        $dernierUtilisateur = $utilisateurRepository->findOneBy(array(),array('id' => 'DESC'));
 
         return $this->render('back_office/index.html.twig', [
             'controller_name' => 'BackOfficeController',

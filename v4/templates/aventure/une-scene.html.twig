@@ -56,7 +56,7 @@
     </div>
 
     <!-- ADMIN - MODIFIER | SUPRIMER -->
-    {% if is_granted("ROLE_ADMIN") %}
+    {% if is_granted("ROLE_MJ") %}
         <div class="d-flex justify-content-center mt-3">
             <div class="col col-lg-2 text-right">
                 <a href="{{ path('admin_scene_edit', {id:une_scene.id} ) }}"><i class="fas fa-edit"></i>&nbsp;&nbsp;Modifier</a>

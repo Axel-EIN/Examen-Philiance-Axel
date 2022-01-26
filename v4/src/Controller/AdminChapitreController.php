@@ -18,7 +18,7 @@ class AdminChapitreController extends AbstractController
 {
     /**
      * @Route("/admin/chapitre", name="admin_chapitre")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function afficherAdminChapitres(ChapitreRepository $chapitreRepository): Response
     {
@@ -31,7 +31,7 @@ class AdminChapitreController extends AbstractController
 
     /**
      * @Route("/admin/chapitre/create", name="admin_chapitre_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function creerChapitre(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
@@ -65,7 +65,7 @@ class AdminChapitreController extends AbstractController
 
     /**
      * @Route("/admin/chapitre/{id}/edit", name="admin_chapitre_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerChapitre(Request $request, Chapitre $chapitre, Uploader $uploadeur): Response {
 
@@ -107,7 +107,7 @@ class AdminChapitreController extends AbstractController
 
     /**
      * @Route("/admin/chapitre/{id}/delete", name="admin_chapitre_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerChapitre(Request $request, Chapitre $chapitre): Response {
         if ($this->isCsrfTokenValid('delete' . $chapitre->getId(), $request->query->get('csrf'))) {

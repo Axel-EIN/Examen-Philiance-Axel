@@ -19,7 +19,7 @@ class AdminSaisonController extends AbstractController
 {
     /**
      * @Route("/admin/saison", name="admin_saison")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function afficherAdminSaisons(SaisonRepository $saisonRepository): Response {
 
@@ -32,7 +32,7 @@ class AdminSaisonController extends AbstractController
 
     /**
      * @Route("/admin/saison/create", name="admin_saison_create")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function creerSaison(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
@@ -66,7 +66,7 @@ class AdminSaisonController extends AbstractController
 
     /**
      * @Route("/admin/saison/{id}/edit", name="admin_saison_edit")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function editerSaison(Request $request, Saison $saison, Uploader $uploadeur): Response {
 
@@ -109,7 +109,7 @@ class AdminSaisonController extends AbstractController
 
     /**
      * @Route("/admin/saison/{id}/delete", name="admin_saison_delete", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_MJ")
      */
     public function supprimerSaison(Request $request, Saison $saison): Response {
         if ($this->isCsrfTokenValid('delete' . $saison->getId(), $request->query->get('csrf'))) {

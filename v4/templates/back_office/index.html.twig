@@ -6,14 +6,14 @@
 
 <main class="container-fluid bg-light page-min">
     <div class="container py-5">
-        <h1 class="text-center">{% block h1 %}Bienvenue dans le Panneau d'Administration !{% endblock %}</h1>
+        <h1 class="text-center">{% block h1 %}Bienvenue dans le Panneau {% if is_granted("ROLE_ADMIN") %}d'Administration{% else %}du Maître du Jeu{% endif %} !{% endblock %}</h1>
 
         {{ include('back_office/admin-nav.html.twig') }}
         {{ include('parts/messages-flashes.html.twig') }}
 
         {% block child %}
 
-
+{% if is_granted("ROLE_MJ") %}
         {# AVENTURE #}
         <h2 class="mt-5">Aventure</h2>
         <hr>
@@ -256,9 +256,9 @@
         </section>
 
         {# PERSONNAGES #}
-        <h2 class="mt-5">Personnages et Utilisateurs</h2>
+        <h2 class="mt-5">Personnages</h2>
         <hr>
-        <p class="mb-4 text-muted">Voici le tableau de bord relatif aux personnages et utilisateurs.</p>
+        <p class="mb-4 text-muted">Voici le tableau de bord relatif aux personnages.</p>
         <section class="row">
 
             {# PERSONNAGES JOUEURS #}
@@ -339,6 +339,18 @@
                 </article>
             </div>
 
+        </section>
+
+{% endif %}
+
+{% if is_granted("ROLE_ADMIN") %}
+
+        {# UTILISATEURS #}
+        <h2 class="mt-5">Comptes Utilisateurs</h2>
+        <hr>
+        <p class="mb-4 text-muted">Voici le tableau de bord relatif aux comptes utilisateurs.</p>
+        <section class="row">
+
             {# UTILISATEURS #}
             <div class="col-lg-3 col-12 px-2">
                 <article class="border p-3 bg-white d-flex flex-column h-100">
@@ -366,6 +378,8 @@
             </div>
 
         </section>
+
+{% endif %}
 
         {% endblock %}
 

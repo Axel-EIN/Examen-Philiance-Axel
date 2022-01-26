@@ -19,6 +19,7 @@ class AdminUtilisateurController extends AbstractController
 {
     /**
      * @Route("/admin/utilisateur", name="admin_utilisateur")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function afficherUtilisateurs(UtilisateurRepository $utilisateurRepository): Response
     {
