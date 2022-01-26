@@ -41,7 +41,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             new PasswordCredentials($request->request->get('password', '')),
             [
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-                new RememberMeBadge(), // add this to make RememberMe Cookie working on Symfony 5.3
+                // new RememberMeBadge(), // add this to make RememberMe Cookie working on Symfony 5.3
             ]
         );
     }
