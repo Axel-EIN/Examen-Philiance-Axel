@@ -35,6 +35,10 @@ class LoginController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        // On crée le message flash pour la gestion de l'erreur
+        if ($error !== null)
+            $this->addFlash('danger', $error->getMessage());
+
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
@@ -147,7 +151,7 @@ class LoginController extends AbstractController
             $entityManager->flush();
 
             // On crée le message flash
-            $this->addFlash('message', 'Mot de passe mis à jour');
+            $this->addFlash('success', 'Mot de passe mis à jour');
 
             // On redirige vers la page de connexion
             return $this->redirectToRoute('app_login');
