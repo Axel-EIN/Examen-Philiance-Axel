@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Politique de Confidentialité {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <main class="container-fluid bg-light">
+        <section class="container">
+
+            <nav class="pt-3">
+                <span class="text-muted">
+                    <a href="{{ path('aventure') }}">
+                        <i class="fas fa-home"></i></a>
+                        > <a href="{{ path('politique_confidentialite') }}"><strong>Politique de Confidentialité</strong></a>
+                </span>
+            </nav>
+
+            <h1 class="pt-3 mb-3">
+                <strong>Politique de Confidentialité</strong>
+            </h1>
+
+            <h2>Introduction</h2>
+
+            <p class="ml-4">Dans le cadre de son activité, le site AXL-JDR, est amenée à collecter et à traiter des informations dont certaines sont qualifiées de "données personnelles". Le site AXL-JDR attache une grande importance au respect de la vie privée, et n’utilise que des donnes de manière responsable et confidentielle et dans une finalité précise.</p>
+
+            <h2>Données personnelles</h2>
+
+            <p class="ml-4">Sur le site web AXL-JDR, il y a 2 types de données susceptibles d’être recueillies :</p>
+            <ul>
+                <li><strong>Les données transmises directement</strong>
+                Ces données sont celles que vous nous transmettez directement, via un formulaire de contact ou bien par contact direct par email. Sont obligatoires dans le formulaire de contact le champs « prénom et nom », « entreprise ou organisation » et « email ».</li>
+                <li><strong>Les données collectées automatiquement</strong>
+                Lors de vos visites, une fois votre consentement donné, nous pouvons recueillir des informations de type « web analytics » relatives à votre navigation, la durée de votre consultation, votre adresse IP, votre type et version de navigateur. <!-- La technologie utilisée est le cookie. --></li>
+            </ul>
+
+            <h2>Utilisation des données</h2>
+
+            <p class="ml-4">Les données que vous nous transmettez directement sont utilisées dans le but de vous re-contacter et/ou dans le cadre de la demande que vous nous faites. Les données « web analytics » sont collectées de forme anonyme (en enregistrant des adresses IP anonymes) par Google Analytics, et nous permettent de mesurer l'audience de notre site web, les consultations et les éventuelles erreurs afin d’améliorer constamment l’expérience des utilisateurs. Ces données sont utilisées par AXL-JDR, responsable du traitement des données, et ne seront jamais cédées à un tiers ni utilisées à d’autres fins que celles détaillées ci-dessus.</p>
+
+            <h2>Base légale</h2>
+
+            <p class="ml-4">Les données personnelles ne sont collectées qu’après consentement obligatoire de l’utilisateur. Ce consentement est valablement recueilli (boutons et cases à cocher), libre, clair et sans équivoque.</p>
+
+            <h2>Durée de conservation</h2>
+
+            <p class="ml-4">Les données seront sauvegardées durant une durée maximale de 3 ans.</p>
+
+
+            <!-- <h2>Cookies</h2>
+
+            <p class="ml-4">Voici la liste des cookies utilisées et leur objectif :
+                Cookies Google Analytics (liste exhaustive) : Web analytics
+                [Nom du cookie] : Permet de garder en mémoire le fait que vous acceptez les cookies afin de ne plus vous importuner lors de votre prochaine visite.</p> -->
+
+            <h2>Vos droits concernant les données personnelles</h2>
+
+            <p class="ml-4">Vous avez le droit de consultation, demande de modification ou d’effacement sur l’ensemble de vos données personnelles. Vous pouvez également retirer votre consentement au traitement de vos données.</p>
+
+            <h2>Contact délégué à la protection des données</h2>
+
+            <p class="ml-4">ÖNÇÜ-TURAN Axel - Veuillez utiliser le <a href="{{ path('contact') }}">formulaire de contact</a> pour me joindre</p>
+
+        </section>
+    </main>
+
+{% endblock %}

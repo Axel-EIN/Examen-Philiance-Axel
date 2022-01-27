@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions Légales {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <main class="container-fluid bg-light">
+        <section class="container">
+
+            <nav class="pt-3">
+                <span class="text-muted">
+                    <a href="{{ path('aventure') }}">
+                        <i class="fas fa-home"></i></a>
+                        > <a href="{{ path('politique_confidentialite') }}"><strong>Mentions Légales</strong></a>
+                </span>
+            </nav>
+
+            <h1 class="pt-3 mb-3">
+                <strong>Mentions Légales</strong>
+            </h1>
+
+            <h2>Identité</h2>
+            <p class="ml-4">
+                Nom du site web : AXL-JDR<br/>
+                Adresse : https://exam.axl-design.me<br/>
+                Propriétaire : Axel ÖNÇÜ-TURAN<br/>
+                Responsable de publication : Axel ÖNÇÜ-TURAN<br/>
+            </p>
+
+            <h2>Identité</h2>
+            <p class="ml-4">
+                Nom du site web : AXL-JDR<br/>
+                Adresse : https://exam.axl-design.me<br/>
+                Propriétaire : Axel ÖNÇÜ-TURAN<br/>
+                Responsable de publication : Axel ÖNÇÜ-TURAN<br/>
+                <br/>
+                Conception et réalisation : Axel ÖNÇÜ-TURAN<br/>
+                Animation : Axel ÖNÇÜ-TURAN<br/>
+                Hébergement : OVH<br/>
+            </p>
+
+            <h2>Conditions d’utilisation</h2>
+            <p class="ml-4">L’utilisation du présent site implique l’acceptation pleine et entière des conditions générales d’utilisation décrites ci-après. Ces conditions d’utilisation sont susceptibles d’être modifiées ou complétées à tout moment.</p>
+
+            <h2>Informations</h2>
+            <p class="ml-4">Les informations et documents du site sont présentés à titre indicatif, n’ont pas de caractère exhaustif, et ne peuvent engager la responsabilité du propriétaire du site.<br/><br/>
+            Le propriétaire du site ne peut être tenu responsable des dommages directs et indirects consécutifs à l’accès au site.</p>
+
+            <h2>Interactivité</h2>
+            <p class="ml-4">Les utilisateurs du site peuvent y déposer du contenu, apparaissant sur le site dans des espaces dédiés (notamment via les commentaires). Le contenu déposé reste sous la responsabilité de leurs auteurs, qui en assument pleinement l’entière responsabilité juridique.<br/><br/>
+            Le propriétaire du site se réserve néanmoins le droit de retirer sans préavis et sans justification tout contenu déposé par les utilisateurs qui ne satisferait pas à la charte déontologique du site ou à la législation en vigueur.</p>
+
+            <h2>Propriété intellectuelle</h2>
+            <p class="ml-4">Sauf mention contraire, tous les éléments accessibles sur le site (textes, images, graphismes, logo, icônes, sons, logiciels, etc.) restent la propriété exclusive de leurs auteurs, en ce qui concerne les droits de propriété intellectuelle ou les droits d’usage. <span id="1" class="text-muted small">1</span><br/><br/>
+            Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation écrite préalable de l’auteur.<span id="2" class="text-muted small">2</span><span id="3" class="text-muted small">3</span><br/><br/>
+            Toute exploitation non autorisée du site ou de l’un quelconque des éléments qu’il contient est considérée comme constitutive d’une contrefaçon et passible de poursuites. <span id="4" class="text-muted small">4</span><br/><br/>
+            Les marques et logos reproduits sur le site sont déposés par les sociétés qui en sont propriétaires.</p>
+
+            <h2>Liens</h2>
+            <strong>Liens sortants</strong><br/>
+            <p class="ml-4">Le propriétaire du site décline toute responsabilité et n’est pas engagé par le référencement via des liens hypertextes, de ressources tierces présentes sur le réseau Internet, tant en ce qui concerne leur contenu que leur pertinence.</p>
+            <strong>Liens entrants</strong><br/>
+            <p class="ml-4">Le propriétaire du site autorise les liens hypertextes vers l’une des pages de ce site, à condition que ceux-ci ouvrent une nouvelle fenêtre et soient présentés de manière non équivoque afin d’éviter :</p>
+            <ul>
+                <li>Tout risque de confusion entre le site citant et le propriétaire du site.</li>
+                <li>Ainsi que toute présentation tendancieuse, ou contraire aux lois en vigueur.</li>
+            </ul>
+            <p class="ml-4">Le propriétaire du site se réserve le droit de demander la suppression d’un lien s’il estime que le site source ne respecte pas les règles ainsi définies.</p>
+
+            <h2>Confidentialité</h2>
+            <p class="ml-4">Tout utilisateur dispose d’un droit d’accès, de rectification et d’opposition aux données personnelles le concernant, en effectuant sa demande écrite et signée, accompagnée d’une preuve d’identité. <span id="5" class="text-muted small">5</span> <span id="6" class="text-muted small">6</span> <span id="7" class="text-muted small">7</span> <span id="8" class="text-muted small">8</span><br/><br/>
+            Le site ne recueille pas d’informations personnelles, et n’est pas assujetti à déclaration à la CNIL. <span id="9" class="text-muted small">9</span></p>
+
+            <h2>Crédits</h2>
+            <p class="ml-4">Mentions légales fournies par WebExpress – Version 1.6 – Utilisation libre sous Licence Creative Commons CC BY-NC-ND 3.0 FR / creativecommons.org</p>
+
+            <hr></hr>
+
+            <p class="text-muted">
+            1. Articles L111-1 et suivants du Code de la Propriété Intellectuelle du 1er juillet 1992 <a href="#1">↩</a><br/>
+            2. Article 41 de la loi du 11 mars 1957 <a href="#2">↩</a><br/>
+            3. Article L. 226-13 du Code pénal et la Directive Européenne du 24 octobre 1995 <a href="#3">↩</a><br/>
+            4. Articles L.335-2 et suivants du Code de Propriété Intellectuelle <a href="#4">↩</a><br/>
+            5. Loi n° 78-87 du 6 janvier 1978, modifiée par la loi n° 2004-801 du 6 août 2004, relative à l’informatique, aux fichiers et aux libertés <a href="#5">↩</a><br/>
+            6. Articles 38 et suivants de la loi 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés <a href="#6">↩</a><br/>
+            7. Loi du 1er juillet 1998 transposant la directive 96/9 du 11 mars 1996 relative à la protection juridique des bases de données <a href="#7">↩</a><br/>
+            8. Loi n° 2004-801 du 6 août 2004 <a href="#8">↩</a><br/>
+            9. Article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique<a href="#9">↩</a></p>
+
+        </section>
+    </main>
+
+{% endblock %}
