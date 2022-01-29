@@ -7,13 +7,16 @@
 <header class="en-tete-fond" style="background-image: linear-gradient(rgb(40,0,0,0.5),rgb(40,0,0,0.5)),url('{{ asset(saison.image) }}');">
     <div class="container">
         <div class="en-tete">
+            <div class="volatile">
+                {{ include('/parts/messages-flashes.html.twig') }}
+            </div>
             <div class="text-center d-flex justify-content-center">
                 <!-- PRECEDENT -->
                 <div class="flex-grow-1 my-auto">
                     <div class="fleche text-center mr-2 ml-auto">
-{% if saison_precedente is not empty %}
-                        <a class="text-light" href="{{ path('aventure_saison', {numero : (saison_precedente.numero) } ) }}">{{ source('icons/chevron-left-solid.svg') }}</a>
-{% endif %}
+                    {% if saison_precedente is not empty %}
+                        <a class="text-light" href="{{ path('aventure_saison', {id : (saison_precedente.id) } ) }}">{{ source('icons/chevron-left-solid.svg') }}</a>
+                    {% endif %}
                     </div>
                 </div>
                 <!-- EN COURS -->
@@ -21,14 +24,24 @@
                 <!-- SUIVANTE -->
                 <div class="flex-grow-1 my-auto">
                     <div class="fleche text-center mr-auto">
-{% if saison_suivante is not empty %}
-                        <a class="text-light" href="{{ path('aventure_saison', {numero : (saison_suivante.numero) } ) }}">{{ source('icons/chevron-right-solid.svg') }}</a>
-{% endif %}
+                    {% if saison_suivante is not empty %}
+                        <a class="text-light" href="{{ path('aventure_saison', {id : (saison_suivante.id) } ) }}">{{ source('icons/chevron-right-solid.svg') }}</a>
+                    {% endif %}
                     </div>
                 </div>
             </div>
             <hr class="w-50">     
             <h1 class="stylise grand">{{ saison.titre|stylise|raw }}</h1>
+
+            <!-- ADMIN : MODIFIER / SUPPRIMER -->
+            {% if is_granted("ROLE_MJ") %}
+                <div class="btn-mj">
+                    <a class="text-light mx-2" href="{{ path('admin_saison_edit', {id:saison.id}) }}?redirect=aventure"><i class="fas fa-edit"></i></a>
+                    <a class="text-light mx-2" href="{{ path('admin_saison_create') }}?numero={{(last_numero)+1}}&redirect=aventure"><i class="fas fa-plus-square"></i></a>
+                    <a class="text-light mx-2" href="{{ path('admin_saison_delete', {id:saison.id}) }}?csrf={{ csrf_token('delete' ~ saison.id) }}&redirect=aventure" onclick="return confirm('Êtes-vous sûr de vouloir supprimer la saison : {{ saison.titre }} ?')"><i class="fas fa-trash-alt"></i></a>
+                </div>
+            {% endif %}
+
         </div>
     </div>
 </header>
@@ -41,16 +54,42 @@
         </div>
     </div>
 
+{% set numero = 0 %}
 {% for un_chapitre in saison.chapitres %}
-{{ include('/aventure/un-chapitre.html.twig') }}
-<!-- SEPARATEUR -->
-<div class="chapitre-separateur text-center"></div>
-{% else %}
-<div class="chapitre-separateur text-center">
-    <div class="alert alert-light mx-auto persistante mt-3 mb-3">
-        <strong>Désolé il n'y a pas encore de Chapitre !</strong>
+
+    <!-- SEPARATEUR -->
+    <div class="chapitre-separateur text-center">
+
+        <!-- BTN MJ | INSERER CHAPITRE -->
+        {% if is_granted("ROLE_MJ") %}
+            {% set numero = un_chapitre.numero %}
+            {{ include('/parts/btn-inserer-chapitre.html.twig') }}
+        {% endif %}
+        
     </div>
-</div>  
+
+    {{ include('/aventure/un-chapitre.html.twig') }}
+
+{% else %}
+
+    <div class="chapitre-separateur text-center">
+        <div class="alert alert-light mx-auto persistante mt-3 mb-3">
+            <strong>Désolé il n'y a pas encore de Chapitre dans cette Saison !</strong>
+        </div>
+    </div>
+
 {% endfor %}
+
+    <div class="chapitre-separateur text-center">
+
+        <!-- BTN MJ | INSERER CHAPITRE -->
+        {% if is_granted("ROLE_MJ") %}
+            {% set numero = numero + 1 %}
+            {{ include('/parts/btn-inserer-chapitre.html.twig') }}
+        {% endif %}
+
+    </div>
+
 </main>
+
 {% endblock %}

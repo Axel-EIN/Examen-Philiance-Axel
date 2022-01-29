@@ -15,6 +15,9 @@ class AdminSaisonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        if (empty($options['data']->getNumero()))
+            $options['data']->setNumero(1);
+
         $builder
             ->add('numero', IntegerType::class)
             ->add('titre', TextType::class)

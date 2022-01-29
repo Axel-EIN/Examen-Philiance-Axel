@@ -33,7 +33,7 @@
                     </td>
                     <td class="p-2 border text-center"><strong>{{ une_scene.titre }}</strong></td>
                     <td class="p-2 border text-center">
-                        <a href="{{ path('aventure_episode', { id: une_scene.episodeParent.id, '_fragment': 'scn' ~ une_scene.numero  }) }}"><i class="fas fa-eye"></i></a>
+                        <a href="{{ path('aventure_episode', { id: une_scene.episodeParent.id, '_fragment': 'scn' ~ une_scene.id }) }}"><i class="fas fa-eye"></i></a>
                     </td>
                 </tr>
                 <tr class="bg-white">

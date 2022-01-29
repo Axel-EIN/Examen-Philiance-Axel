@@ -1,4 +1,14 @@
-<article id="scn{{ une_scene.numero }}" class="mb-3 ancre-relatif">
+{% if is_granted("ROLE_MJ") %}
+    <div class="d-flex justify-content-center mt-3">
+        <div class="text-right mb-3">
+            <a href="{{ path('admin_scene_create') }}?numero={{une_scene.numero}}&episodeID={{une_scene.episodeParent.id}}&redirect=aventure">
+                <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Insérer une Scène
+            </a>
+        </div>
+    </div>    
+{% endif %}
+
+<article id="scn{{ une_scene.id }}" class="mb-3 ancre-relatif">
 
     <div class="fond-masque">
         <img src="{{ asset(une_scene.image) }}" class="card-img-top img-fluid" alt="Image d'une scène">
@@ -55,17 +65,17 @@
 
     </div>
 
-    <!-- ADMIN - MODIFIER | SUPRIMER -->
+    <!-- MJ - MODIFIER | SUPRIMER -->
     {% if is_granted("ROLE_MJ") %}
         <div class="d-flex justify-content-center mt-3">
             <div class="col col-lg-2 text-right">
-                <a href="{{ path('admin_scene_edit', {id:une_scene.id} ) }}"><i class="fas fa-edit"></i>&nbsp;&nbsp;Modifier</a>
+                <a href="{{ path('admin_scene_edit', {id:une_scene.id} ) }}?redirect=episode"><i class="fas fa-edit"></i>&nbsp;&nbsp;Modifier</a>
             </div>
             <div>
                 &nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div class="col col-lg-2 text-left">
-                <a  href="{{ path('admin_scene_delete', {id: une_scene.id} ) }}?csrf={{ csrf_token('delete' ~ une_scene.id) }}"
+                <a  href="{{ path('admin_scene_delete', {id: une_scene.id} ) }}?csrf={{ csrf_token('delete' ~ une_scene.id) }}&redirect=episode"
                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer la scène : {{une_scene.titre}} ?')">
                         <i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Supprimer
                 </a>

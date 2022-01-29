@@ -1,15 +1,43 @@
-{% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ message }}
-    </div>
-{% endfor %}
 {% for message in app.flashes('warning') %}
-    <div class="alert alert-warning">
+    <div class="alert alert-message alert-dismissible fade show mx-auto" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Fermer</span>
+        </button>
+        <strong>Notification :</strong>
         {{ message }}
     </div>
 {% endfor %}
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success alert-dismissible fade show mx-auto" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Fermer</span>
+        </button>
+        <strong>Succès !</strong>
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('warning') %}
+    <div class="alert alert-warning alert-dismissible fade show mx-auto" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Fermer</span>
+        </button>
+        <strong>Attention :</strong>
+        {{ message }}
+    </div>
+{% endfor %}
+
 {% for message in app.flashes('danger') %}
-    <div class="alert alert-danger">
+    <div class="alert alert-danger alert-dismissible fade show mx-auto" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Fermer</span>
+        </button>
+        <strong>Erreur !</strong>
         {{ message }}
     </div>
 {% endfor %}

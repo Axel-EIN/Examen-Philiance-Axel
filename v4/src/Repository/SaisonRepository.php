@@ -23,6 +23,7 @@ class SaisonRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->andWhere('s.numero = :value_numero')
             ->setParameter('value_numero', $numero-1)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
@@ -32,6 +33,7 @@ class SaisonRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->andWhere('s.numero = :value_numero')
             ->setParameter('value_numero', $numero+1)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;

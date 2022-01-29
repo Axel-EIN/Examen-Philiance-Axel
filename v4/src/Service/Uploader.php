@@ -36,6 +36,7 @@ class Uploader
         catch (FileException $e)
         {
             // ... handle exception if something happens during file upload
+            // ajouter flashbag et gestion de l'erreur (redirection)
         }
 
         return $nouveau_nomFichier;

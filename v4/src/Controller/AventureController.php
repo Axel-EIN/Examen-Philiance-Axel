@@ -18,21 +18,24 @@ class AventureController extends AbstractController
      */
     public function afficherAventure(SaisonRepository $saisonRepository): Response
     {
-        return $this->redirectToRoute('aventure_saison', [ 'numero' => 1 ]);
+        $premiereSaison = $saisonRepository->findOneBy(array(), array('numero' => 'ASC'));
+        return $this->redirectToRoute('aventure_saison', [ 'id' => $premiereSaison->getId() ]);
     }
 
     /**
-     * @Route("/aventure/{numero}", name="aventure_saison")
+     * @Route("/aventure/{id}", name="aventure_saison")
      */
     public function afficherSaison(Saison $saison, SaisonRepository $saisonRepository): Response
     {
         $precedent = $saisonRepository->findPrevious($saison->getNumero());
         $suivant = $saisonRepository->findNext($saison->getNumero());
+        $lastNumero = $saisonRepository->findOneBy(array(), array('numero' => 'DESC'))->getNumero();
 
         return $this->render('aventure/index.html.twig', [
             'saison' => $saison,
             'saison_precedente' => $precedent,
             'saison_suivante' => $suivant,
+            'last_numero' => $lastNumero
         ]);
     }
 
@@ -41,8 +44,8 @@ class AventureController extends AbstractController
      */
     public function afficherEpisode(Episode $episode, EpisodeRepository $episodeRepository, PersonnageRepository $personnageRepository): Response
     {
-        $precedent = $episodeRepository->findPrevious($episode->getNumero());
-        $suivant = $episodeRepository->findNext($episode->getNumero());
+        $precedent = $episodeRepository->findPrevious($episode->getChapitreParent()->getId(), $episode->getNumero());
+        $suivant = $episodeRepository->findNext($episode->getChapitreParent()->getId(), $episode->getNumero());
 
         $episode_participations = [];
         $episode_personnages_id = [];

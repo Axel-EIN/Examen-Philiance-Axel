@@ -1,15 +1,18 @@
 <main class="offset-2 col-8">
     {{ form_start(form) }}
-        {{ form_row(form.numero) }}
         {{ form_row(form.titre) }}
+        {{ form_row(form.image) }}
+
         {% if type != 'Créer' %}
             <img class="img-fluid" src="{{ asset(saison.image) }}" />
         {% endif %}
-        {{ form_row(form.image) }}
+
         {{ form_row(form.couleur) }}
-            {{ form_widget(form) }}
-            <div class="text-center">
-                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-            </div>
+        {{ form_row(form.numero) }}
+
+        <div class="text-center">
+            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+        </div>
+        
     {{ form_end(form) }}
 </main>

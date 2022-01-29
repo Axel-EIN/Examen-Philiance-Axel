@@ -83,6 +83,36 @@ nav .active { font-weight: bold; }
 .btn-primary.disabled { background-color: #b4b4b4;
                         border-color: #9f9f9f; }
 
+.btn-mj {
+        font-size: 2rem;
+        position: absolute;
+        top: 8px;
+        right: 0px;
+}
+
+.btn-card-mj {
+        font-size: 8rem;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+}
+
+.btn-card-mj a:hover {
+        text-decoration: none;        
+}
+
+.btn-mj-episode {
+        font-size: 1.5rem;
+        position: absolute;
+        padding: 4px;
+        top: 0px;
+        right: 0px;
+        z-index: 100;
+        background-color: rgba(180, 0, 0, 0.67);
+        border-radius: 0px 2px 0px 8px;
+}
 
 /* -------------------------------  */
 /* HEADERS                          */
@@ -223,7 +253,8 @@ nav .active { font-weight: bold; }
 .volatile {
         position: absolute;
         left: 50%; top: 0px;
-        transform: translate(-50%, -50%); }
+        transform: translate(-50%, -50%);
+        z-index: 100; }
 
 .persistante {
         font-size: 1rem;

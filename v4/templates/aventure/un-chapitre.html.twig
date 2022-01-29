@@ -3,32 +3,66 @@
         <div class="sous-en-tete d-flex flex-column justify-content-end" >
             <h2 class="pre-titre-chapitre text-left">CHAPITRE {{ un_chapitre.numero }}</h2>
             <div><hr></div>
+
+            <!-- BTN - MODIFIER / SUPPRIMER -->
+            {% if is_granted("ROLE_MJ") %}
+                <small>
+                    <div class="header-btn d-flex justify-content-end mr-3 btn-mj">
+                            <a href="{{ path('admin_chapitre_edit', {id:un_chapitre.id}) }}?redirect=aventure" class="text-light">
+                                <i class="fas fa-edit"></i></a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="{{ path('admin_chapitre_delete', {id:un_chapitre.id}) }}?csrf={{ csrf_token('delete' ~ un_chapitre.id) }}&redirect=aventure"
+                            class="text-light" onclick="return confirm('Êtes-vous sûr de vouloir supprimer le chapitre : {{ un_chapitre.titre }} ?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                    </div>
+                </small>
+            {% endif %}
+
             <div class="mt-auto mb-3">
-                <h2 id="tete-lecture-ch{{ un_chapitre.numero }}" class="stylise grand">{{ un_chapitre.titre|stylise|raw }}</h2>
+                <h2 id="tete-lecture-ch-id{{ un_chapitre.id }}" class="stylise grand">{{ un_chapitre.titre|stylise|raw }}</h2>
                 <p class="citation">{{ un_chapitre.citation|nl2br }}</p>
-{% if un_chapitre.episodes is not empty %}
+            {% if un_chapitre.episodes is not empty %}
                 <div class="mx-auto mb-2">
-                    <a href="#tete-lecture-ch{{ un_chapitre.numero }}" class="btn btn-primary btn-lg text-center" data-toggle="collapse"
+                    <a href="#tete-lecture-ch-id{{ un_chapitre.numero }}" class="btn btn-primary btn-lg text-center" data-toggle="collapse"
                             data-target="#ch{{ un_chapitre.numero }}-episodes" aria-controls="ch{{ un_chapitre.numero }}-episodes"
                             aria-expanded="true" aria-label="Toggle Chapitre {{ un_chapitre.numero }} Episodes">
                                 Voir les Episodes
                     </a>
                 </div>
-{% else %}
+            {% else %}
                 <div class="alert alert-light mx-auto persistante">
-                    <strong>Pas encore d'épisode disponible !</strong>
+                    <strong>Pas encore d'épisode disponible !</strong>&nbsp;&nbsp;
+                    {% if is_granted("ROLE_MJ") %}
+                        <a class="text-light" href="{{path('admin_episode_create')}}?numero=1&chapitreID={{un_chapitre.id}}&redirect=aventure">
+                            <i class="fas fa-plus-square"></i>&nbsp;&nbsp;<strong>Ajouter un Épisode</strong>
+                        </a>
+                    {% endif %}
                 </div>
-{% endif %}
+            {% endif %}
             </div>
         </div>
 
          <!-- EPISODES -->
-        <div id="ch{{ un_chapitre.numero }}-episodes" class="collapse">
+        <div id="ch{{ un_chapitre.numero }}-episodes" class="collapse pb-5">
             <div class="container">
                 <div class="row justify-content-center">
-{% for un_episode in un_chapitre.episodes %}
-                    <article class="col-lg-3 col-md-4 col-sm-6 order-8 episode-card">
+                {% set dernierEpisodeNumero = 1 %}
+                {% for un_episode in un_chapitre.episodes %}
+
+                    {% set dernierEpisodeNumero = un_episode.numero %}
+                    <article class="col-lg-3 col-md-4 col-sm-6 episode-card">
+
                         <div class="card episode-card-liste">
+
+                            <!-- BTN - MJ -->
+                            {% if is_granted("ROLE_MJ") %}
+                                <div class="btn-mj-episode">
+                                    <a class="text-light mx-2" href="{{ path('admin_episode_edit', {id:un_episode.id}) }}?redirect=aventure"><i class="fas fa-edit"></i></a>
+                                    <a class="text-light mx-2" href="{{ path('admin_episode_delete', {id:un_episode.id}) }}?csrf={{ csrf_token('delete' ~ un_episode.id) }}&redirect=aventure" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l'épisode : {{ un_episode.titre }} ?')"><i class="fas fa-trash-alt"></i></a>
+                                </div>
+                            {% endif %}
+
                             <div class="episode-card-numero">{{ un_episode.numero }}</div>
                             <div class="fond-masque">
                                 <a href="{{ path('aventure_episode', {id:un_episode.id} ) }}">
@@ -44,7 +78,18 @@
                             </div>
                         </div>
                     </article>
-{% endfor %}
+                {% endfor %}
+
+                <!-- BTN - MJ - AJOUTER UN EPISODE -->
+                {% if is_granted("ROLE_MJ") %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 order-8 episode-card btn-card-mj">
+                        <a class="text-light" href="{{path('admin_episode_create')}}?numero={{(dernierEpisodeNumero)+1}}&chapitreID={{un_chapitre.id}}&redirect=aventure">
+                            <i class="fas fa-plus-square"></i>
+                            <h4>Ajouter un épisode</h4>
+                        </a>
+                    </div>
+                {% endif %}
+
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Episode;
 use App\Service\Uploader;
 use App\Form\AdminEpisodeType;
+use App\Repository\ChapitreRepository;
 use App\Repository\EpisodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -33,9 +34,20 @@ class AdminEpisodeController extends AbstractController
      * @Route("/admin/episode/create", name="admin_episode_create")
      * @IsGranted("ROLE_MJ")
      */
-    public function creerEpisode(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
+    public function creerEpisode(Request $request, EntityManagerInterface $em, Uploader $uploadeur, ChapitreRepository $chapitreRepository) {
 
         $episode = new Episode;
+
+        if ( !empty($request->query->get('numero')) && $request->query->get('numero') > 0
+          && !empty($request->query->get('chapitreID')) && $request->query->get('chapitreID') > 0 )
+        {
+                $episode->setNumero($request->query->get('numero'));
+
+                $chapitreParent = $chapitreRepository->find($request->query->get('chapitreID'));
+                if ($chapitreParent !== null)
+                    $episode->setChapitreParent($chapitreParent);
+        }
+
         $form = $this->createForm(AdminEpisodeType::class, $episode);
         $form->handleRequest($request);
 
@@ -49,14 +61,18 @@ class AdminEpisodeController extends AbstractController
                     . '-ch' . $episode->getChapitreParent()->getNumero() . '-ep' . $episode->getNumero(), 'episodes');
                 $nouveauCheminRelatif = 'assets/img/episodes/' . $nouvelleImageNomFichier;
                 $episode->setImage($nouveauCheminRelatif);
-            } else { $episode->setImage('assets/img/placeholders/960x540.png'); }
+            } else { $episode->setImage('assets/img/placeholders/960x540.jpg'); }
 
             $em->persist($episode);
             $em->flush();
 
             $this->addFlash('success', 'L\'épisode a bien été crée !');
 
+            if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'aventure')
+                return $this->redirectToRoute('aventure_saison', ['id' => $episode->getChapitreParent()->getSaisonParent()->getId(),'_fragment' => 'tete-lecture-ch-id' . $episode->getChapitreParent()->getId()]);
+            
             return $this->redirectToRoute('admin_episode');
+
         } else {
             return $this->render('admin_episode/create.html.twig', [
                 'type' => 'Créer',
@@ -98,6 +114,9 @@ class AdminEpisodeController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'L\'épisode a bien été modifié !');
 
+            if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'aventure')
+                return $this->redirectToRoute('aventure_saison', ['id' => $episode->getChapitreParent()->getSaisonParent()->getId(),'_fragment' => 'tete-lecture-ch-id' . $episode->getChapitreParent()->getId()]);
+
             return $this->redirectToRoute('admin_episode', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -121,6 +140,8 @@ class AdminEpisodeController extends AbstractController
                 return $this->redirectToRoute('admin_episode', [], Response::HTTP_SEE_OTHER);
             }
 
+            $chapitreParent = $episode->getChapitreParent();
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $nomImageASupprimer = basename($episode->getImage());
@@ -134,8 +155,11 @@ class AdminEpisodeController extends AbstractController
             $entityManager->remove($episode);
             $entityManager->flush();
 
-            $this->addFlash('success', 'L\épisode a bien été supprimé !');
+            $this->addFlash('success', 'L\'épisode a bien été supprimé !');
         }
+
+        if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'aventure')
+            return $this->redirectToRoute('aventure_saison', ['id' => $chapitreParent->getSaisonParent()->getId(), '_fragment' => 'tete-lecture-ch-id' . $chapitreParent->getId()]);
 
         return $this->redirectToRoute('admin_episode', [], Response::HTTP_SEE_OTHER);
     }

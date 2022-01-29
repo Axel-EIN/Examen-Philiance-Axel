@@ -6,6 +6,7 @@ use App\Entity\Scene;
 use App\Service\Uploader;
 use App\Form\AdminSceneType;
 use App\Entity\Participation;
+use App\Repository\EpisodeRepository;
 use App\Repository\ParticipationRepository;
 use App\Repository\SceneRepository;
 use App\Repository\PersonnageRepository;
@@ -37,16 +38,23 @@ class AdminSceneController extends AbstractController
      * @Route("/admin/scene/create", name="admin_scene_create")
      * @IsGranted("ROLE_MJ")
      */
-    public function creerScene(
-                                Request $request,
-                                EntityManagerInterface $em,
-                                Uploader $uploadeur,
-                                PersonnageRepository $personnageRepository) {
+    public function creerScene(Request $request, EntityManagerInterface $em, Uploader $uploadeur, PersonnageRepository $personnageRepository, EpisodeRepository $episodeRepository) {
 
         $tout_pjs = $personnageRepository->findBy(array('est_pj' => true));
         $tout_pnjs = $personnageRepository->findBy(array('est_pj' => false));
 
         $scene = new Scene;
+
+        if ( !empty($request->query->get('numero')) && $request->query->get('numero') > 0
+        && !empty($request->query->get('episodeID')) && $request->query->get('episodeID') > 0 )
+        {
+                $scene->setNumero($request->query->get('numero'));
+
+                $episodeParent = $episodeRepository->find($request->query->get('episodeID'));
+                if ($episodeParent !== null)
+                    $scene->setEpisodeParent($episodeParent);
+        }
+
         $form = $this->createForm(AdminSceneType::class, $scene);
         $form->handleRequest($request);
 
@@ -62,7 +70,7 @@ class AdminSceneController extends AbstractController
                     . '-ep' . $scene->getEpisodeParent()->getNumero() . '-scn' . $scene->getNumero(), 'scenes');
                 $nouveauCheminRelatif = 'assets/img/scenes/' . $nouvelleImageNomFichier;
                 $scene->setImage($nouveauCheminRelatif);
-            } else { $scene->setImage('assets/img/placeholders/1280x720.png'); }
+            } else { $scene->setImage('assets/img/placeholders/1280x720.jpg'); }
 
             // Gestion des PARTICIPATIONS
             if(!empty($request->get('participants'))) {
@@ -163,7 +171,11 @@ class AdminSceneController extends AbstractController
 
             $this->addFlash('success', 'La scène a bien été crée !');
 
+            if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'episode')
+                return $this->redirectToRoute('aventure_episode', ['id' => $scene->getEpisodeParent()->getId(),'_fragment' => 'scn' . $scene->getId()]);
+        
             return $this->redirectToRoute('admin_scene');
+
         } else {
             return $this->render('admin_scene/create.html.twig', [
                 'type' => 'Créer',
@@ -178,12 +190,7 @@ class AdminSceneController extends AbstractController
      * @Route("/admin/scene/{id}/edit", name="admin_scene_edit")
      * @IsGranted("ROLE_MJ")
      */
-    public function editerScene(
-                                Request $request,
-                                Scene $scene,
-                                Uploader $uploadeur,
-                                PersonnageRepository $personnageRepository,
-                                ParticipationRepository $participationRepository): Response {
+    public function editerScene(Request $request, Scene $scene, Uploader $uploadeur, PersonnageRepository $personnageRepository, ParticipationRepository $participationRepository): Response {
 
         $tout_pjs = $personnageRepository->findBy(array('est_pj' => true));
         $tout_pnjs = $personnageRepository->findBy(array('est_pj' => false));
@@ -360,6 +367,9 @@ class AdminSceneController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'La scène a bien été modifiée !');
 
+            if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'episode')
+                return $this->redirectToRoute('aventure_episode', ['id' => $scene->getEpisodeParent()->getId(),'_fragment' => 'scn' . $scene->getId()]);
+    
             return $this->redirectToRoute('admin_scene', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -379,20 +389,34 @@ class AdminSceneController extends AbstractController
      * @IsGranted("ROLE_MJ")
      */
     public function supprimerScene(Request $request, Scene $scene): Response {
+
         if ($this->isCsrfTokenValid('delete' . $scene->getId(), $request->query->get('csrf'))) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $nomImageASupprimer = basename($scene->getImage());
+
+            $episodeParent = $scene->getEpisodeParent();
+
             if ($nomImageASupprimer != '1280x720.png') {
                 $cheminImageASupprimer = $this->getParameter('image_directory') . '/scenes/' . $nomImageASupprimer;
+
                 if (file_exists($cheminImageASupprimer)) {
                     $filesystem = new Filesystem();
                     $filesystem->remove($cheminImageASupprimer);
                 }
+
             }
+
             $entityManager->remove($scene);
             $entityManager->flush();
             $this->addFlash('success', 'La scène a bien été supprimée !');
+
         }
+
+        if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'episode')
+            return $this->redirectToRoute('aventure_episode', ['id' => $episodeParent->getId()]);
+
         return $this->redirectToRoute('admin_scene', [], Response::HTTP_SEE_OTHER);
+
     }
 }

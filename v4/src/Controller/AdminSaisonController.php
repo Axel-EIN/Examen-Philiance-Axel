@@ -37,6 +37,10 @@ class AdminSaisonController extends AbstractController
     public function creerSaison(Request $request, EntityManagerInterface $em, Uploader $uploadeur) {
 
         $saison = new Saison;
+
+        if (!empty($request->query->get('numero')) && $request->query->get('numero') > 0)
+            $saison->setNumero($request->query->get('numero'));
+
         $form = $this->createForm(AdminSaisonType::class, $saison);
         $form->handleRequest($request);
 
@@ -48,14 +52,18 @@ class AdminSaisonController extends AbstractController
                 $nouvelleImageNomFichier = $uploadeur->upload($nouvelleImage, 'saison-' . $saison->getNumero(), 'saisons');
                 $nouveauCheminRelatif = 'assets/img/saisons/' . $nouvelleImageNomFichier;
                 $saison->setImage($nouveauCheminRelatif);
-            } else { $saison->setImage('assets/img/placeholders/1980x1024.png'); }
+            } else { $saison->setImage('assets/img/placeholders/1920x1080.jpg'); }
 
             $em->persist($saison);
             $em->flush();
 
             $this->addFlash('success', 'La saison a bien été créee !');
 
+            if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'aventure')
+                return $this->redirectToRoute('aventure_saison', ['id' => $saison->getId()]);
+
             return $this->redirectToRoute('admin_saison');
+
         } else {
             return $this->render('admin_saison/create.html.twig', [
                 'type' => 'Créer',
@@ -71,7 +79,6 @@ class AdminSaisonController extends AbstractController
     public function editerSaison(Request $request, Saison $saison, Uploader $uploadeur): Response {
 
         $form = $this->createForm(AdminSaisonType::class, $saison);
-        
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
@@ -96,7 +103,11 @@ class AdminSaisonController extends AbstractController
 
             $this->addFlash('success', 'La saison a bien été modifiée !');
 
+            if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'aventure')
+                return $this->redirectToRoute('aventure_saison', ['id' => $saison->getId()]);
+            
             return $this->redirectToRoute('admin_saison', [], Response::HTTP_SEE_OTHER);
+
         }
 
         return $this->renderForm('admin_saison/edit.html.twig', [
@@ -112,6 +123,7 @@ class AdminSaisonController extends AbstractController
      * @IsGranted("ROLE_MJ")
      */
     public function supprimerSaison(Request $request, Saison $saison): Response {
+
         if ($this->isCsrfTokenValid('delete' . $saison->getId(), $request->query->get('csrf'))) {
 
             if (!$saison->getChapitres()->isEmpty()) {
@@ -133,7 +145,11 @@ class AdminSaisonController extends AbstractController
             }
 
             $this->addFlash('success', 'La saison a bien été supprimée !');
+
         }
+
+        if (!empty($request->query->get('redirect')) && $request->query->get('redirect') == 'aventure')
+            return $this->redirectToRoute('aventure', [], Response::HTTP_SEE_OTHER);
 
         return $this->redirectToRoute('admin_saison', [], Response::HTTP_SEE_OTHER);
     }
