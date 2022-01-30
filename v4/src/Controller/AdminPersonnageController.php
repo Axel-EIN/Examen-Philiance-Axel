@@ -129,7 +129,7 @@ class AdminPersonnageController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Le personnage a bien été modifié !');
 
-            return $this->redirectToRoute('admin_personnage', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_personnage');
         }
 
         return $this->renderForm('admin_personnage/edit.html.twig', [
@@ -171,6 +171,6 @@ class AdminPersonnageController extends AbstractController
             $this->addFlash('success', 'Le personnage a bien été supprimé !');
         }
 
-        return $this->redirectToRoute('admin_personnage', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_personnage');
     }
 }

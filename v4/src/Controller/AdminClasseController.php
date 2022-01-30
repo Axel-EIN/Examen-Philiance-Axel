@@ -92,7 +92,7 @@ class AdminClasseController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'La classe a bien été modifiée !');
 
-            return $this->redirectToRoute('admin_classe', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_classe');
         }
 
         return $this->renderForm('admin_classe/edit.html.twig', [
@@ -113,7 +113,7 @@ class AdminClasseController extends AbstractController
 
             if (!$classe->getEcoles()->isEmpty()) {
                 $this->addFlash('warning', 'Veuillez supprimer les écoles enfants au prélable !');
-                return $this->redirectToRoute('admin_classe', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('admin_classe');
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -133,6 +133,6 @@ class AdminClasseController extends AbstractController
             $this->addFlash('success', 'La classe a bien été supprimée !');
         }
 
-        return $this->redirectToRoute('admin_classe', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_classe');
     }
 }

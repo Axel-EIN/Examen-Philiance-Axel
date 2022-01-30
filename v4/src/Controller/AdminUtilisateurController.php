@@ -119,7 +119,7 @@ class AdminUtilisateurController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'L\'utilisateur a bien été modifié !');
 
-            return $this->redirectToRoute('admin_utilisateur', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_utilisateur');
         }
 
         return $this->renderForm('admin_utilisateur/edit.html.twig', [
@@ -154,6 +154,7 @@ class AdminUtilisateurController extends AbstractController
             $this->addFlash('success', 'L\'utilisateur a bien été supprimé !');
         }
 
-        return $this->redirectToRoute('admin_utilisateur', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_utilisateur');
+        // return $this->redirectToRoute('admin_utilisateur', [], Response::HTTP_SEE_OTHER);
     }
 }

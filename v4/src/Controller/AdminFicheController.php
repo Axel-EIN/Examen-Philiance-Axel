@@ -65,7 +65,7 @@ class AdminFicheController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'La fiche a bien été modifiée !');
 
-            return $this->redirectToRoute('admin_fiche', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_fiche');
         }
 
         return $this->renderForm('admin_fiche/edit.html.twig', [
@@ -90,6 +90,6 @@ class AdminFicheController extends AbstractController
             $this->addFlash('success', 'La fiche a bien été supprimée !');
         }
 
-        return $this->redirectToRoute('admin_fiche', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_fiche');
     }
 }

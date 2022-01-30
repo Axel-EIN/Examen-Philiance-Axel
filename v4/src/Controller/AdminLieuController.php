@@ -109,7 +109,7 @@ class AdminLieuController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Le Lieu a bien été modifié !');
 
-            return $this->redirectToRoute('admin_lieu', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_lieu');
         }
 
         return $this->renderForm('admin_lieu/edit.html.twig', [
@@ -144,6 +144,6 @@ class AdminLieuController extends AbstractController
             $this->addFlash('success', 'Le Lieu a bien été supprimé !');
         }
 
-        return $this->redirectToRoute('admin_lieu', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_lieu');
     }
 }

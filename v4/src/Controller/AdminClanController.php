@@ -103,7 +103,7 @@ class AdminClanController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Le clan a bien été modifié !');
 
-            return $this->redirectToRoute('admin_clan', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_clan');
         }
 
         return $this->renderForm('admin_clan/edit.html.twig', [
@@ -124,7 +124,7 @@ class AdminClanController extends AbstractController
 
             if (!$clan->getEcoles()->isEmpty()) {
                 $this->addFlash('warning', 'Veuillez supprimer les écoles enfants au prélable !');
-                return $this->redirectToRoute('admin_clan', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('admin_clan');
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -143,6 +143,6 @@ class AdminClanController extends AbstractController
             $this->addFlash('success', 'Le clan a bien été supprimé !');
         }
 
-        return $this->redirectToRoute('admin_clan', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_clan');
     }
 }

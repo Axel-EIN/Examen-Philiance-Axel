@@ -92,7 +92,7 @@ class AdminArchiveController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'L\'Archive a bien été modifiée !');
 
-            return $this->redirectToRoute('admin_archive', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_archive');
         }
 
         return $this->renderForm('admin_archive/edit.html.twig', [
@@ -127,6 +127,6 @@ class AdminArchiveController extends AbstractController
             $this->addFlash('success', 'L\'archive a bien été supprimée !');
         }
 
-        return $this->redirectToRoute('admin_archive', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_archive');
     }
 }
