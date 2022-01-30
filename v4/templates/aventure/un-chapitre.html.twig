@@ -44,16 +44,47 @@
         </div>
 
          <!-- EPISODES -->
-        <div id="ch{{ un_chapitre.numero }}-episodes" class="collapse pb-5">
+        <div id="ch{{ un_chapitre.numero }}-episodes" class="collapse py-5">
             <div class="container">
                 <div class="row justify-content-center">
                 {% set dernierEpisodeNumero = 1 %}
+
+                {% set cette_episode_personnages = [] %}
                 {% for un_episode in un_chapitre.episodes %}
+
+                    {% for un_episode_personnages in ce_chapitre_personnages.participationsDuChapitre %}
+                        {% if un_episode_personnages.episodeId == un_episode.id %}
+                            {% set cette_episode_personnages = un_episode_personnages %}
+                            {% set break = true %}
+                        {% endif %}
+                    {% endfor %}
 
                     {% set dernierEpisodeNumero = un_episode.numero %}
                     <article class="col-lg-3 col-md-4 col-sm-6 episode-card">
 
                         <div class="card episode-card-liste">
+
+                        <div class="mini-portrait d-flex flex-row justify-content-center align-items-center">
+                        {% if app.user %}
+                            {% for un_personnage in cette_episode_personnages.participationsDeEpisode %}
+                                {% for un_personnage_user in app.user.personnages %}
+                                    {% if un_personnage.personnageId == un_personnage_user.id %}
+                                        <div class="d-flex flex-column justify-content-center align-items-center mr-2">
+                                            {% if un_personnage.xp != 0 and un_personnage.estMort != 1 %}
+                                                <strong class="xp">+{{un_personnage.xp}}XP</strong>
+                                            {% else %}
+                                                <strong class="text-mort">MORT</strong>
+                                            {% endif %}
+                                            <br/>
+                                            <a href="{{path('personnage_profil',{id:un_personnage.personnageId})}}" >
+                                                <img class="mini-perso-icone {% if un_personnage.estMort == 1 %}mort{% elseif un_personnage.xp == 0 %}disabled{% else %}survol{% endif %}" src="{{asset(un_personnage_user.icone)}}" alt="Icone du Personnage" />
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        </div>
 
                             <!-- BTN - MJ -->
                             {% if is_granted("ROLE_MJ") %}

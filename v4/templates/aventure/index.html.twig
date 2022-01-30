@@ -55,7 +55,15 @@
     </div>
 
 {% set numero = 0 %}
+{% set ce_chapitre_personnages = [] %}
 {% for un_chapitre in saison.chapitres %}
+
+    {% for un_chapitre_personnages in chapitres_personnages %}
+        {% if un_chapitre_personnages.chapitreId == un_chapitre.id %}
+            {% set ce_chapitre_personnages = un_chapitre_personnages %}
+            {% set break = true %}
+        {% endif %}
+    {% endfor %}
 
     <!-- SEPARATEUR -->
     <div class="chapitre-separateur text-center">
@@ -63,7 +71,7 @@
         <!-- BTN MJ | INSERER CHAPITRE -->
         {% if is_granted("ROLE_MJ") %}
             {% set numero = un_chapitre.numero %}
-            {{ include('/parts/btn-inserer-chapitre.html.twig') }}
+            {{ include('/parts/btn-inserer-chapitre.html.twig', {ce_chapitre_personnages}) }}
         {% endif %}
         
     </div>
