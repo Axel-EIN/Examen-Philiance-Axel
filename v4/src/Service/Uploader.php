@@ -1,10 +1,11 @@
 <?php
 namespace App\Service;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class Uploader
+class Uploader extends AbstractController
 {
     private $targetDirectory;
 
@@ -35,8 +36,7 @@ class Uploader
         }
         catch (FileException $e)
         {
-            // ... handle exception if something happens during file upload
-            // ajouter flashbag et gestion de l'erreur (redirection)
+            $this->addFlash('da,ger', 'Le fichier n\'a pu être téléversé!');
         }
 
         return $nouveau_nomFichier;
