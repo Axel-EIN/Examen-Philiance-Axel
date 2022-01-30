@@ -1,7 +1,7 @@
 {% if is_granted("ROLE_MJ") %}
     <div class="d-flex justify-content-center mt-3">
         <div class="text-right mb-3">
-            <a href="{{ path('admin_scene_create') }}?numero={{une_scene.numero}}&episodeID={{une_scene.episodeParent.id}}&redirect=aventure">
+            <a href="{{ path('admin_scene_create') }}?numero={{une_scene.numero}}&episodeID={{une_scene.episodeParent.id}}&redirect=episode">
                 <i class="fas fa-plus-square"></i>&nbsp;&nbsp;Insérer une Scène
             </a>
         </div>
