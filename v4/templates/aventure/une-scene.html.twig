@@ -43,14 +43,15 @@
                         {% if une_participation.estPj == 1 %}
                             <div style="display: inline-block; position: relative;">
                                 {% if une_participation.xpGagne != 0 and une_participation.estMort != 1 %}
-                                    <strong class="xp">+{{une_participation.xpGagne}}XP</strong>
+                                    <strong class="{% if une_participation.personnage.joueur == app.user %}votre-xp{% else %}xp{% endif %}">+{{une_participation.xpGagne}}XP</strong>
                                 {% endif %}
                                 <br/>
                                 <a href="{{path('personnage_profil',{id:une_participation.personnage.id})}}" >
                                     {% if une_participation.estMort == 1 %}
                                         <img src="{{asset('assets/img/icons/mort.png')}}" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
                                     {% endif %}
-                                    <img class="perso-icone {% if une_participation.estMort == 1 %}mort{% elseif une_participation.xpGagne == 0 %}disabled{% else %}survol{% endif %}"
+                                    {% dump(app.user) %}
+                                    <img class="perso-icone {% if une_participation.personnage.joueur == app.user %}votre-personnage{% endif %} {% if une_participation.estMort == 1 %}mort{% elseif une_participation.xpGagne == 0 %}disabled{% else %}survol{% endif %}"
                                          src="{{asset(une_participation.personnage.icone)}}" alt="Icone du Personnage" />
                                 </a>
                             </div>

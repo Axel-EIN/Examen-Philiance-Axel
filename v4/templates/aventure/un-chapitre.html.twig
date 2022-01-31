@@ -71,7 +71,7 @@
                                     {% if un_personnage.personnageId == un_personnage_user.id %}
                                         <div class="d-flex flex-column justify-content-center align-items-center mr-2">
                                             {% if un_personnage.xp != 0 and un_personnage.estMort != 1 %}
-                                                <strong class="xp">+{{un_personnage.xp}}XP</strong>
+                                                <strong class="votre-xp">+{{un_personnage.xp}}XP</strong>
                                             {% else %}
                                                 <strong class="text-mort">MORT</strong>
                                             {% endif %}

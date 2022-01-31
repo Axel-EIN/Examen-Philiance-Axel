@@ -507,7 +507,8 @@ img.disabled { filter:grayscale(100%); }
 @media (max-width: 576px) { .ligne-pjs { visibility: collapse; } }
 @media (max-width: 480px) { .ligne-pjs { visibility: collapse; } }
 
-.xp { color: rgb(0, 100, 0); text-shadow: 1px 1px 0 #0f0, -1px -1px 0 #0f0, 1px -1px 0 #0f0, -1px 1px 0 #0f0; }
+.xp { color: rgb(0, 100, 100); text-shadow: 1px 1px 0 #0ff, -1px -1px 0 #0ff, 1px -1px 0 #0ff, -1px 1px 0 #0ff; }
+.votre-xp { color: rgb(0, 100, 0); text-shadow: 1px 1px 0 #0f0, -1px -1px 0 #0f0, 1px -1px 0 #0f0, -1px 1px 0 #0f0; }
 .text-mort { color: rgb(100, 0, 0); text-shadow: 1px 1px 0 #f00, -1px -1px 0 #f00, 1px -1px 0 #f00, -1px 1px 0 #f00; }
 
 .perso-icone { width: 64px; border-radius: 5px; }
@@ -522,6 +523,10 @@ img.disabled { filter:grayscale(100%); }
         width: 48px;
         box-shadow: 2px 2px 0 #0f0, -2px -2px 0 #0f0, 2px -2px 0 #0f0, -2px 2px 0 #0f0;
         border-radius: 4px;
+}
+
+.votre-personnage {
+        box-shadow: 2px 2px 0 #0f0, -2px -2px 0 #0f0, 2px -2px 0 #0f0, -2px 2px 0 #0f0;
 }
 
 .mort { filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(600%) contrast(0.8); }
