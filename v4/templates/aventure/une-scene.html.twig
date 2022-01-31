@@ -50,7 +50,6 @@
                                     {% if une_participation.estMort == 1 %}
                                         <img src="{{asset('assets/img/icons/mort.png')}}" alt="est mort" style="width: 72px; position: absolute; top: -4px; left: -2px; z-index: 1;" />
                                     {% endif %}
-                                    {% dump(app.user) %}
                                     <img class="perso-icone {% if une_participation.personnage.joueur == app.user %}votre-personnage{% endif %} {% if une_participation.estMort == 1 %}mort{% elseif une_participation.xpGagne == 0 %}disabled{% else %}survol{% endif %}"
                                          src="{{asset(une_participation.personnage.icone)}}" alt="Icone du Personnage" />
                                 </a>
