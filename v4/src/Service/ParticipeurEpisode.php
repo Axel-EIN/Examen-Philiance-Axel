@@ -44,7 +44,10 @@ class ParticipeurEpisode
             $episode_personnages[$compteur]['prenom'] = $this->persoRepo->find($un_personnage_id)->getPrenom();
             $episode_personnages[$compteur]['xp'] = $compteurXp;
             $episode_personnages[$compteur]['estMort'] = $estMort;
-            $episode_personnages[$compteur]['joueurId'] = $this->persoRepo->find($un_personnage_id)->getJoueur()->getId();
+            if ($this->persoRepo->find($un_personnage_id)->getJoueur() == null)
+                $episode_personnages[$compteur]['joueurId'] = 1;
+            else
+                $episode_personnages[$compteur]['joueurId'] = $this->persoRepo->find($un_personnage_id)->getJoueur()->getId();
             $compteur++;
         }
 
